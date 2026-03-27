@@ -128,8 +128,65 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 14px;
+            margin-bottom: 10px;
+        }
+        .overnights-row {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .overnights-label {
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .overnights-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #c8cdd8;
+            letter-spacing: 0.3px;
+        }
+        .overnights-value .on-city { color: #a78bfa; }
+        .overnights-value .on-sep { color: #4b5563; }
+
+        .info-rows {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
             margin-bottom: 24px;
         }
+        .info-card {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .info-label {
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .info-value {
+            font-size: 13px;
+            font-weight: 500;
+            color: #c8cdd8;
+            line-height: 1.6;
+        }
+        .leg-item { display: inline-block; white-space: nowrap; }
+        .leg-route { color: #e2e8f0; font-weight: 600; }
+        .leg-mode { margin: 0 2px; }
+        .leg-time { color: #6b7280; }
+        .leg-sep { color: #374151; margin: 0 6px; }
         .stat-card {
             background: rgba(15, 19, 35, 0.8);
             border: 1px solid rgba(99, 130, 255, 0.1);
@@ -377,6 +434,7 @@
     <div class="plan-subtitle" id="plan-subtitle"></div>
 
     <div class="stats-row" id="stats-row"></div>
+    <div class="info-rows" id="info-rows"></div>
 
     <div class="main-grid">
         <div class="map-container">
@@ -464,7 +522,7 @@ const plans = {
         name: 'Castle + Paris + Amsterdam',
         badge: 'PRIMARY', badgeClass: 'badge-primary',
         subtitle: 'Eiffel Tower on the 4th of July, Neuschwanstein, 2 nights in Amsterdam. <strong>1 KL chill day</strong> — all three highlights.',
-        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 4, klDays: 1, chill: 2 },
+        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 4, klDays: 1, chill: 2, overnights: 'Paris 1 · Füssen 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
@@ -521,7 +579,7 @@ const plans = {
         name: 'Paris Day Trip + Castle + Amsterdam',
         badge: 'BALANCED', badgeClass: 'badge-chill',
         subtitle: 'All three highlights — Paris as a day trip (no overnight). <strong>2 KL chill days.</strong> Best of both worlds.',
-        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 3, klDays: 2, chill: 3 },
+        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 3, klDays: 2, chill: 3, overnights: 'Füssen 1 · Amsterdam 2 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
@@ -576,7 +634,7 @@ const plans = {
         name: 'Castle + Paris',
         badge: 'MOST CHILL', badgeClass: 'badge-chill',
         subtitle: 'Drop Amsterdam for maximum relaxation. Paris overnight + castle. <strong>4 KL chill days.</strong>',
-        stats: { days: 10, countries: 2, cities: 4, km: '~1,400', hotelNights: 2, klDays: 4, chill: 5 },
+        stats: { days: 10, countries: 2, cities: 4, km: '~1,400', hotelNights: 2, klDays: 4, chill: 5, overnights: 'Paris 1 · Füssen 1 · KL 7', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
@@ -626,7 +684,7 @@ const plans = {
         name: 'Castle + Amsterdam',
         badge: 'SIMPLE', badgeClass: 'badge-chill',
         subtitle: 'Just two big trips. Neuschwanstein + Amsterdam. Strasbourg day trip on 4th of July. <strong>3 KL chill days.</strong>',
-        stats: { days: 10, countries: 3, cities: 4, km: '~2,000', hotelNights: 3, klDays: 3, chill: 4 },
+        stats: { days: 10, countries: 3, cities: 4, km: '~2,000', hotelNights: 3, klDays: 3, chill: 4, overnights: 'Füssen 1 · Amsterdam 2 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'neuschwanstein', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
@@ -716,6 +774,30 @@ function renderPlan(planKey) {
         <div class="stat-card">
             <div class="stat-value" style="font-size:16px">Chill Level</div>
             <div class="chill-meter">${Array.from({length:5}, (_,i) => `<div class="chill-dot${i < p.stats.chill ? ' filled' : ''}"></div>`).join('')}</div>
+        </div>
+    `;
+
+    // Info rows (overnights + transport legs)
+    const infoEl = document.getElementById('info-rows');
+    const overnightParts = p.stats.overnights.split(' · ').map(part => {
+        const m = part.match(/^(.+)\s(\d+)$/);
+        return m ? `<span class="on-city">${m[1]}</span> <span style="color:#38bdf8;font-weight:700">${m[2]}</span>` : part;
+    }).join('<span class="on-sep"> · </span>');
+
+    const legParts = p.stats.legs.split(' · ').map(leg => {
+        const m = leg.match(/^(.+?)\s(🚗|🚄)\s(.+)$/);
+        if (!m) return leg;
+        return `<span class="leg-item"><span class="leg-route">${m[1]}</span> <span class="leg-mode">${m[2]}</span> <span class="leg-time">${m[3]}</span></span>`;
+    }).join('<span class="leg-sep">·</span>');
+
+    infoEl.innerHTML = `
+        <div class="info-card">
+            <div class="info-label">Overnights by City</div>
+            <div class="info-value">${overnightParts}</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">Transport Legs — 🚗 Drive  🚄 Train</div>
+            <div class="info-value">${legParts}</div>
         </div>
     `;
 
