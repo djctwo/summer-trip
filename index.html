@@ -9,6 +9,40 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+        /* Password gate */
+        .pw-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #0b0e1a;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 16px;
+        }
+        .pw-overlay.hidden { display: none; }
+        .pw-title {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 22px; font-weight: 700;
+            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .pw-input {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 15px; padding: 12px 20px; width: 280px;
+            background: rgba(15, 19, 35, 0.8); color: #e2e8f0;
+            border: 1px solid rgba(99, 130, 255, 0.3); border-radius: 10px;
+            outline: none; text-align: center;
+        }
+        .pw-input:focus { border-color: rgba(99, 130, 255, 0.6); }
+        .pw-input.error { border-color: #ef4444; animation: shake 0.3s; }
+        @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        .pw-btn {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 13px; font-weight: 600; padding: 10px 32px;
+            background: rgba(99, 130, 255, 0.15); color: #7eb8ff;
+            border: 1px solid rgba(99, 130, 255, 0.3); border-radius: 8px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .pw-btn:hover { background: rgba(99, 130, 255, 0.25); }
+        .app-content.locked { display: none; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -421,6 +455,13 @@
 </head>
 <body>
 
+<div class="pw-overlay" id="pw-overlay">
+    <div class="pw-title">SUMMER TRIP 2026</div>
+    <input type="password" class="pw-input" id="pw-input" placeholder="Enter password" autofocus>
+    <button class="pw-btn" id="pw-btn">Unlock</button>
+</div>
+
+<div class="app-content locked" id="app-content">
 <div class="topbar">
     <h1>SUMMER TRIP 2026</h1>
     <div class="meta">
@@ -954,6 +995,37 @@ Object.entries(plans).forEach(([key, p]) => {
 
 // Initial render
 renderPlan('primary');
+</script>
+</div><!-- /app-content -->
+
+<script>
+(function() {
+    const hash = '9fba553f12ebea038d2e8afbc88caa28c4cb0e115821dc165c3a5a9630c824eb';
+    async function sha256(s) {
+        const data = new TextEncoder().encode(s);
+        const buf = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    if (sessionStorage.getItem('trip-unlocked') === 'yes') {
+        document.getElementById('pw-overlay').classList.add('hidden');
+        document.getElementById('app-content').classList.remove('locked');
+    }
+    async function tryUnlock() {
+        const val = document.getElementById('pw-input').value;
+        const h = await sha256(val);
+        if (h === hash) {
+            sessionStorage.setItem('trip-unlocked', 'yes');
+            document.getElementById('pw-overlay').classList.add('hidden');
+            document.getElementById('app-content').classList.remove('locked');
+            setTimeout(() => map.invalidateSize(), 100);
+        } else {
+            document.getElementById('pw-input').classList.add('error');
+            setTimeout(() => document.getElementById('pw-input').classList.remove('error'), 400);
+        }
+    }
+    document.getElementById('pw-btn').addEventListener('click', tryUnlock);
+    document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+})();
 </script>
 </body>
 </html>
