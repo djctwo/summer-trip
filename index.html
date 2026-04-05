@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summer Trip Dashboard — Jul 3–12, 2026</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Summer Trip">
+    <meta name="theme-color" content="#0b0e1a">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU3VtbWVyIFRyaXAgMjAyNiIsInNob3J0X25hbWUiOiJTdW1tZXIgVHJpcCIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBiMGUxYSIsInRoZW1lX2NvbG9yIjoiIzBiMGUxYSJ9">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -1180,6 +1185,132 @@
             transition: all 0.2s;
         }
         .share-btn:hover { background: rgba(99, 130, 255, 0.2); }
+
+        /* Countdown timer */
+        .ov-countdown {
+            text-align: center; padding: 20px 0 8px;
+            font-size: 14px; color: #6b7280; font-weight: 500;
+        }
+        .ov-countdown-num {
+            display: inline-flex; align-items: baseline; gap: 16px;
+            margin-top: 8px;
+        }
+        .ov-cd-unit {
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .ov-cd-val {
+            font-size: 32px; font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .ov-cd-label { font-size: 10px; color: #4b5563; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Booking progress */
+        .booking-progress {
+            margin-bottom: 24px;
+        }
+        .bp-bar-bg {
+            height: 8px; border-radius: 4px;
+            background: rgba(99, 130, 255, 0.1);
+            margin-bottom: 10px; overflow: hidden;
+        }
+        .bp-bar-fill {
+            height: 100%; border-radius: 4px;
+            background: linear-gradient(90deg, #34d399, #38bdf8);
+            transition: width 0.4s ease;
+        }
+        .bp-status { font-size: 12px; color: #6b7280; margin-bottom: 12px; }
+        .bp-items { display: flex; flex-direction: column; gap: 6px; }
+        .bp-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 12px; border-radius: 8px;
+            background: rgba(15, 19, 35, 0.5);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .bp-item:hover { background: rgba(99, 130, 255, 0.06); }
+        .bp-check {
+            width: 18px; height: 18px; border-radius: 5px;
+            border: 2px solid rgba(99, 130, 255, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: all 0.2s; font-size: 11px;
+        }
+        .bp-item.booked .bp-check {
+            background: rgba(52, 211, 153, 0.2); border-color: #34d399; color: #34d399;
+        }
+        .bp-item.booked .bp-label { opacity: 0.5; text-decoration: line-through; }
+        .bp-label { font-size: 12px; color: #c8cdd8; flex: 1; }
+        .bp-priority {
+            font-size: 9px; font-weight: 700; padding: 2px 6px;
+            border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .bp-priority-urgent { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .bp-priority-soon { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .bp-priority-later { background: rgba(99, 130, 255, 0.15); color: #7eb8ff; }
+
+        /* Daily briefing */
+        .daily-briefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .brief-card {
+            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+        }
+        .brief-card:hover { border-color: rgba(99, 130, 255, 0.25); }
+        .brief-day { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 2px; }
+        .brief-dest { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+        .brief-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; }
+        .brief-row-label { color: #6b7280; }
+        .brief-row-val { color: #c8cdd8; font-weight: 600; }
+
+        /* Restaurant wishlist */
+        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+        .resto-card {
+            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+        }
+        .resto-card:hover { border-color: rgba(99, 130, 255, 0.25); }
+        .resto-city { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 4px; }
+        .resto-name { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+        .resto-type { font-size: 11px; color: #fbbf24; margin-bottom: 6px; }
+        .resto-desc { font-size: 11px; color: #8b94a6; line-height: 1.6; }
+        .resto-must { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(251, 146, 60, 0.15); color: #fb923c; margin-left: 6px; }
+
+        /* Language cheat sheet */
+        .lang-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .lang-section {
+            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px; padding: 16px;
+        }
+        .lang-flag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 10px; }
+        .lang-phrase { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(99, 130, 255, 0.05); }
+        .lang-phrase:last-child { border-bottom: none; }
+        .lang-en { font-size: 12px; color: #6b7280; }
+        .lang-local { font-size: 12px; color: #e2e8f0; font-weight: 600; font-style: italic; }
+
+        /* Trip timeline */
+        .trip-timeline {
+            display: flex; gap: 0; margin-bottom: 24px; border-radius: 10px; overflow: hidden;
+            height: 56px;
+        }
+        .tl-segment {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 6px 4px; min-width: 0; flex: 1; transition: flex 0.2s;
+            cursor: default; position: relative;
+        }
+        .tl-segment:hover { flex: 1.8; }
+        .tl-day { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.8); }
+        .tl-label { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
+
+        /* Photo spots */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+        .photo-card {
+            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+        }
+        .photo-card:hover { border-color: rgba(99, 130, 255, 0.25); }
+        .photo-city { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 4px; }
+        .photo-spot { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+        .photo-icon { font-size: 20px; float: right; margin: -2px 0 0 8px; }
+        .photo-tip { font-size: 11px; color: #8b94a6; line-height: 1.6; }
+        .photo-time { font-size: 10px; color: #38bdf8; font-weight: 600; margin-top: 4px; }
         .share-toast {
             position: fixed;
             bottom: 30px;
@@ -1216,7 +1347,7 @@
             .stat-card, .info-card, .trip-overview, .map-container, .timeline-panel,
             .checklist-panel, .budget-panel, .flights-panel, .notes-panel,
             .weather-card, .dest-card, .dest-card-body, .emergency-card,
-            .booking-link { background: #fff; border-color: #ddd; color: #1a1a2e; }
+            .booking-link, .brief-card, .resto-card, .photo-card, .lang-section { background: #fff; border-color: #ddd; color: #1a1a2e; }
             .stat-value, .ov-stat-value, .rec-pick-name { -webkit-text-fill-color: #1a1a2e; }
             .stat-label, .info-label, .trip-overview-label, .panel-header,
             .weather-city, .dest-card-name, .booking-link-title, .emergency-item .em-value,
@@ -1261,6 +1392,7 @@
             <div class="ov-hero-title">Melissa's Summer Visit</div>
             <div class="ov-hero-sub">Porto + Castle + Munich &mdash; Jul 3 to Jul 12, 2026</div>
             <div class="ov-hero-detail" style="color:#34d399">&#10003; Plan confirmed &bull; 3 countries &bull; Home base: Kaiserslautern</div>
+            <div class="ov-countdown" id="ov-countdown"></div>
         </div>
 
         <div class="ov-stats-bar">
@@ -1377,6 +1509,11 @@
                 <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(234,179,8,0.25)"></div>Castle + Munich</div>
                 <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.12)"></div>KL / Chill</div>
             </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">Booking Progress</div>
+            <div class="booking-progress" id="booking-progress"></div>
         </div>
 
         <div class="ov-section" style="text-align:center; border-color:rgba(52,211,153,0.2)">
@@ -1518,6 +1655,10 @@
 
     <div class="trip-overview" id="trip-overview"></div>
 
+    <div class="trip-timeline" id="trip-timeline"></div>
+
+    <div class="daily-briefs" id="daily-briefs"></div>
+
     <div class="weather-row" id="weather-row"></div>
 
     <div class="dest-cards" id="dest-cards"></div>
@@ -1620,6 +1761,24 @@
                 <button class="share-btn" id="share-btn">Copy Itinerary</button>
             </div>
             <div class="booking-links" id="booking-links" style="padding:16px 20px"></div>
+        </div>
+    </div>
+
+    <div class="bottom-row">
+        <div class="checklist-panel">
+            <div class="panel-header">Restaurant &amp; Food Wishlist</div>
+            <div class="restaurant-grid" id="restaurant-grid" style="padding:16px 20px"></div>
+        </div>
+        <div class="checklist-panel">
+            <div class="panel-header">Photo Spots</div>
+            <div class="photo-grid" id="photo-grid" style="padding:16px 20px"></div>
+        </div>
+    </div>
+
+    <div class="bottom-row">
+        <div class="checklist-panel" style="grid-column: 1 / -1">
+            <div class="panel-header">Language Cheat Sheet</div>
+            <div class="lang-sections" id="lang-sections" style="padding:16px 20px"></div>
         </div>
     </div>
 
@@ -2693,6 +2852,186 @@ renderPlan = function(planKey) {
 
     emEl.innerHTML = '<div class="emergency-card"><h4>Emergency Numbers</h4><div class="emergency-item"><span class="em-label">Europe-wide emergency</span><span class="em-value">112</span></div><div class="emergency-item"><span class="em-label">Germany police</span><span class="em-value">110</span></div><div class="emergency-item"><span class="em-label">Germany ambulance</span><span class="em-value">112</span></div><div class="emergency-item"><span class="em-label">Roadside assistance (ADAC)</span><span class="em-value">+49 89 22 22 22</span></div></div><div class="emergency-card"><h4>US Embassies</h4>' + embassyHtml + '</div><div class="emergency-card"><h4>Practical</h4><div class="emergency-item"><span class="em-label">Tesla Supercharger app</span><span class="em-value">Tesla app</span></div><div class="emergency-item"><span class="em-label">Currency</span><span class="em-value">EUR (\u20AC1 \u2248 $1.08)</span></div><div class="emergency-item"><span class="em-label">Power adapter</span><span class="em-value">Type C/F (EU standard)</span></div><div class="emergency-item"><span class="em-label">Tipping</span><span class="em-value">Round up 5\u201310%</span></div></div>';
 
+    // Trip timeline
+    const tlEl = document.getElementById('trip-timeline');
+    const tlColors = { arrive: '#ef4444', porto: '#d97706', paris: '#8b5cf6', castle: '#eab308', munich: '#eab308', chill: '#6366f1', depart: '#ef4444', strasbourg: '#8b5cf6', arles: '#f97316', amsterdam: '#f97316', milan: '#0ea5e9', palma: '#0284c7', kl: '#6366f1' };
+    tlEl.innerHTML = p.days.map(d => {
+        const key = d.dest.toLowerCase();
+        let bg = '#6366f1';
+        if (key.includes('arrive') || key.includes('depart')) bg = '#ef4444';
+        else if (key.includes('porto')) bg = '#d97706';
+        else if (key.includes('paris')) bg = '#8b5cf6';
+        else if (key.includes('neuschwanstein') || key.includes('castle') || key.includes('munich') || key.includes('füssen')) bg = '#eab308';
+        else if (key.includes('amsterdam')) bg = '#f97316';
+        else if (key.includes('strasbourg')) bg = '#8b5cf6';
+        else if (key.includes('arles') || key.includes('provence')) bg = '#f97316';
+        else if (key.includes('milan')) bg = '#0ea5e9';
+        else if (key.includes('palma')) bg = '#0284c7';
+        else if (key.includes('chill') || key.includes('farewell') || key.includes('kaiserslautern')) bg = '#6366f1';
+        return '<div class="tl-segment" style="background:' + bg + '"><div class="tl-day">' + d.date.split(' ')[1] + ' ' + d.date.split(' ')[2] + '</div><div class="tl-label">' + d.dest.split('—')[0].split('→')[0].trim() + '</div></div>';
+    }).join('');
+
+    // Daily briefing cards
+    const briefEl = document.getElementById('daily-briefs');
+    const weatherLookup = weatherData[planKey] || {};
+    briefEl.innerHTML = p.days.map(d => {
+        const wCity = d.dest.split('—')[0].split('→')[0].trim().split(' ')[0];
+        const w = Object.values(weatherLookup).find(v => d.dest.toLowerCase().includes(v.city ? v.city.toLowerCase() : ''));
+        const wakeMap = { 1: '—', 2: '12:00 PM', 3: '9:00 AM', 4: '9:00 AM', 5: '7:00 AM', 6: '9:00 AM', 7: '9:00 AM', 8: '10:00 AM', 9: '9:30 AM', 10: '6:30 AM' };
+        const wake = d.schedule && d.schedule[0] ? d.schedule[0][0] : (wakeMap[d.day] || '—');
+        const needPack = d.overnight && !d.overnight.includes('Kaiserslautern') ? 'Overnight bag' : '—';
+        return '<div class="brief-card">' +
+            '<div class="brief-day">Day ' + d.day + ' · ' + d.date + '</div>' +
+            '<div class="brief-dest">' + d.dest + '</div>' +
+            '<div class="brief-row"><span class="brief-row-label">First event</span><span class="brief-row-val">' + wake + '</span></div>' +
+            '<div class="brief-row"><span class="brief-row-label">Transport</span><span class="brief-row-val">' + (d.transport || '—') + '</span></div>' +
+            '<div class="brief-row"><span class="brief-row-label">Overnight</span><span class="brief-row-val">' + (d.overnight || 'Departure') + '</span></div>' +
+            '<div class="brief-row"><span class="brief-row-label">Pack</span><span class="brief-row-val">' + needPack + '</span></div>' +
+            '</div>';
+    }).join('');
+
+    // Restaurant wishlist
+    const restoEl = document.getElementById('restaurant-grid');
+    const restoData = {
+        porto: [
+            { city: 'Porto', name: 'Cantinho do Avillez', type: 'Modern Portuguese', desc: 'Chef José Avillez\'s casual Porto spot. Creative Portuguese dishes, great wine list. Ribeira area.', must: true },
+            { city: 'Porto', name: 'Café Santiago', type: 'Francesinha', desc: 'The best francesinha in Porto. Messy, cheesy, saucy — the quintessential Porto sandwich. Cash only.', must: true },
+            { city: 'Porto', name: 'Gazela Cachorrinhos', type: 'Street food', desc: 'Tiny hole-in-the-wall famous for hot dogs with spicy sauce. Under €3. Near Batalha.', must: false },
+            { city: 'Porto', name: 'Pastéis de Belém style', type: 'Pastry / Café', desc: 'Any pastelaria for pastéis de nata + galão (milky coffee). Try Manteigaria or Nata Lisboa.', must: true },
+            { city: 'Porto', name: 'Wine Quay Bar', type: 'Wine bar', desc: 'Casual riverside wine bar on Ribeira. Port wine + petiscos (Portuguese tapas) at sunset.', must: false }
+        ],
+        munich: [
+            { city: 'Munich', name: 'Augustiner-Keller', type: 'Beer hall', desc: 'The locals\' favorite. Less touristy than Hofbräuhaus, better beer (Augustiner Edelstoff), massive beer garden.', must: true },
+            { city: 'Munich', name: 'Hofbräuhaus', type: 'Beer hall', desc: 'The iconic tourist beer hall. Worth visiting once for the atmosphere. Schweinshaxe + Weissbier.', must: false },
+            { city: 'Munich', name: 'Viktualienmarkt stalls', type: 'Market food', desc: 'Browse the outdoor market. Grab Leberkäse-Semmel, Obatzda, or fresh pretzels. Beer garden in the center.', must: true },
+            { city: 'Munich', name: 'Café Frischhut', type: 'Bakery', desc: 'Open since 1973. Famous for Schmalznudel (fried dough). Perfect breakfast stop near Viktualienmarkt.', must: false }
+        ],
+        kl: [
+            { city: 'KL', name: 'Bremerhof', type: 'Biergarten', desc: 'Doug\'s go-to. Beautiful outdoor seating in Bremerhof Park. Schnitzel, Flammkuchen, local Pfalz wines.', must: true },
+            { city: 'KL', name: 'Wochenmarkt', type: 'Saturday market', desc: 'Saturday morning market at Stiftsplatz. Fresh produce, bread, cheese, flowers. Great for cooking at home.', must: true },
+            { city: 'KL', name: 'Brauhaus an der Glanbrücke', type: 'Brewpub', desc: 'Local brewery restaurant on the river. Hearty Pfalz cooking, house-brewed beer.', must: false }
+        ]
+    };
+    const restos = [];
+    if (p.locs.includes('porto')) restos.push(...(restoData.porto || []));
+    if (p.locs.includes('munich')) restos.push(...(restoData.munich || []));
+    restos.push(...(restoData.kl || []));
+    // Add Paris if applicable
+    if (p.locs.includes('paris')) restos.push(
+        { city: 'Paris', name: 'Le Bouillon Chartier', type: 'Traditional French', desc: 'Historic 1896 brasserie. Classic French at incredibly low prices. Steak frites, onion soup. No reservations.', must: true },
+        { city: 'Paris', name: 'Du Pain et des Idées', type: 'Bakery', desc: 'One of Paris\'s best bakeries. Pain des amis, escargot pastry. Near Canal Saint-Martin.', must: false }
+    );
+    if (p.locs.includes('amsterdam')) restos.push(
+        { city: 'Amsterdam', name: 'Foodhallen', type: 'Food hall', desc: 'Indoor food market in De Hallen. 20+ stalls — Vietnamese, burgers, oysters, bitterballen. Great for grazing.', must: true }
+    );
+    restoEl.innerHTML = restos.map(r =>
+        '<div class="resto-card"><div class="resto-city">' + r.city + '</div>' +
+        '<div class="resto-name">' + r.name + (r.must ? '<span class="resto-must">MUST TRY</span>' : '') + '</div>' +
+        '<div class="resto-type">' + r.type + '</div>' +
+        '<div class="resto-desc">' + r.desc + '</div></div>'
+    ).join('');
+
+    // Photo spots
+    const photoEl = document.getElementById('photo-grid');
+    const photoData = {
+        porto: [
+            { city: 'Porto', spot: 'Dom Luís Bridge', icon: '🌉', tip: 'Walk to the middle of the upper deck for panoramic shots of both sides of the Douro. Best light at golden hour.', time: 'Sunset (8:30 PM Jul)' },
+            { city: 'Porto', spot: 'Ribeira Waterfront', icon: '🏘️', tip: 'Shoot from the Gaia side looking back at Ribeira for the classic colorful houses shot. Include boats in foreground.', time: 'Morning or sunset' },
+            { city: 'Porto', spot: 'Clérigos Tower', icon: '🗼', tip: '76m high, 225 steps. 360° panoramic view of Porto. Go early to avoid crowds.', time: 'Morning (10 AM)' },
+            { city: 'Porto', spot: 'São Bento Station', icon: '🚂', tip: '20,000 azulejo tiles inside. Shoot the main hall from the entrance stairs for the full effect.', time: 'Any time (indoor)' },
+            { city: 'Porto', spot: 'Livraria Lello', icon: '📚', tip: 'The "Harry Potter bookshop." Shoot the red staircase from below. €5 entry (redeemable on book purchase).', time: 'Opening (9:30 AM)' }
+        ],
+        neuschwanstein: [
+            { city: 'Neuschwanstein', spot: 'Marienbrücke', icon: '🏰', tip: 'THE classic castle shot. Suspended bridge with the castle framed by mountains. Can be crowded — go early or wait.', time: 'Morning (best light)' },
+            { city: 'Neuschwanstein', spot: 'Hohenschwangau Viewpoint', icon: '⛰️', tip: 'View from below looking up at the castle perched on the cliff. Different angle than Marienbrücke.', time: 'Afternoon' }
+        ],
+        munich: [
+            { city: 'Munich', spot: 'Marienplatz Glockenspiel', icon: '🕰️', tip: 'The mechanical clock performs at 11 AM and 12 PM. Position yourself on the north side of the square for the best angle.', time: '11 AM or 12 PM' },
+            { city: 'Munich', spot: 'Englischer Garten', icon: '🌳', tip: 'Surfers on the Eisbach wave make incredible shots. Chinese Tower beer garden for the classic Munich atmosphere.', time: 'Afternoon' },
+            { city: 'Munich', spot: 'Nymphenburg Palace', icon: '👑', tip: 'Baroque palace with reflecting pool. Stand centered on the canal for a symmetrical shot.', time: 'Morning' }
+        ]
+    };
+    const photos = [];
+    p.locs.forEach(k => { if (photoData[k]) photos.push(...photoData[k]); });
+    // Add Paris/Amsterdam if applicable
+    if (p.locs.includes('paris') && !photoData.paris) {
+        photos.push(
+            { city: 'Paris', spot: 'Eiffel Tower from Trocadéro', icon: '🗼', tip: 'Classic shot from Trocadéro esplanade. Best at sunrise for no crowds and golden light.', time: 'Sunrise or sunset' },
+            { city: 'Paris', spot: 'Sacré-Cœur Steps', icon: '⛪', tip: 'Panoramic view of all of Paris from the steps. Best at golden hour.', time: 'Sunset' }
+        );
+    }
+    if (p.locs.includes('amsterdam')) {
+        photos.push(
+            { city: 'Amsterdam', spot: 'Canal Houses', icon: '🏡', tip: 'Shoot the narrow canal houses from a bridge. Keizersgracht and Herengracht are the most photogenic.', time: 'Golden hour' }
+        );
+    }
+    photoEl.innerHTML = photos.map(ph =>
+        '<div class="photo-card"><div class="photo-icon">' + ph.icon + '</div>' +
+        '<div class="photo-city">' + ph.city + '</div>' +
+        '<div class="photo-spot">' + ph.spot + '</div>' +
+        '<div class="photo-tip">' + ph.tip + '</div>' +
+        '<div class="photo-time">Best time: ' + ph.time + '</div></div>'
+    ).join('');
+
+    // Language cheat sheet
+    const langEl = document.getElementById('lang-sections');
+    const langData = {
+        portuguese: {
+            flag: '🇵🇹 Portuguese (Porto)',
+            phrases: [
+                ['Hello', 'Olá (oh-LAH)'],
+                ['Thank you', 'Obrigado (oh-bree-GAH-doo)'],
+                ['Please', 'Por favor (por fah-VOR)'],
+                ['The check, please', 'A conta, por favor'],
+                ['Beer', 'Cerveja (ser-VAY-zhah)'],
+                ['Port wine', 'Vinho do Porto'],
+                ['Delicious', 'Delicioso (deh-lee-see-OH-zoo)'],
+                ['How much?', 'Quanto custa?'],
+                ['Excuse me', 'Com licença'],
+                ['Cheers!', 'Saúde! (sah-OO-deh)']
+            ]
+        },
+        german: {
+            flag: '🇩🇪 German (Munich & KL)',
+            phrases: [
+                ['Hello', 'Hallo / Grüß Gott (Bavaria)'],
+                ['Thank you', 'Danke (DAHN-keh)'],
+                ['Please', 'Bitte (BIT-teh)'],
+                ['The check, please', 'Die Rechnung, bitte'],
+                ['Beer', 'Bier (beer) / Ein Maß (1L mug)'],
+                ['Cheers!', 'Prost! (prohst)'],
+                ['Excuse me', 'Entschuldigung'],
+                ['Do you speak English?', 'Sprechen Sie Englisch?'],
+                ['I\'d like...', 'Ich hätte gern...'],
+                ['Delicious', 'Lecker! (LEH-ker)']
+            ]
+        },
+        french: {
+            flag: '🇫🇷 French',
+            phrases: [
+                ['Hello', 'Bonjour (bohn-ZHOOR)'],
+                ['Thank you', 'Merci (mair-SEE)'],
+                ['Please', 'S\'il vous plaît'],
+                ['The check, please', 'L\'addition, s\'il vous plaît'],
+                ['Beer', 'Bière (bee-AIR)'],
+                ['Cheers!', 'Santé! (sahn-TAY)'],
+                ['Excuse me', 'Excusez-moi'],
+                ['Do you speak English?', 'Parlez-vous anglais?']
+            ]
+        }
+    };
+    let langHtml = '';
+    if (p.locs.includes('porto')) langHtml += renderLang(langData.portuguese);
+    langHtml += renderLang(langData.german);
+    if (p.locs.includes('paris') || p.locs.includes('strasbourg') || p.locs.includes('arles')) langHtml += renderLang(langData.french);
+    langEl.innerHTML = langHtml;
+
+    function renderLang(lang) {
+        return '<div class="lang-section"><div class="lang-flag">' + lang.flag + '</div>' +
+            lang.phrases.map(ph => '<div class="lang-phrase"><span class="lang-en">' + ph[0] + '</span><span class="lang-local">' + ph[1] + '</span></div>').join('') +
+            '</div>';
+    }
+
     // Share button
     document.getElementById('share-btn').onclick = function() {
         let text = p.name + ' \u2014 Summer Trip 2026\n';
@@ -2794,6 +3133,76 @@ function renderComparison() {
     compareResult.innerHTML = html;
 }
 renderComparison();
+
+// ===================== COUNTDOWN TIMER =====================
+function updateCountdown() {
+    const el = document.getElementById('ov-countdown');
+    if (!el) return;
+    const arrival = new Date('2026-07-03T11:15:00+02:00'); // FRA time CEST
+    const now = new Date();
+    const diff = arrival - now;
+    if (diff <= 0) {
+        el.innerHTML = '<div style="color:#34d399;font-size:16px;font-weight:700">Melissa is here! 🎉</div>';
+        return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    el.innerHTML = '<div style="color:#6b7280;font-size:12px;margin-bottom:6px">Until Melissa lands at Frankfurt</div>' +
+        '<div class="ov-countdown-num">' +
+        '<div class="ov-cd-unit"><div class="ov-cd-val">' + days + '</div><div class="ov-cd-label">days</div></div>' +
+        '<div class="ov-cd-unit"><div class="ov-cd-val">' + String(hrs).padStart(2, '0') + '</div><div class="ov-cd-label">hrs</div></div>' +
+        '<div class="ov-cd-unit"><div class="ov-cd-val">' + String(mins).padStart(2, '0') + '</div><div class="ov-cd-label">min</div></div>' +
+        '<div class="ov-cd-unit"><div class="ov-cd-val">' + String(secs).padStart(2, '0') + '</div><div class="ov-cd-label">sec</div></div>' +
+        '</div>';
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ===================== BOOKING PROGRESS TRACKER =====================
+const bpEl = document.getElementById('booking-progress');
+if (bpEl) {
+    const bpItems = plans.porto.bookings;
+    const bpSaved = JSON.parse(localStorage.getItem('trip-booking-progress') || '{}');
+    function renderBP() {
+        const total = bpItems.length;
+        const done = bpItems.filter(b => bpSaved[b.key]).length;
+        const pct = Math.round((done / total) * 100);
+        let html = '<div class="bp-bar-bg"><div class="bp-bar-fill" style="width:' + pct + '%"></div></div>';
+        html += '<div class="bp-status">' + done + ' of ' + total + ' booked (' + pct + '%)</div>';
+        html += '<div class="bp-items">';
+        bpItems.forEach(b => {
+            const checked = bpSaved[b.key] ? ' booked' : '';
+            const priClass = b.priority === 'urgent' ? 'bp-priority-urgent' : b.priority === 'soon' ? 'bp-priority-soon' : 'bp-priority-later';
+            html += '<div class="bp-item' + checked + '" data-bp-key="' + b.key + '">' +
+                '<div class="bp-check">' + (bpSaved[b.key] ? '✓' : '') + '</div>' +
+                '<div class="bp-label">' + b.title + '<br><span style="font-size:10px;color:#6b7280">' + b.detail + '</span></div>' +
+                '<span class="bp-priority ' + priClass + '">' + b.priority + '</span></div>';
+        });
+        html += '</div>';
+        bpEl.innerHTML = html;
+        bpEl.querySelectorAll('.bp-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const key = item.dataset.bpKey;
+                bpSaved[key] = !bpSaved[key];
+                localStorage.setItem('trip-booking-progress', JSON.stringify(bpSaved));
+                renderBP();
+            });
+        });
+    }
+    renderBP();
+}
+
+// ===================== PWA SERVICE WORKER =====================
+if ('serviceWorker' in navigator) {
+    const swBlob = new Blob([
+        'self.addEventListener("install", e => { e.waitUntil(caches.open("trip-v1").then(c => c.addAll(["./"]))); self.skipWaiting(); });' +
+        'self.addEventListener("fetch", e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });'
+    ], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+}
 
 // Initial view: overview (no plan rendered yet)
 // renderPlan('primary') is NOT called — overview is shown by default
