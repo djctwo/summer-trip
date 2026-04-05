@@ -257,6 +257,155 @@
         }
         .chill-dot.filled { background: #38bdf8; }
 
+        /* Recommendation view */
+        .rec-view { display: none; }
+        .rec-view.active { display: block; }
+        .plan-content { }
+        .plan-content.hidden { display: none; }
+
+        .rec-hero {
+            text-align: center;
+            padding: 40px 24px 32px;
+        }
+        .rec-pick-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a78bfa;
+            margin-bottom: 12px;
+        }
+        .rec-pick-name {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .rec-pick-tagline {
+            font-size: 14px;
+            color: #8b94a6;
+        }
+        .rec-section {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .rec-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a78bfa;
+            margin-bottom: 14px;
+        }
+        .rec-paragraph {
+            font-size: 14px;
+            color: #c8cdd8;
+            line-height: 1.9;
+        }
+        .rec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .rec-factor {
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+            background: rgba(20, 25, 45, 0.6);
+        }
+        .rec-factor-icon { font-size: 20px; margin-bottom: 8px; }
+        .rec-factor-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 6px;
+        }
+        .rec-factor-desc {
+            font-size: 12px;
+            color: #8b94a6;
+            line-height: 1.6;
+        }
+        .rec-comparison {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .rec-comparison th {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(99, 130, 255, 0.1);
+        }
+        .rec-comparison td {
+            font-size: 13px;
+            color: #c8cdd8;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(99, 130, 255, 0.05);
+        }
+        .rec-comparison tr.rec-highlight td {
+            color: #e2e8f0;
+            font-weight: 600;
+            background: rgba(167, 139, 250, 0.06);
+        }
+        .rec-comparison .rec-star { color: #a78bfa; margin-left: 6px; }
+        .rec-cta-row {
+            text-align: center;
+            padding: 20px 0 8px;
+        }
+        .rec-cta-btn {
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 36px;
+            background: linear-gradient(135deg, rgba(99, 130, 255, 0.2), rgba(168, 85, 247, 0.2));
+            color: #a78bfa;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .rec-cta-btn:hover {
+            background: linear-gradient(135deg, rgba(99, 130, 255, 0.3), rgba(168, 85, 247, 0.3));
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        @media (max-width: 1200px) {
+            .rec-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Trip overview */
+        .trip-overview {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+        .trip-overview-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+        .trip-overview-text {
+            font-size: 13px;
+            color: #8b94a6;
+            line-height: 1.8;
+        }
+
         /* Main layout */
         .main-grid {
             display: grid;
@@ -492,10 +641,104 @@
 <div class="tab-bar" id="tab-bar"></div>
 
 <div class="container">
+
+    <!-- Recommendation View -->
+    <div class="rec-view" id="rec-view">
+        <div class="rec-hero">
+            <div class="rec-pick-label">Recommended Pick</div>
+            <div class="rec-pick-name">Porto + Castle + Munich</div>
+            <div class="rec-pick-tagline">The best balance of quality time together and unforgettable sightseeing</div>
+        </div>
+
+        <div class="rec-section">
+            <div class="rec-section-title">Why This Plan</div>
+            <div class="rec-paragraph">
+                Porto gives you the best of both worlds. You spend the 4th of July weekend in one of Europe's most romantic and walkable cities — port wine at sunset on the Dom Lu&iacute;s Bridge, the Ribeira waterfront glowing at night, pastéis de nata for breakfast. It's only two nights away, so you're back in Kaiserslautern by Monday evening. Then the castle and Munich block on Tuesday and Wednesday delivers the two must-do's without rushing. That leaves you with four full chill days at home — more than any other plan that includes a real international trip. No 5-hour drives to Amsterdam. No bouncing between three countries in four days. Just a clean, compact trip abroad, the Bavarian highlights, and plenty of time to cook dinner together, walk the Pfalzerwald, and actually enjoy being in the same place.
+            </div>
+        </div>
+
+        <div class="rec-section">
+            <div class="rec-section-title">What Makes It Click</div>
+            <div class="rec-grid">
+                <div class="rec-factor">
+                    <div class="rec-factor-icon">&#9203;</div>
+                    <div class="rec-factor-title">4 Full Chill Days</div>
+                    <div class="rec-factor-desc">More downtime than any plan except Chill — but Chill only visits France and Bavaria. Porto gives you Portugal and still keeps 4 rest days.</div>
+                </div>
+                <div class="rec-factor">
+                    <div class="rec-factor-icon">&#127751;</div>
+                    <div class="rec-factor-title">Compact International Trip</div>
+                    <div class="rec-factor-desc">Fly out Saturday, fly back Monday. Two nights in Porto with zero wasted transit days. You're home for dinner on day 4.</div>
+                </div>
+                <div class="rec-factor">
+                    <div class="rec-factor-icon">&#127860;</div>
+                    <div class="rec-factor-title">Porto Is Made for Two</div>
+                    <div class="rec-factor-desc">Riverside dinners, port wine cellars, cobblestone alleys, sunset views from Jardins do Pal&aacute;cio de Cristal. It's intimate without trying to be.</div>
+                </div>
+                <div class="rec-factor">
+                    <div class="rec-factor-icon">&#127984;</div>
+                    <div class="rec-factor-title">Castle + Munich Still Locked In</div>
+                    <div class="rec-factor-desc">Neuschwanstein and Munich are must-do's. This plan slots them right after Porto with no overlap or crunch.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rec-section">
+            <div class="rec-section-title">The Flow</div>
+            <div class="rec-paragraph">
+                <strong style="color:#ef4444">Fri Jul 3</strong> &mdash; Melissa lands at Frankfurt, drive to KL, Biergarten dinner, early night.<br><br>
+                <strong style="color:#d97706">Sat Jul 4</strong> &mdash; Drive to Luxembourg Airport (1h), fly Ryanair to Porto. Arrive 4:30 PM. Walk Ribeira, riverside dinner, port wine on Dom Lu&iacute;s Bridge at sunset. <em style="color:#a78bfa">4th of July in Portugal.</em><br><br>
+                <strong style="color:#d97706">Sun Jul 5</strong> &mdash; Full Porto day. Cl&eacute;rigos Tower, Livraria Lello, cross to Vila Nova de Gaia for a port wine cellar tour, S&atilde;o Bento Station tiles, francesinha for dinner.<br><br>
+                <strong style="color:#d97706">Mon Jul 6</strong> &mdash; Morning at Foz do Douro beach, fly back to Luxembourg, home by 6 PM.<br><br>
+                <strong style="color:#eab308">Tue Jul 7</strong> &mdash; Early drive to Neuschwanstein. Castle, Marienbrücke bridge, Hohenschwangau. Overnight in F&uuml;ssen.<br><br>
+                <strong style="color:#eab308">Wed Jul 8</strong> &mdash; F&uuml;ssen old town + Lechfall, drive to Munich. Marienplatz, Viktualienmarkt, Englischer Garten, beer hall dinner.<br><br>
+                <strong style="color:#eab308">Thu Jul 9</strong> &mdash; Munich morning (Nymphenburg or shopping), drive back to KL.<br><br>
+                <strong style="color:#6366f1">Fri Jul 10</strong> &mdash; Chill day. Sleep in, coffee, Pfalzerwald walk, cook dinner together.<br><br>
+                <strong style="color:#6366f1">Sat Jul 11</strong> &mdash; Farewell day. Saturday Wochenmarkt, revisit favorites, farewell dinner.<br><br>
+                <strong style="color:#ef4444">Sun Jul 12</strong> &mdash; Drive to Frankfurt, 9:45 AM flight home.
+            </div>
+        </div>
+
+        <div class="rec-section">
+            <div class="rec-section-title">How It Compares</div>
+            <table class="rec-comparison">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>4th of July</th>
+                        <th>Chill Days</th>
+                        <th>Hotel Nights</th>
+                        <th>Budget</th>
+                        <th>Vibe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Primary</td><td>Paris</td><td>1</td><td>4</td><td>~$1,820–2,400</td><td>Non-stop action</td></tr>
+                    <tr><td>Balanced</td><td>Paris (day trip)</td><td>2</td><td>4</td><td>~$1,700–2,300</td><td>Packed but doable</td></tr>
+                    <tr><td>Chill</td><td>Paris</td><td>4</td><td>3</td><td>~$1,400–1,900</td><td>Relaxed, less variety</td></tr>
+                    <tr><td>Minimal</td><td>Strasbourg</td><td>3</td><td>4</td><td>~$1,600–2,100</td><td>Simple, familiar</td></tr>
+                    <tr><td>Provence</td><td>Arles</td><td>3</td><td>4</td><td>~$1,610–2,200</td><td>Unique, flight-heavy</td></tr>
+                    <tr><td>Milan</td><td>Milan</td><td>2</td><td>5</td><td>~$1,430–1,930</td><td>Best budget</td></tr>
+                    <tr class="rec-highlight"><td>Porto<span class="rec-star">&#9733;</span></td><td>Porto</td><td>4</td><td>4</td><td>~$1,490–1,940</td><td>Best balance</td></tr>
+                    <tr><td>Palma</td><td>Palma</td><td>2</td><td>5</td><td>~$1,485–1,985</td><td>Beach + mountains</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rec-section" style="text-align:center; border-color: rgba(168, 85, 247, 0.2);">
+            <div class="rec-paragraph" style="margin-bottom:16px;">Porto wins because it doesn't make you choose. You get a stunning international destination <em>and</em> the most time together at home. The other plans either cram too much in or skip the adventure.</div>
+            <button class="rec-cta-btn" onclick="renderPlan('porto')">View Full Porto Plan</button>
+        </div>
+    </div>
+
+    <!-- Plan Content (normal view) -->
+    <div class="plan-content" id="plan-content">
     <div class="plan-subtitle" id="plan-subtitle"></div>
 
     <div class="stats-row" id="stats-row"></div>
     <div class="info-rows" id="info-rows"></div>
+
+    <div class="trip-overview" id="trip-overview"></div>
 
     <div class="main-grid">
         <div class="map-container">
@@ -581,6 +824,7 @@
             <div class="notes-grid" id="notes-grid"></div>
         </div>
     </div>
+    </div><!-- /plan-content -->
 </div>
 
 <script>
@@ -608,7 +852,8 @@ const plans = {
         name: 'Paris + Castle + Munich + Amsterdam',
         badge: 'PRIMARY', badgeClass: 'badge-primary',
         subtitle: '4th of July in Paris, Neuschwanstein + Munich, then Amsterdam. <strong>1 KL chill day.</strong> Maximum highlights.',
-        stats: { days: 10, countries: 4, cities: 6, km: '~2,200', hotelNights: 5, klDays: 1, chill: 1, overnights: 'Paris 1 · Füssen 1 · Munich 1 · Amsterdam 1 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
+        summary: 'Melissa arrives Friday and settles into Kaiserslautern. Saturday morning you drive to Strasbourg, park the Tesla, and catch the TGV to Paris for a 4th of July lunch at Madame Brasserie on the Eiffel Tower, followed by Montmartre and Champs-Élysées — overnight in Paris. Sunday hits the Louvre before the TGV back through Strasbourg for tarte flambée, then home. Monday is the single chill day before an early Tuesday drive to Neuschwanstein Castle, with Marienbrücke and Hohenschwangau, overnighting in Füssen. Wednesday you continue to Munich for Marienplatz, Viktualienmarkt, and a beer hall dinner. Thursday drives back to KL. Friday is the big Amsterdam push — Anne Frank House, canal cruise at golden hour, dinner in De Pijp — with a Saturday morning Rijksmuseum stop before the 5-hour drive home. Sunday morning it\'s wheels up from Frankfurt. This is the maximum-highlights plan with the most ground covered, but only one rest day.',
+        stats: { days: 10, countries: 4, cities: 6, km: '~2,200', hotelNights: 4, klDays: 1, chill: 1, overnights: 'Paris 1 · Füssen 1 · Munich 1 · Amsterdam 1 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
@@ -667,6 +912,7 @@ const plans = {
         name: 'Paris Day Trip + Castle + Munich + Amsterdam',
         badge: 'BALANCED', badgeClass: 'badge-chill',
         subtitle: 'Paris as a day trip (no overnight). Castle + Munich. 2 nights in Amsterdam. <strong>2 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday you drive to Strasbourg, TGV to Paris for a full day — Eiffel Tower lunch, Montmartre, Champs-Élysées — but instead of staying overnight, you catch the evening TGV back to Strasbourg and drive home the same night. Sunday is a chill recovery day. Monday you head to Neuschwanstein Castle with the Marienbrücke bridge and Hohenschwangau, overnighting in Füssen. Tuesday continues to Munich for Marienplatz, Viktualienmarkt, and Englischer Garten, then Wednesday drives back to KL for another chill day. Thursday morning is the 5-hour drive to Amsterdam for two full nights — Anne Frank House, Jordaan canals, canal cruise, Rijksmuseum, and dinner in De Pijp. Saturday you drive home, and Sunday morning it\'s wheels up from Frankfurt. Skipping the Paris overnight frees up an extra rest day while still fitting in four countries.',
         stats: { days: 10, countries: 4, cities: 6, km: '~2,200', hotelNights: 4, klDays: 2, chill: 2, overnights: 'Füssen 1 · Munich 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 round · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
@@ -725,6 +971,7 @@ const plans = {
         name: 'Paris + Castle + Munich',
         badge: 'MOST CHILL', badgeClass: 'badge-chill',
         subtitle: 'Drop Amsterdam for maximum relaxation. Paris overnight + castle + Munich. <strong>4 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday is the Paris day — drive to Strasbourg, TGV in, Eiffel Tower lunch at Madame Brasserie, Montmartre at sunset, overnight in Paris. Sunday morning you hit the Louvre, then TGV back through Strasbourg for tarte flambée before driving home. Monday through Thursday are four full chill days in Kaiserslautern — sleep in, coffee shops, Japanischer Garten, Pfalzerwald walks, cooking dinner together. No rushing. Friday you make the 4-hour drive to Neuschwanstein for the castle, Marienbrücke, and Hohenschwangau, overnighting in Füssen. Saturday continues to Munich for Marienplatz, Viktualienmarkt, and a beer hall. Sunday morning you drive straight from Munich to Frankfurt Airport. Amsterdam is dropped entirely, giving you maximum time to just hang out at home together. Best plan if the priority is quality time over sightseeing.',
         stats: { days: 10, countries: 2, cities: 5, km: '~1,400', hotelNights: 3, klDays: 4, chill: 4, overnights: 'Paris 1 · Füssen 1 · Munich 1 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich'],
         routes: [
@@ -778,6 +1025,7 @@ const plans = {
         name: 'Strasbourg + Castle + Munich + Amsterdam',
         badge: 'SIMPLE', badgeClass: 'badge-chill',
         subtitle: 'Strasbourg day trip on the 4th (still France!). Castle + Munich. Amsterdam. <strong>3 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday you drive 1.5 hours to Strasbourg for a day trip — Petite France, the cathedral, and tarte flambée for lunch. It\'s still France for the 4th of July, but without the Paris logistics. You\'re home by dinner. Sunday and Monday are chill days in Kaiserslautern. Tuesday you make the 4-hour drive to Neuschwanstein for the castle, Marienbrücke bridge, and Hohenschwangau, overnighting in Füssen. Wednesday continues to Munich for Marienplatz, Viktualienmarkt, and a beer hall dinner. Thursday drives back to KL for one more chill day. Friday morning is the 5-hour push to Amsterdam for two nights — Anne Frank House, canal cruise, Rijksmuseum, dinner in De Pijp. Sunday you drive to Frankfurt for the morning flight. This plan trades Paris for a simpler Strasbourg day trip, giving you three rest days while still hitting France, the castle, Munich, and Amsterdam.',
         stats: { days: 10, countries: 3, cities: 5, km: '~2,000', hotelNights: 4, klDays: 3, chill: 3, overnights: 'Füssen 1 · Munich 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
         locs: ['kl', 'frankfurt', 'strasbourg', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
@@ -829,6 +1077,7 @@ const plans = {
         name: 'Arles + Castle + Munich',
         badge: 'PROVENCE', badgeClass: 'badge-primary',
         subtitle: '4th of July in Provence — fly to Marseille, explore Arles + Les Baux. Castle + Munich. <strong>3 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday morning you\'re up early — drive to Frankfurt Airport, fly Lufthansa to Marseille, pick up a rental car, and drive an hour to Arles. The 4th of July is spent at the Roman Amphitheater, walking Van Gogh\'s trail to the Café Terrace at Night spot, and dinner under the Provençal stars. Sunday is a full day trip by rental car — Les Baux, the Carrières de Lumières light show, Pont du Gard for a swim in the Gardon River, and Saint-Rémy. Monday morning you drive back to Marseille, fly home, and are back in KL by mid-afternoon. Tuesday is a chill recovery day. Wednesday you head to Neuschwanstein for the castle, Marienbrücke, and Hohenschwangau, overnighting in Füssen. Thursday continues to Munich for Marienplatz, Viktualienmarkt, and a beer hall. Friday drives back, Saturday is the farewell day, Sunday is departure. This plan swaps the Paris TGV for a Provence flight and gets you into lavender fields and Roman ruins.',
         stats: { days: 10, countries: 2, cities: 5, km: '~600', hotelNights: 4, klDays: 3, chill: 3, overnights: 'Arles 2 · Füssen 1 · Munich 1 · KL 5', legs: 'KL→FRA ✈️ MRS 🚗 1h · Arles→MRS ✈️ FRA 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'marseille', 'arles', 'neuschwanstein', 'munich'],
         routes: [
@@ -884,6 +1133,7 @@ const plans = {
         name: 'Milan + Castle + Munich',
         badge: 'MILAN', badgeClass: 'badge-primary',
         subtitle: '4th of July in Italy — €63/pp flights! Duomo, Lake Como. Castle + Munich. <strong>2 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday afternoon you drive an hour to Luxembourg Airport and fly Ryanair to Milan Bergamo for just €63 per person round trip. You land Saturday evening and head into the city for a late dinner in the Navigli district. Sunday is a full Milan day — climb the Duomo rooftop, Galleria Vittorio Emanuele, The Last Supper, Castello Sforzesco, and aperitivo in Navigli. Monday is a Lake Como day trip by train — ferry between Varenna and Bellagio, Villa Melzi gardens, lunch with lake views, back to Milan for dinner in Brera. Tuesday morning you fly back to Luxembourg and are home in KL by early afternoon. Wednesday you head to Neuschwanstein for the castle, Marienbrücke, and Hohenschwangau, overnighting in Füssen. Thursday continues to Munich for Marienplatz and a beer hall. Friday drives back, then Saturday and Sunday wrap up with a farewell day and departure. Three nights in Italy, the castle, Munich, and two chill days — all on a budget.',
         stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 5, klDays: 2, chill: 2, overnights: 'Milan 3 · Füssen 1 · Munich 1 · KL 4', legs: 'KL→LUX ✈️ BGY · BGY→LUX ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'luxembourg', 'milan', 'neuschwanstein', 'munich'],
         routes: [
@@ -938,6 +1188,7 @@ const plans = {
         name: 'Porto + Castle + Munich',
         badge: 'PORTO', badgeClass: 'badge-primary',
         subtitle: '4th of July in Portugal — Ribeira waterfront, port wine. Castle + Munich. <strong>4 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday around noon you drive an hour to Luxembourg Airport and fly Ryanair to Porto, landing at 4:30 PM local time. The 4th of July evening is spent walking the Ribeira waterfront, dinner at a riverside restaurant, and port wine tasting at sunset on the Dom Luís Bridge. Sunday is a full Porto day — Clérigos Tower for panoramic views, Livraria Lello (the Harry Potter bookshop), cross the bridge to Vila Nova de Gaia for a port wine cellar tour, São Bento Station\'s stunning tiles, and a francesinha for dinner. Monday morning you walk Foz do Douro beach, then fly back to Luxembourg and are home by 6 PM. Tuesday you head to Neuschwanstein for the castle, Marienbrücke, and Hohenschwangau, overnighting in Füssen. Wednesday continues to Munich for Marienplatz, Viktualienmarkt, and a beer hall. Thursday drives back. Friday and Saturday are chill days — cook together, Saturday market, farewell dinner. Sunday is departure. This is the most relaxed plan with four full chill days in KL, plus Porto\'s charm.',
         stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 4, klDays: 4, chill: 4, overnights: 'Porto 2 · Füssen 1 · Munich 1 · KL 5', legs: 'KL→LUX ✈️ OPO · OPO→LUX ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'luxembourg', 'porto', 'neuschwanstein', 'munich'],
         routes: [
@@ -991,6 +1242,7 @@ const plans = {
         name: 'Palma + Castle + Munich',
         badge: 'PALMA', badgeClass: 'badge-primary',
         subtitle: '4th of July on the beach in Mallorca! Castle + Munich after. <strong>2 KL chill days.</strong>',
+        summary: 'Melissa arrives Friday and settles into KL. Saturday evening you drive 1.25 hours to Frankfurt Hahn and fly Ryanair to Palma de Mallorca for €101 per person round trip, landing around 9 PM for late tapas and sangria in Plaza Mayor. Sunday is a beach day — morning at Playa de Palma, afternoon at the Cathedral (with Gaudí\'s interior), Arab Baths, Old Town wandering, and sunset cocktails on a rooftop. Monday is the mountain day trip — rent a car and drive the stunning Serra de Tramuntana coastal road to Valldemossa (Chopin\'s monastery), the artists\' village of Deià, and the serpentine descent to Sa Calobra beach. Tuesday morning you hit the Mercat de l\'Olivar food market, then fly back to Hahn and are home by 5 PM. Wednesday you head to Neuschwanstein for the castle, Marienbrücke, and Hohenschwangau, overnighting in Füssen. Thursday continues to Munich for Marienplatz and a beer hall dinner. Friday drives back, Saturday is farewell, Sunday is departure. Beach, mountains, a fairy-tale castle, and Munich — the most varied landscape plan.',
         stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 5, klDays: 2, chill: 2, overnights: 'Palma 3 · Füssen 1 · Munich 1 · KL 4', legs: 'KL→HHN ✈️ PMI · PMI→HHN ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
         locs: ['kl', 'frankfurt', 'hahn', 'palma', 'neuschwanstein', 'munich'],
         routes: [
@@ -1111,6 +1363,13 @@ function renderPlan(planKey) {
             <div class="info-label">Transport Legs — 🚗 Drive  🚄 Train</div>
             <div class="info-value">${legParts}</div>
         </div>
+    `;
+
+    // Trip overview
+    const overviewEl = document.getElementById('trip-overview');
+    overviewEl.innerHTML = `
+        <div class="trip-overview-label">Trip Overview</div>
+        <div class="trip-overview-text">${p.summary}</div>
     `;
 
     // Map
@@ -1260,6 +1519,31 @@ Object.entries(plans).forEach(([key, p]) => {
     tabBar.appendChild(btn);
 });
 
+// Recommendation tab
+const recBtn = document.createElement('button');
+recBtn.className = 'tab-btn';
+recBtn.dataset.plan = 'rec';
+recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(168,85,247,0.15);color:#a78bfa">&#9733;</span>`;
+recBtn.addEventListener('click', () => showRec());
+tabBar.appendChild(recBtn);
+
+function showRec() {
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+    recBtn.classList.add('active');
+    document.getElementById('plan-content').classList.add('hidden');
+    document.getElementById('rec-view').classList.add('active');
+    document.getElementById('plan-subtitle').innerHTML = '';
+}
+
+// Patch renderPlan to hide rec view
+const _origRenderPlan = renderPlan;
+renderPlan = function(planKey) {
+    document.getElementById('rec-view').classList.remove('active');
+    document.getElementById('plan-content').classList.remove('hidden');
+    _origRenderPlan(planKey);
+    setTimeout(() => map.invalidateSize(), 50);
+};
+
 // Initial render
 renderPlan('primary');
 </script>
@@ -1276,6 +1560,7 @@ renderPlan('primary');
     if (sessionStorage.getItem('trip-unlocked') === 'yes') {
         document.getElementById('pw-overlay').classList.add('hidden');
         document.getElementById('app-content').classList.remove('locked');
+        setTimeout(() => map.invalidateSize(), 100);
     }
     async function tryUnlock() {
         const val = document.getElementById('pw-input').value;
