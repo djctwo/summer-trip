@@ -1893,19 +1893,24 @@ function renderPlan(planKey) {
         <div class="notes-category">
             <h3>Transport</h3>
             <ul>
-                <li>Park Tesla at P+R for Amsterdam</li>
+                ${p.locs.includes('amsterdam') ? '<li>Park Tesla at P+R for Amsterdam</li>' : ''}
+                ${p.locs.includes('strasbourg') ? '<li>Park Tesla at Strasbourg Gare Centrale for TGV</li>' : ''}
+                ${p.locs.includes('luxembourg') ? '<li>Drive to Luxembourg Airport (1h from KL)</li>' : ''}
+                ${p.locs.includes('hahn') ? '<li>Drive to Frankfurt Hahn (1.25h from KL)</li>' : ''}
+                ${p.locs.includes('marseille') ? '<li>Park Tesla at FRA P2 for Provence flights</li>' : ''}
                 <li>Neuschwanstein: timed entry, arrive early</li>
                 <li>Jul 12: leave KL by 6:30 AM for FRA</li>
-                ${planKey === 'paris' ? '<li>Park Tesla at Strasbourg Gare Centrale for TGV</li>' : ''}
             </ul>
         </div>
         <div class="notes-category">
             <h3>Book Early</h3>
             <ul>
                 <li>Neuschwanstein: sells out weeks ahead</li>
-                <li>Anne Frank House: drops ~6 weeks out</li>
-                ${planKey === 'paris' ? '<li>Madame Brasserie: Jul peak season</li><li>TGV: cheaper the earlier you book</li>' : ''}
-                ${planKey !== 'paris' ? '<li>Rijksmuseum: pre-book to skip line</li>' : ''}
+                ${p.locs.includes('amsterdam') ? '<li>Anne Frank House: drops ~6 weeks out</li>' : ''}
+                ${p.locs.includes('amsterdam') ? '<li>Rijksmuseum: pre-book to skip line</li>' : ''}
+                ${p.locs.includes('paris') ? '<li>Madame Brasserie: Jul peak season</li><li>TGV: cheaper the earlier you book</li>' : ''}
+                ${p.locs.includes('milan') ? '<li>Last Supper: sells out months ahead</li>' : ''}
+                ${p.locs.includes('porto') ? '<li>Port wine cellar tour: book Taylor\'s or Sandeman</li>' : ''}
                 <li>Hotels: July is peak in all destinations</li>
             </ul>
         </div>
@@ -1916,6 +1921,10 @@ function renderPlan(planKey) {
                 ${p.locs.includes('amsterdam') ? '<li>Amsterdam canal cruise at golden hour</li>' : ''}
                 ${p.locs.includes('strasbourg') ? '<li>Strasbourg tarte flambee</li>' : ''}
                 ${p.locs.includes('paris') ? '<li>Montmartre at sunset</li>' : ''}
+                ${p.locs.includes('arles') ? '<li>Van Gogh trail + Pont du Gard swim</li>' : ''}
+                ${p.locs.includes('milan') ? '<li>Duomo rooftop + Lake Como ferry</li>' : ''}
+                ${p.locs.includes('porto') ? '<li>Dom Lu\u00eds Bridge at sunset</li>' : ''}
+                ${p.locs.includes('palma') ? '<li>Serra de Tramuntana coastal road</li>' : ''}
                 <li>Pfalz Weinfest if one is running</li>
             </ul>
         </div>
@@ -1927,6 +1936,10 @@ function renderPlan(planKey) {
                 ${p.locs.includes('amsterdam') ? '<li>Amsterdam: dinner in De Pijp</li>' : ''}
                 ${p.locs.includes('munich') ? '<li>Munich: Hofbrauhaus + somewhere real</li>' : ''}
                 ${p.locs.includes('paris') ? '<li>Paris: Madame Brasserie (Eiffel Tower)</li>' : ''}
+                ${p.locs.includes('arles') ? '<li>Arles: Place du Forum dinner</li>' : ''}
+                ${p.locs.includes('milan') ? '<li>Milan: aperitivo in Navigli</li>' : ''}
+                ${p.locs.includes('porto') ? '<li>Porto: francesinha + riverside dinner</li>' : ''}
+                ${p.locs.includes('palma') ? '<li>Palma: seafood in Santa Catalina</li>' : ''}
             </ul>
         </div>
     `;
