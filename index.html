@@ -2640,6 +2640,38 @@ function renderComparison() {
         html += '</tr>';
     });
     html += '</tbody></table>';
+
+    // Summary/decisions
+    const cheapest = keys.reduce((a, b) => { const lo = s => parseInt(plans[s].budgetTotal.match(/\$([\d,]+)/)[1].replace(',','')); return lo(a) < lo(b) ? a : b; });
+    const mostChill = keys.reduce((a, b) => plans[a].stats.chill > plans[b].stats.chill ? a : b);
+    const mostCities = keys.reduce((a, b) => plans[a].stats.cities > plans[b].stats.cities ? a : b);
+    const leastDriving = keys.reduce((a, b) => parseInt(plans[a].stats.km.replace(/[^\d]/g,'')) < parseInt(plans[b].stats.km.replace(/[^\d]/g,'')) ? a : b);
+    const fewestHotels = keys.reduce((a, b) => plans[a].stats.hotelNights < plans[b].stats.hotelNights ? a : b);
+
+    const n = k => plans[k].name.split('+')[0].trim();
+    let summary = '<div style="margin-top:20px;padding:18px 20px;border-radius:10px;border:1px solid rgba(168,85,247,0.15);background:rgba(20,25,45,0.6)">';
+    summary += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:12px">Analysis</div>';
+    summary += '<div style="font-size:13px;color:#c8cdd8;line-height:1.9">';
+
+    const winners = [];
+    winners.push('<strong style="color:#38bdf8">' + n(cheapest) + '</strong> is the cheapest at ' + plans[cheapest].budgetTotal);
+    winners.push('<strong style="color:#38bdf8">' + n(mostChill) + '</strong> gives the most downtime with ' + plans[mostChill].stats.chill + ' chill days');
+    if (n(mostCities) !== n(mostChill)) winners.push('<strong style="color:#38bdf8">' + n(mostCities) + '</strong> covers the most ground with ' + plans[mostCities].stats.cities + ' cities');
+    if (parseInt(plans[leastDriving].stats.km.replace(/[^\d]/g,'')) < parseInt(plans[keys.find(k=>k!==leastDriving)].stats.km.replace(/[^\d]/g,'')))
+        winners.push('<strong style="color:#38bdf8">' + n(leastDriving) + '</strong> has the least driving at ' + plans[leastDriving].stats.km);
+
+    summary += winners.join('. ') + '.';
+
+    // Trade-off
+    if (mostChill !== cheapest) {
+        summary += '<br><br>If budget matters most, go with <strong style="color:#e2e8f0">' + n(cheapest) + '</strong>. If quality time at home is the priority, <strong style="color:#e2e8f0">' + n(mostChill) + '</strong> wins.';
+    } else {
+        summary += '<br><br><strong style="color:#e2e8f0">' + n(cheapest) + '</strong> is both the most affordable and the most relaxed \u2014 hard to beat on balance.';
+    }
+
+    summary += '</div></div>';
+    html += summary;
+
     compareResult.innerHTML = html;
 }
 renderComparison();
