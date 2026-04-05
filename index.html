@@ -257,11 +257,279 @@
         }
         .chill-dot.filled { background: #38bdf8; }
 
-        /* Recommendation view */
+        /* Overview + Recommendation views */
+        .overview-view { display: none; }
+        .overview-view.active { display: block; }
         .rec-view { display: none; }
         .rec-view.active { display: block; }
         .plan-content { }
         .plan-content.hidden { display: none; }
+
+        .ov-hero {
+            text-align: center;
+            padding: 36px 24px 28px;
+        }
+        .ov-hero-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+        .ov-hero-sub {
+            font-size: 15px;
+            color: #8b94a6;
+            margin-bottom: 4px;
+        }
+        .ov-hero-detail {
+            font-size: 12px;
+            color: #4b5563;
+        }
+        .ov-stats-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .ov-stat {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .ov-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7eb8ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .ov-stat-label {
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        .ov-section {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .ov-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a78bfa;
+            margin-bottom: 16px;
+        }
+
+        .ov-fixed-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+        .ov-fixed-card {
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+            background: rgba(20, 25, 45, 0.6);
+            text-align: center;
+        }
+        .ov-fixed-icon { font-size: 22px; margin-bottom: 8px; }
+        .ov-fixed-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+        }
+        .ov-fixed-desc {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .ov-calendar {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .ov-cal-day {
+            padding: 10px 4px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+            background: rgba(20, 25, 45, 0.6);
+        }
+        .ov-cal-dow {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .ov-cal-num {
+            font-size: 20px;
+            font-weight: 800;
+            color: #e2e8f0;
+            line-height: 1.2;
+        }
+        .ov-cal-label {
+            font-size: 9px;
+            color: #8b94a6;
+            margin-top: 4px;
+        }
+        .ov-cal-day.ov-cal-fixed { border-color: rgba(239, 68, 68, 0.3); }
+        .ov-cal-day.ov-cal-fixed .ov-cal-num { color: #ef4444; }
+        .ov-cal-day.ov-cal-castle { border-color: rgba(234, 179, 8, 0.3); }
+        .ov-cal-day.ov-cal-castle .ov-cal-num { color: #eab308; }
+        .ov-cal-day.ov-cal-july4 { border-color: rgba(168, 85, 247, 0.3); }
+        .ov-cal-day.ov-cal-july4 .ov-cal-num { color: #a78bfa; }
+        .ov-cal-day.ov-cal-flex { border-color: rgba(99, 130, 255, 0.12); }
+
+        .ov-plan-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+        .ov-plan-card {
+            padding: 18px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            background: rgba(20, 25, 45, 0.6);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        .ov-plan-card:hover {
+            border-color: rgba(99, 130, 255, 0.3);
+            background: rgba(25, 32, 60, 0.8);
+            transform: translateY(-2px);
+        }
+        .ov-plan-card.ov-card-rec {
+            border-color: rgba(168, 85, 247, 0.25);
+        }
+        .ov-plan-card.ov-card-rec::after {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -9px;
+            right: 12px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #a78bfa;
+            background: rgba(15, 19, 35, 0.95);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        .ov-plan-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 3px;
+        }
+        .ov-plan-july4 {
+            font-size: 11px;
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+        .ov-plan-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .ov-plan-meta-val { color: #c8cdd8; font-weight: 600; }
+        .ov-plan-chill {
+            display: flex;
+            gap: 3px;
+            margin-top: 10px;
+        }
+        .ov-plan-chill-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: rgba(99, 130, 255, 0.15);
+        }
+        .ov-plan-chill-dot.filled { background: #38bdf8; }
+        .ov-plan-budget {
+            font-size: 13px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-top: 10px;
+        }
+
+        .ov-bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 140px;
+            padding: 0 8px;
+        }
+        .ov-bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .ov-bar {
+            width: 100%;
+            border-radius: 6px 6px 0 0;
+            min-height: 8px;
+            transition: height 0.5s ease;
+        }
+        .ov-bar-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ov-bar-value {
+            font-size: 10px;
+            font-weight: 600;
+            color: #c8cdd8;
+        }
+
+        .ov-legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+        .ov-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+        .ov-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 1200px) {
+            .ov-stats-bar { grid-template-columns: repeat(3, 1fr); }
+            .ov-fixed-grid { grid-template-columns: repeat(2, 1fr); }
+            .ov-calendar { grid-template-columns: repeat(5, 1fr); }
+            .ov-plan-cards { grid-template-columns: repeat(2, 1fr); }
+        }
 
         .rec-hero {
             text-align: center;
@@ -642,6 +910,162 @@
 
 <div class="container">
 
+    <!-- Overview View -->
+    <div class="overview-view active" id="overview-view">
+        <div class="ov-hero">
+            <div class="ov-hero-title">Melissa's Summer Visit</div>
+            <div class="ov-hero-sub">10 days in Europe &mdash; Jul 3 to Jul 12, 2026</div>
+            <div class="ov-hero-detail">8 itinerary options &bull; 6 countries &bull; Home base: Kaiserslautern, Germany</div>
+        </div>
+
+        <div class="ov-stats-bar">
+            <div class="ov-stat">
+                <div class="ov-stat-value">10</div>
+                <div class="ov-stat-label">Days Together</div>
+            </div>
+            <div class="ov-stat">
+                <div class="ov-stat-value">8</div>
+                <div class="ov-stat-label">Plan Options</div>
+            </div>
+            <div class="ov-stat">
+                <div class="ov-stat-value">6</div>
+                <div class="ov-stat-label">Countries</div>
+            </div>
+            <div class="ov-stat">
+                <div class="ov-stat-value">2</div>
+                <div class="ov-stat-label">Must-Do's</div>
+            </div>
+            <div class="ov-stat">
+                <div class="ov-stat-value" style="font-size:16px">$1.2K&ndash;2.4K</div>
+                <div class="ov-stat-label">Budget Range</div>
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">What's Locked In</div>
+            <div class="ov-fixed-grid">
+                <div class="ov-fixed-card">
+                    <div class="ov-fixed-icon">&#9992;&#65039;</div>
+                    <div class="ov-fixed-title">Arrival &mdash; Fri Jul 3</div>
+                    <div class="ov-fixed-desc">UA1565/UA8879 lands FRA 11:15 AM<br>Drive to Kaiserslautern (1.5h)</div>
+                </div>
+                <div class="ov-fixed-card">
+                    <div class="ov-fixed-icon">&#127984;</div>
+                    <div class="ov-fixed-title">Neuschwanstein Castle</div>
+                    <div class="ov-fixed-desc">Must-do. Marienbrücke bridge, Hohenschwangau. Overnight in Füssen.</div>
+                </div>
+                <div class="ov-fixed-card">
+                    <div class="ov-fixed-icon">&#127866;</div>
+                    <div class="ov-fixed-title">Munich</div>
+                    <div class="ov-fixed-desc">Must-do. Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.</div>
+                </div>
+                <div class="ov-fixed-card">
+                    <div class="ov-fixed-icon">&#9992;&#65039;</div>
+                    <div class="ov-fixed-title">Departure &mdash; Sun Jul 12</div>
+                    <div class="ov-fixed-desc">LH100/UA8918 departs FRA 9:45 AM<br>Leave KL by 6:30 AM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">The 10-Day Window</div>
+            <div class="ov-calendar">
+                <div class="ov-cal-day ov-cal-fixed">
+                    <div class="ov-cal-dow">Fri</div>
+                    <div class="ov-cal-num">3</div>
+                    <div class="ov-cal-label">Arrive FRA</div>
+                </div>
+                <div class="ov-cal-day ov-cal-july4">
+                    <div class="ov-cal-dow">Sat</div>
+                    <div class="ov-cal-num">4</div>
+                    <div class="ov-cal-label">4th of July</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Sun</div>
+                    <div class="ov-cal-num">5</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Mon</div>
+                    <div class="ov-cal-num">6</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Tue</div>
+                    <div class="ov-cal-num">7</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Wed</div>
+                    <div class="ov-cal-num">8</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Thu</div>
+                    <div class="ov-cal-num">9</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Fri</div>
+                    <div class="ov-cal-num">10</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-flex">
+                    <div class="ov-cal-dow">Sat</div>
+                    <div class="ov-cal-num">11</div>
+                    <div class="ov-cal-label">Flexible</div>
+                </div>
+                <div class="ov-cal-day ov-cal-fixed">
+                    <div class="ov-cal-dow">Sun</div>
+                    <div class="ov-cal-num">12</div>
+                    <div class="ov-cal-label">Depart FRA</div>
+                </div>
+            </div>
+            <div class="ov-legend">
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(239,68,68,0.3)"></div>Fixed (flights)</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.3)"></div>4th of July (abroad)</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.12)"></div>Flexible</div>
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">All 8 Plans</div>
+            <div class="ov-plan-cards" id="ov-plan-cards"></div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">Budget Comparison</div>
+            <div class="ov-bar-chart" id="ov-budget-chart"></div>
+            <div class="ov-legend" style="margin-top:12px">
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.6)"></div>Low estimate</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.4)"></div>High estimate</div>
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">Chill vs Adventure</div>
+            <div class="ov-bar-chart" id="ov-chill-chart"></div>
+            <div class="ov-legend" style="margin-top:12px">
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#38bdf8"></div>Chill days at home</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#fb923c"></div>Hotel nights away</div>
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">Key Decisions</div>
+            <div class="rec-paragraph" style="margin-bottom:16px">
+                Every plan shares the same bones: Melissa arrives Friday Jul 3 at Frankfurt, you drive home to Kaiserslautern, and 10 days later she flies out Sunday Jul 12. In between, Neuschwanstein Castle and Munich are locked in as a 2-day block. The 4th of July must be spent outside Germany. What changes between plans is <em>where</em> you go for the 4th, <em>how many</em> chill days you keep at home, and whether you add Amsterdam on top.
+            </div>
+            <div class="rec-paragraph">
+                <strong style="color:#e2e8f0">The tradeoff is simple:</strong> more destinations = less downtime. The Primary plan hits 4 countries and 6 cities but only gives you 1 day to breathe. The Chill plan maxes out home time but only visits France. Plans like Porto and Provence split the difference &mdash; a focused international trip plus the Bavarian must-do's, with enough KL days to actually relax together. The budget spread is ~$1,200 on the low end (Chill) to ~$2,400 on the high end (Primary), driven mostly by hotel nights and whether you fly or drive.
+            </div>
+        </div>
+
+        <div class="ov-section" style="text-align:center; border-color:rgba(99,130,255,0.2)">
+            <div class="rec-paragraph" style="margin-bottom:16px">Click any plan tab above to see the full day-by-day itinerary, route map, budget breakdown, and booking checklist.</div>
+        </div>
+    </div>
+
     <!-- Recommendation View -->
     <div class="rec-view" id="rec-view">
         <div class="rec-hero">
@@ -731,8 +1155,8 @@
         </div>
     </div>
 
-    <!-- Plan Content (normal view) -->
-    <div class="plan-content" id="plan-content">
+    <!-- Plan Content (normal view, hidden by default — overview shows first) -->
+    <div class="plan-content hidden" id="plan-content">
     <div class="plan-subtitle" id="plan-subtitle"></div>
 
     <div class="stats-row" id="stats-row"></div>
@@ -1510,16 +1934,26 @@ function renderPlan(planKey) {
 
 // ===================== INIT TABS =====================
 const tabBar = document.getElementById('tab-bar');
+
+// Overview tab (first)
+const ovBtn = document.createElement('button');
+ovBtn.className = 'tab-btn active';
+ovBtn.dataset.plan = 'overview';
+ovBtn.innerHTML = `Overview<span class="tab-badge" style="background:rgba(56,189,248,0.15);color:#38bdf8">ALL</span>`;
+ovBtn.addEventListener('click', () => showOverview());
+tabBar.appendChild(ovBtn);
+
+// Plan tabs
 Object.entries(plans).forEach(([key, p]) => {
     const btn = document.createElement('button');
-    btn.className = 'tab-btn' + (key === 'primary' ? ' active' : '');
+    btn.className = 'tab-btn';
     btn.dataset.plan = key;
     btn.innerHTML = `${p.name}<span class="tab-badge ${p.badgeClass}">${p.badge}</span>`;
     btn.addEventListener('click', () => renderPlan(key));
     tabBar.appendChild(btn);
 });
 
-// Recommendation tab
+// Recommendation tab (last)
 const recBtn = document.createElement('button');
 recBtn.className = 'tab-btn';
 recBtn.dataset.plan = 'rec';
@@ -1527,25 +1961,102 @@ recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(16
 recBtn.addEventListener('click', () => showRec());
 tabBar.appendChild(recBtn);
 
-function showRec() {
-    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-    recBtn.classList.add('active');
+function hideAllViews() {
+    document.getElementById('overview-view').classList.remove('active');
+    document.getElementById('rec-view').classList.remove('active');
     document.getElementById('plan-content').classList.add('hidden');
-    document.getElementById('rec-view').classList.add('active');
-    document.getElementById('plan-subtitle').innerHTML = '';
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
 }
 
-// Patch renderPlan to hide rec view
+function showOverview() {
+    hideAllViews();
+    ovBtn.classList.add('active');
+    document.getElementById('overview-view').classList.add('active');
+}
+
+function showRec() {
+    hideAllViews();
+    recBtn.classList.add('active');
+    document.getElementById('rec-view').classList.add('active');
+}
+
+// Patch renderPlan to hide other views
 const _origRenderPlan = renderPlan;
 renderPlan = function(planKey) {
-    document.getElementById('rec-view').classList.remove('active');
+    hideAllViews();
     document.getElementById('plan-content').classList.remove('hidden');
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.toggle('active', t.dataset.plan === planKey));
     _origRenderPlan(planKey);
     setTimeout(() => map.invalidateSize(), 50);
 };
 
-// Initial render
-renderPlan('primary');
+// ===================== OVERVIEW: PLAN CARDS =====================
+const planCardsEl = document.getElementById('ov-plan-cards');
+const july4Map = { primary: 'Paris', balanced: 'Paris (day trip)', chill: 'Paris', minimal: 'Strasbourg', provence: 'Arles', milan: 'Milan', porto: 'Porto', palma: 'Palma' };
+Object.entries(plans).forEach(([key, p]) => {
+    const card = document.createElement('div');
+    card.className = 'ov-plan-card' + (key === 'porto' ? ' ov-card-rec' : '');
+    card.innerHTML = `
+        <div class="ov-plan-name">${p.name}</div>
+        <div class="ov-plan-july4">4th of July: ${july4Map[key]}</div>
+        <div class="ov-plan-meta"><span>Countries</span><span class="ov-plan-meta-val">${p.stats.countries}</span></div>
+        <div class="ov-plan-meta"><span>Hotel Nights</span><span class="ov-plan-meta-val">${p.stats.hotelNights}</span></div>
+        <div class="ov-plan-meta"><span>Driving</span><span class="ov-plan-meta-val">${p.stats.km}</span></div>
+        <div class="ov-plan-chill">${Array.from({length:5}, (_,i) => `<div class="ov-plan-chill-dot${i < p.stats.chill ? ' filled' : ''}"></div>`).join('')}</div>
+        <div class="ov-plan-budget">${p.budgetTotal}</div>
+    `;
+    card.addEventListener('click', () => renderPlan(key));
+    planCardsEl.appendChild(card);
+});
+
+// ===================== OVERVIEW: BUDGET CHART =====================
+const budgetChartEl = document.getElementById('ov-budget-chart');
+const budgetData = Object.entries(plans).map(([key, p]) => {
+    const m = p.budgetTotal.match(/\$([\d,]+)[^\d]+([\d,]+)/);
+    const lo = m ? parseInt(m[1].replace(',','')) : 0;
+    const hi = m ? parseInt(m[2].replace(',','')) : 0;
+    return { key, name: key.charAt(0).toUpperCase() + key.slice(1), lo, hi };
+});
+const maxBudget = Math.max(...budgetData.map(d => d.hi));
+budgetData.forEach(d => {
+    const loPct = (d.lo / maxBudget * 100);
+    const hiPct = (d.hi / maxBudget * 100);
+    const col = document.createElement('div');
+    col.className = 'ov-bar-col';
+    col.innerHTML = `
+        <div class="ov-bar-value">$${(d.hi/1000).toFixed(1)}K</div>
+        <div style="width:100%;position:relative;height:${hiPct}%">
+            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:100%;background:rgba(168,85,247,0.25);border-radius:6px 6px 0 0"></div>
+            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:${loPct/hiPct*100}%;background:rgba(99,130,255,0.5);border-radius:6px 6px 0 0;z-index:1"></div>
+        </div>
+        <div class="ov-bar-label">${d.name === 'Primary' ? 'Prim.' : d.name === 'Balanced' ? 'Bal.' : d.name === 'Minimal' ? 'Min.' : d.name === 'Provence' ? 'Prov.' : d.name}</div>
+    `;
+    budgetChartEl.appendChild(col);
+});
+
+// ===================== OVERVIEW: CHILL CHART =====================
+const chillChartEl = document.getElementById('ov-chill-chart');
+Object.entries(plans).forEach(([key, p]) => {
+    const maxNights = 9;
+    const chillH = (p.stats.chill / maxNights * 100);
+    const hotelH = (p.stats.hotelNights / maxNights * 100);
+    const totalH = chillH + hotelH;
+    const col = document.createElement('div');
+    const label = key.charAt(0).toUpperCase() + key.slice(1);
+    col.className = 'ov-bar-col';
+    col.innerHTML = `
+        <div class="ov-bar-value">${p.stats.chill} / ${p.stats.hotelNights}</div>
+        <div style="width:100%;display:flex;flex-direction:column;justify-content:flex-end;height:${totalH}%">
+            <div class="ov-bar" style="height:${hotelH/(totalH)*100}%;background:rgba(251,146,60,0.5);border-radius:6px 6px 0 0"></div>
+            <div class="ov-bar" style="height:${chillH/(totalH)*100}%;background:#38bdf8;border-radius:0"></div>
+        </div>
+        <div class="ov-bar-label">${label === 'Primary' ? 'Prim.' : label === 'Balanced' ? 'Bal.' : label === 'Minimal' ? 'Min.' : label === 'Provence' ? 'Prov.' : label}</div>
+    `;
+    chillChartEl.appendChild(col);
+});
+
+// Initial view: overview (no plan rendered yet)
+// renderPlan('primary') is NOT called — overview is shown by default
 </script>
 </div><!-- /app-content -->
 
