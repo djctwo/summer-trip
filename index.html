@@ -347,6 +347,15 @@
         .tag-country-de { background: rgba(250, 204, 21, 0.12); color: #facc15; }
         .tag-country-fr { background: rgba(96, 165, 250, 0.12); color: #60a5fa; }
         .tag-country-nl { background: rgba(251, 146, 60, 0.12); color: #fb923c; }
+        .tag-country-it { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+        .tag-country-pt { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
+        .tag-country-es { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+        .tag-flight { background: rgba(244, 114, 182, 0.12); color: #f472b6; }
+        .tag-rental { background: rgba(45, 212, 191, 0.12); color: #2dd4bf; }
+        .tag-country-it { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+        .tag-country-pt { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
+        .tag-country-es { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+        .tag-country-lu { background: rgba(52, 211, 153, 0.12); color: #34d399; }
 
         /* Bottom row */
         .bottom-row {
@@ -432,6 +441,13 @@
         .marker-amsterdam { background: linear-gradient(135deg, #fb923c, #f97316); }
         .marker-strasbourg { background: linear-gradient(135deg, #60a5fa, #2563eb); }
         .marker-frankfurt { background: linear-gradient(135deg, #f87171, #ef4444); }
+        .marker-marseille { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .marker-arles { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+        .marker-luxembourg { background: linear-gradient(135deg, #34d399, #059669); }
+        .marker-porto { background: linear-gradient(135deg, #fbbf24, #d97706); }
+        .marker-milan { background: linear-gradient(135deg, #f87171, #dc2626); }
+        .marker-palma { background: linear-gradient(135deg, #38bdf8, #0284c7); }
+        .marker-hahn { background: linear-gradient(135deg, #f87171, #ef4444); }
 
         .leaflet-popup-content-wrapper {
             background: rgba(15, 19, 35, 0.95) !important;
@@ -541,6 +557,24 @@
                 </div>
                 <div class="flight-number">LH100 / UA8918</div>
             </div>
+            <div class="flight-card">
+                <div class="flight-label">Provence Outbound — Jul 4</div>
+                <div class="flight-route">
+                    <div class="flight-city"><div class="flight-code">FRA</div><div class="flight-name">Frankfurt</div><div class="flight-time">7:15 AM</div></div>
+                    <div class="flight-arrow"></div>
+                    <div class="flight-city"><div class="flight-code">MRS</div><div class="flight-name">Marseille</div><div class="flight-time">8:50 AM</div></div>
+                </div>
+                <div class="flight-number">Lufthansa (nonstop, 1h35)</div>
+            </div>
+            <div class="flight-card">
+                <div class="flight-label">Provence Return — Jul 5 or 6</div>
+                <div class="flight-route">
+                    <div class="flight-city"><div class="flight-code">MRS</div><div class="flight-name">Marseille</div><div class="flight-time">~12:00 PM</div></div>
+                    <div class="flight-arrow"></div>
+                    <div class="flight-city"><div class="flight-code">FRA</div><div class="flight-name">Frankfurt</div><div class="flight-time">~1:35 PM</div></div>
+                </div>
+                <div class="flight-number">Lufthansa (nonstop, 1h35)</div>
+            </div>
         </div>
         <div class="notes-panel">
             <div class="panel-header">Travel Notes</div>
@@ -558,219 +592,452 @@ const allLocations = {
     paris:          { lat: 48.8584, lng: 2.2945,  name: 'Paris', emoji: 'PAR', markerClass: 'marker-paris' },
     neuschwanstein: { lat: 47.5576, lng: 10.7498, name: 'Neuschwanstein', emoji: 'NSW', markerClass: 'marker-neuschwanstein' },
     munich:         { lat: 48.1351, lng: 11.5820, name: 'Munich', emoji: 'MUC', markerClass: 'marker-munich' },
-    amsterdam:      { lat: 52.3676, lng: 4.9041,  name: 'Amsterdam', emoji: 'AMS', markerClass: 'marker-amsterdam' }
+    amsterdam:      { lat: 52.3676, lng: 4.9041,  name: 'Amsterdam', emoji: 'AMS', markerClass: 'marker-amsterdam' },
+    marseille:      { lat: 43.4393, lng: 5.2214,  name: 'Marseille Airport', emoji: 'MRS', markerClass: 'marker-marseille' },
+    arles:          { lat: 43.6767, lng: 4.6278,  name: 'Arles', emoji: 'ARL', markerClass: 'marker-arles' },
+    luxembourg:     { lat: 49.6233, lng: 6.2044,  name: 'Luxembourg Airport', emoji: 'LUX', markerClass: 'marker-luxembourg' },
+    porto:          { lat: 41.1579, lng: -8.6291, name: 'Porto', emoji: 'OPO', markerClass: 'marker-porto' },
+    milan:          { lat: 45.6759, lng: 9.7009,  name: 'Milan Bergamo', emoji: 'BGY', markerClass: 'marker-milan' },
+    palma:          { lat: 39.5517, lng: 2.7388,  name: 'Palma de Mallorca', emoji: 'PMI', markerClass: 'marker-palma' },
+    hahn:           { lat: 49.9487, lng: 7.2639,  name: 'Frankfurt Hahn', emoji: 'HHN', markerClass: 'marker-hahn' }
 };
 
 // ===================== PLANS =====================
 const plans = {
     primary: {
-        name: 'Castle + Paris + Amsterdam',
+        name: 'Paris + Castle + Munich + Amsterdam',
         badge: 'PRIMARY', badgeClass: 'badge-primary',
-        subtitle: 'Eiffel Tower on the 4th of July, Neuschwanstein, 2 nights in Amsterdam. <strong>1 KL chill day</strong> — all three highlights.',
-        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 4, klDays: 1, chill: 2, overnights: 'Paris 1 · Füssen 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
-        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'amsterdam'],
+        subtitle: '4th of July in Paris, Neuschwanstein + Munich, then Amsterdam. <strong>1 KL chill day.</strong> Maximum highlights.',
+        stats: { days: 10, countries: 4, cities: 6, km: '~2,200', hotelNights: 5, klDays: 1, chill: 1, overnights: 'Paris 1 · Füssen 1 · Munich 1 · Amsterdam 1 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
+        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
             { from: 'strasbourg', to: 'paris', color: '#3b82f6', dash: '8, 12' },
             { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
             { from: 'kl', to: 'amsterdam', color: '#f97316', dash: null },
             { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
         ],
         popups: {
-            kl: { sub: 'Home Base', desc: 'Chill day Jul 6. Rest day between Paris and the castle.' },
+            kl: { sub: 'Home Base', desc: 'Chill day Jul 6. Hub for all trips.' },
             frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3 at 11:15 AM. Departure Jul 12 at 9:45 AM.' },
-            strasbourg: { sub: 'Jul 4 transit + Jul 5', desc: 'Park Tesla, TGV to Paris. Explore Petite France + tarte flambee on the return.' },
-            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July in France! Eiffel Tower lunch at Madame Brasserie. Montmartre, Champs-Elysees. Overnight.' },
-            neuschwanstein: { sub: 'Day 5 (Jul 7)', desc: 'The Disney castle. Marienbrucke bridge photo. Overnight Fussen.' },
-            amsterdam: { sub: 'Days 7–9 (Jul 9–11)', desc: 'Canal cruise, Anne Frank House, Rijksmuseum, Van Gogh Museum. 2 nights.' }
+            strasbourg: { sub: 'Jul 4 + Jul 5', desc: 'Park Tesla, TGV to Paris. Petite France + tarte flambée on return.' },
+            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July in France! Eiffel Tower lunch at Madame Brasserie. Montmartre, Champs-Élysées.' },
+            neuschwanstein: { sub: 'Day 5 (Jul 7)', desc: 'The Disney castle. Marienbrücke bridge. Hohenschwangau. Overnight Füssen.' },
+            munich: { sub: 'Day 6 (Jul 8)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall dinner.' },
+            amsterdam: { sub: 'Day 8 (Jul 10)', desc: 'Canal cruise, Anne Frank House, Rijksmuseum. 1 night.' }
         },
         days: [
-            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, clear customs, drive to KL. Afternoon exploring the Altstadt, Biergarten dinner. Early night — reset the jet lag.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs, meet at arrivals'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive Kaiserslautern'], ['2:30 PM', 'Walk the Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof Biergarten'], ['9:00 PM', 'Early night (jet lag recovery)']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July', desc: 'Drive to Strasbourg, park Tesla, TGV to Paris. Eiffel Tower lunch, Montmartre sunset, Champs-Élysées stroll.', schedule: [['7:00 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['8:30 AM', 'Park Tesla at Gare Centrale garage'], ['9:00 AM', 'TGV departs Strasbourg (1h50)'], ['10:50 AM', 'Arrive Paris Gare de l\'Est'], ['11:30 AM', 'Check into hotel, freshen up'], ['12:30 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:30 PM', 'Champs-Élysées + Arc de Triomphe walk'], ['5:00 PM', 'Montmartre + Sacré-Cœur'], ['7:30 PM', 'Dinner in Montmartre'], ['9:00 PM', 'Sunset from Sacré-Cœur steps']], overnight: 'Paris hotel', transport: 'Drive 1.5h + TGV 1h50', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
-            { day: 3, date: 'Sun Jul 5', dest: 'Paris → Strasbourg → KL', desc: 'Sunday morning at the Louvre (open Sun, closed Tue). TGV back to Strasbourg. Afternoon in Petite France with tarte flambée.', schedule: [['9:00 AM', 'Louvre opens — 3 hours inside'], ['12:00 PM', 'Lunch near Tuileries Garden'], ['2:00 PM', 'TGV Paris → Strasbourg (1h50)'], ['3:50 PM', 'Arrive Strasbourg'], ['4:00 PM', 'Walk Petite France, cathedral'], ['5:30 PM', 'Tarte flambée late lunch/early dinner'], ['6:15 PM', 'Pick up Tesla, drive home (1.5h)'], ['7:45 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'TGV 1h50 + Drive 1.5h', tags: [{ text: 'TGV 1h50', cls: 'tag-train' }, { text: '1.5h drive', cls: 'tag-drive' }, { text: 'Louvre', cls: 'tag-landmark' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['paris', 'strasbourg', 'kl'], color: '#3b82f6' },
-            { day: 4, date: 'Mon Jul 6', dest: 'Kaiserslautern — Chill Day', desc: 'Only rest day. Sleep in, no alarms. Japanischer Garten, Pfalzerwald walk, coffee shops. Cook dinner together.', schedule: [['10:00 AM', 'Sleep in — no alarm'], ['11:00 AM', 'Coffee + brunch at a café'], ['1:00 PM', 'Japanischer Garten or Pfalzerwald walk'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together'], ['9:00 PM', 'Pack for the castle']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 5, date: 'Tue Jul 7', dest: 'KL → Neuschwanstein', desc: 'Early departure for Füssen. Tuesday = fewer crowds. Castle, Marienbrücke bridge, Hohenschwangau, Alpsee lake.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen area'], ['11:30 AM', 'Check into hotel, drop bags'], ['12:00 PM', 'Lunch in Schwangau village'], ['1:00 PM', 'Neuschwanstein Castle (timed ticket, ~2h)'], ['3:00 PM', 'Marienbrücke bridge — iconic photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
-            { day: 6, date: 'Wed Jul 8', dest: 'Füssen → Kaiserslautern', desc: 'Füssen old town morning, Lechfall waterfall. Drive back to KL. Rest evening, pack for Amsterdam.', schedule: [['9:00 AM', 'Breakfast, Füssen old town walk'], ['10:00 AM', 'Lechfall waterfall'], ['11:00 AM', 'Depart Füssen (4h drive)'], ['3:00 PM', 'Arrive KL'], ['4:00 PM', 'Rest + recharge'], ['7:00 PM', 'Easy dinner at home'], ['9:00 PM', 'Pack for Amsterdam']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'kl'], color: '#eab308' },
-            { day: 7, date: 'Thu Jul 9', dest: 'KL → Amsterdam', desc: 'Morning departure. Canal cruise at golden hour, Jordaan walk, Anne Frank House. Dinner in De Pijp.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check into hotel, drop bags'], ['1:00 PM', 'Lunch in Jordaan neighborhood'], ['2:30 PM', 'Anne Frank House (timed entry)'], ['4:30 PM', 'Walk Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
-            { day: 8, date: 'Fri Jul 10', dest: 'Amsterdam — Full Day', desc: 'Rijksmuseum, Van Gogh Museum, Vondelpark, Albert Cuyp Market. Full day exploring — no driving.', schedule: [['9:00 AM', 'Rijksmuseum opens (2–3 hours)'], ['12:00 PM', 'Lunch near Museumplein'], ['1:30 PM', 'Van Gogh Museum (2 hours)'], ['3:30 PM', 'Vondelpark stroll'], ['4:30 PM', 'Albert Cuyp Market (open Mon–Sat)'], ['6:30 PM', 'Canal walk — Herengracht, Prinsengracht'], ['8:00 PM', 'Dinner']], overnight: 'Amsterdam hotel', transport: '—', tags: [{ text: 'Rijksmuseum', cls: 'tag-landmark' }, { text: 'Van Gogh Museum', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam'], color: '#f97316' },
-            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Saturday morning — last canal walk, Albert Cuyp Market (open Sat). Drive back to KL. Farewell dinner.', schedule: [['9:00 AM', 'Last canal walk, coffee in Jordaan'], ['10:30 AM', 'Albert Cuyp Market (open Sat)'], ['11:30 AM', 'Depart Amsterdam (5h drive)'], ['4:30 PM', 'Arrive KL'], ['5:30 PM', 'Rest + freshen up'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
-            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Sunday morning — empty roads to Frankfurt. Flight FRA → MUC → SAN.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive Frankfurt Airport'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs FRA → MUC → SAN']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Afternoon exploring, Biergarten dinner. Early night.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs, meet at arrivals'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive Kaiserslautern'], ['2:30 PM', 'Walk the Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof Biergarten'], ['9:00 PM', 'Early night (jet lag recovery)']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July', desc: 'Drive to Strasbourg, TGV to Paris. Eiffel Tower lunch, Montmartre sunset, Champs-Élysées.', schedule: [['7:00 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['8:30 AM', 'Park Tesla at Gare Centrale garage'], ['9:00 AM', 'TGV departs Strasbourg (1h50)'], ['10:50 AM', 'Arrive Paris Gare de l\'Est'], ['11:30 AM', 'Check into hotel, freshen up'], ['12:30 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:30 PM', 'Champs-Élysées + Arc de Triomphe walk'], ['5:00 PM', 'Montmartre + Sacré-Cœur'], ['7:30 PM', 'Dinner in Montmartre'], ['9:00 PM', 'Sunset from Sacré-Cœur steps']], overnight: 'Paris hotel', transport: 'Drive 1.5h + TGV 1h50', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Paris → Strasbourg → KL', desc: 'Louvre morning (open Sun). TGV back to Strasbourg. Petite France afternoon, tarte flambée.', schedule: [['9:00 AM', 'Louvre opens — 3 hours inside'], ['12:00 PM', 'Lunch near Tuileries Garden'], ['2:00 PM', 'TGV Paris → Strasbourg (1h50)'], ['3:50 PM', 'Arrive Strasbourg'], ['4:00 PM', 'Walk Petite France, cathedral'], ['5:30 PM', 'Tarte flambée late lunch/early dinner'], ['6:15 PM', 'Pick up Tesla, drive home (1.5h)'], ['7:45 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'TGV 1h50 + Drive 1.5h', tags: [{ text: 'TGV 1h50', cls: 'tag-train' }, { text: '1.5h drive', cls: 'tag-drive' }, { text: 'Louvre', cls: 'tag-landmark' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['paris', 'strasbourg', 'kl'], color: '#3b82f6' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Kaiserslautern — Chill Day', desc: 'Only rest day. Sleep in, Japanischer Garten, Pfalzerwald walk, cook dinner together.', schedule: [['10:00 AM', 'Sleep in — no alarm'], ['11:00 AM', 'Coffee + brunch at a café'], ['1:00 PM', 'Japanischer Garten or Pfalzerwald walk'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together'], ['9:00 PM', 'Pack for the castle']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 5, date: 'Tue Jul 7', dest: 'KL → Neuschwanstein', desc: 'Early drive to Füssen. Tuesday = fewer crowds. Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen area'], ['11:30 AM', 'Check into hotel, drop bags'], ['12:00 PM', 'Lunch in Schwangau village'], ['1:00 PM', 'Neuschwanstein Castle (timed ticket, ~2h)'], ['3:00 PM', 'Marienbrücke bridge — iconic photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 6, date: 'Wed Jul 8', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Drive to Munich (2h). Marienplatz, Viktualienmarkt, Englischer Garten.', schedule: [['8:30 AM', 'Breakfast, Füssen old town walk'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive Füssen → Munich (2h)'], ['12:30 PM', 'Arrive Munich, check into hotel'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Walk through Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Dinner at a beer hall']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Munich → Kaiserslautern', desc: 'Munich morning — Nymphenburg Palace or shopping. Drive back to KL (4h).', schedule: [['9:00 AM', 'Last Munich morning — Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h drive)'], ['3:00 PM', 'Arrive KL'], ['4:00 PM', 'Rest + recharge'], ['7:00 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'KL → Amsterdam', desc: 'Drive to Amsterdam (5h). Afternoon — Anne Frank House, Jordaan canals, canal cruise at golden hour.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check into hotel, drop bags'], ['1:00 PM', 'Lunch in Jordaan'], ['2:30 PM', 'Anne Frank House (timed entry)'], ['4:30 PM', 'Walk Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Saturday morning — Rijksmuseum or Albert Cuyp Market. Drive back to KL. Farewell dinner.', schedule: [['9:00 AM', 'Rijksmuseum (2 hours) or Albert Cuyp Market'], ['11:30 AM', 'Depart Amsterdam (5h drive)'], ['4:30 PM', 'Arrive KL'], ['5:30 PM', 'Rest + freshen up'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Sunday morning — empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive Frankfurt Airport'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs FRA → MUC → SAN']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
         ],
         bookings: [
             { title: 'Madame Brasserie lunch (x2)', detail: 'Jul 4, book at tour-eiffel.fr — sells out fast', priority: 'urgent', key: 'p-brasserie' },
             { title: 'Neuschwanstein Castle tickets (x2)', detail: 'Jul 7, timed entry — ticket-center-hohenschwangau.de', priority: 'urgent', key: 'p-castle' },
-            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 9, released ~6 weeks out — set reminder', priority: 'urgent', key: 'p-anne' },
+            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 10, released ~6 weeks out — set reminder', priority: 'urgent', key: 'p-anne' },
             { title: 'TGV Strasbourg–Paris round trip (x2)', detail: 'Jul 4–5, sncf-connect.com', priority: 'soon', key: 'p-tgv' },
             { title: 'Paris hotel (1 night)', detail: 'Jul 4, near Eiffel Tower or Le Marais', priority: 'soon', key: 'p-paris' },
-            { title: 'Fussen hotel (1 night)', detail: 'Jul 7, near Neuschwanstein', priority: 'soon', key: 'p-fussen' },
-            { title: 'Amsterdam hotel (2 nights)', detail: 'Jul 9–10, canal-side', priority: 'soon', key: 'p-ams' },
-            { title: 'Rijksmuseum tickets (x2)', detail: 'Jul 10, pre-book to skip line', priority: 'later', key: 'p-rijks' },
-            { title: 'Van Gogh Museum tickets (x2)', detail: 'Jul 10, pre-book', priority: 'later', key: 'p-vangogh' }
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 7, near Neuschwanstein', priority: 'soon', key: 'p-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 8, city center near Marienplatz', priority: 'soon', key: 'p-munich' },
+            { title: 'Amsterdam hotel (1 night)', detail: 'Jul 10, canal-side', priority: 'soon', key: 'p-ams' },
+            { title: 'Rijksmuseum tickets (x2)', detail: 'Jul 11, pre-book to skip line', priority: 'later', key: 'p-rijks' }
         ],
         budget: [
-            { cat: 'Gas (~1,800 km)', amt: '~$155' },
+            { cat: 'Gas (~2,200 km)', amt: '~$190' },
             { cat: 'TGV Strasbourg–Paris round trip (x2)', amt: '~$160–240' },
             { cat: 'Strasbourg parking (2 days)', amt: '~$20' },
-            { cat: 'Hotels (4 nights: Paris, Fussen, Amsterdam x2)', amt: '~$600–850' },
+            { cat: 'Hotels (5 nights: Paris, Füssen, Munich, Amsterdam)', amt: '~$700–1,000' },
             { cat: 'Madame Brasserie lunch (x2)', amt: '~$130' },
             { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
-            { cat: 'Anne Frank House + museums (x2)', amt: '~$125' },
+            { cat: 'Anne Frank House + Rijksmuseum (x2)', amt: '~$80' },
             { cat: 'Food & activities', amt: '~$500–700' }
         ],
-        budgetTotal: '~$1,730–2,260'
+        budgetTotal: '~$1,820–2,400'
     },
 
     balanced: {
-        name: 'Paris Day Trip + Castle + Amsterdam',
+        name: 'Paris Day Trip + Castle + Munich + Amsterdam',
         badge: 'BALANCED', badgeClass: 'badge-chill',
-        subtitle: 'All three highlights — Paris as a day trip (no overnight). <strong>2 KL chill days.</strong> Best of both worlds.',
-        stats: { days: 10, countries: 3, cities: 5, km: '~1,800', hotelNights: 3, klDays: 2, chill: 3, overnights: 'Füssen 1 · Amsterdam 2 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
-        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'amsterdam'],
+        subtitle: 'Paris as a day trip (no overnight). Castle + Munich. 2 nights in Amsterdam. <strong>2 KL chill days.</strong>',
+        stats: { days: 10, countries: 4, cities: 6, km: '~2,200', hotelNights: 4, klDays: 2, chill: 2, overnights: 'Füssen 1 · Munich 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 round · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
+        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
             { from: 'strasbourg', to: 'paris', color: '#3b82f6', dash: '8, 12' },
             { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
             { from: 'kl', to: 'amsterdam', color: '#f97316', dash: null },
             { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
         ],
         popups: {
-            kl: { sub: 'Home Base', desc: '2 chill days (Jul 5 + Jul 8). Rest between each big trip.' },
-            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3 at 11:15 AM. Departure Jul 12 at 9:45 AM.' },
+            kl: { sub: 'Home Base', desc: '2 chill days (Jul 5 + Jul 8). Rest between trips.' },
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
             strasbourg: { sub: 'Jul 4 transit', desc: 'Park Tesla, TGV to Paris. Pick up car on return.' },
-            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July day trip! Eiffel Tower lunch, Montmartre, Champs-Elysees. TGV back same night.' },
-            neuschwanstein: { sub: 'Day 4 (Jul 6)', desc: 'The Disney castle. Marienbrucke bridge photo. Overnight Fussen.' },
+            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July day trip! Eiffel Tower lunch, Montmartre, Champs-Élysées. TGV back same night.' },
+            neuschwanstein: { sub: 'Day 4 (Jul 6)', desc: 'Castle, Marienbrücke bridge, Hohenschwangau. Overnight Füssen.' },
+            munich: { sub: 'Day 5 (Jul 7)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' },
             amsterdam: { sub: 'Days 7–9 (Jul 9–11)', desc: 'Canal cruise, Anne Frank House, Rijksmuseum, Van Gogh Museum. 2 nights.' }
         },
         days: [
-            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, clear customs, drive to KL. Afternoon exploring, Biergarten dinner. Early night.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof Biergarten'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July Day Trip', desc: 'Long day trip via TGV. Eiffel Tower lunch, Montmartre, Champs-Élysées. No overnight — back by 10 PM.', schedule: [['6:30 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['8:00 AM', 'Park Tesla at Gare Centrale'], ['8:30 AM', 'TGV departs Strasbourg (1h50)'], ['10:20 AM', 'Arrive Paris'], ['11:00 AM', 'Walk to Eiffel Tower area'], ['12:00 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:00 PM', 'Champs-Élysées + Arc de Triomphe'], ['4:00 PM', 'Montmartre + Sacré-Cœur'], ['6:00 PM', 'Quick dinner near Gare de l\'Est'], ['7:00 PM', 'TGV back to Strasbourg (1h50)'], ['8:50 PM', 'Pick up Tesla, drive home (1.5h)'], ['10:20 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h + TGV 1h50 each way', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
-            { day: 3, date: 'Sun Jul 5', dest: 'Kaiserslautern — Chill Day', desc: 'Lazy Sunday recovery after the Paris run. Sleep in, coffee shops, cook dinner.', schedule: [['10:30 AM', 'Sleep in — recovery day'], ['11:30 AM', 'Brunch at a café'], ['1:00 PM', 'Japanischer Garten or Altstadt stroll'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 4, date: 'Mon Jul 6', dest: 'KL → Neuschwanstein', desc: 'Early drive to Füssen. Monday = smallest crowds. Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel, drop bags'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge — photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
-            { day: 5, date: 'Tue Jul 7', dest: 'Füssen → Kaiserslautern', desc: 'Füssen old town morning, Lechfall waterfall. Drive back to KL.', schedule: [['9:00 AM', 'Breakfast, Füssen old town walk'], ['10:00 AM', 'Lechfall waterfall'], ['11:00 AM', 'Depart Füssen (4h drive)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'kl'], color: '#eab308' },
-            { day: 6, date: 'Wed Jul 8', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day between trips. Pfalzerwald hike or lounge at home. Pack for Amsterdam.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Coffee + brunch'], ['1:00 PM', 'Pfalzerwald hike or stay home'], ['7:00 PM', 'Cook dinner together'], ['9:00 PM', 'Pack for Amsterdam']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 7, date: 'Thu Jul 9', dest: 'KL → Amsterdam', desc: 'Morning departure. Canal cruise at golden hour, Anne Frank House, Jordaan walk.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check into hotel, drop bags'], ['1:00 PM', 'Lunch in Jordaan'], ['2:30 PM', 'Anne Frank House (timed entry)'], ['4:30 PM', 'Walk Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
-            { day: 8, date: 'Fri Jul 10', dest: 'Amsterdam — Full Day', desc: 'Rijksmuseum, Van Gogh Museum, Vondelpark, Albert Cuyp Market. Full day — no driving.', schedule: [['9:00 AM', 'Rijksmuseum (2–3 hours)'], ['12:00 PM', 'Lunch near Museumplein'], ['1:30 PM', 'Van Gogh Museum (2 hours)'], ['3:30 PM', 'Vondelpark stroll'], ['4:30 PM', 'Albert Cuyp Market'], ['6:30 PM', 'Canal walk'], ['8:00 PM', 'Dinner']], overnight: 'Amsterdam hotel', transport: '—', tags: [{ text: 'Rijksmuseum', cls: 'tag-landmark' }, { text: 'Van Gogh Museum', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam'], color: '#f97316' },
-            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Saturday morning — last walk, Albert Cuyp Market. Drive back. Farewell dinner.', schedule: [['9:00 AM', 'Last canal walk, coffee in Jordaan'], ['10:30 AM', 'Albert Cuyp Market (open Sat)'], ['11:30 AM', 'Depart Amsterdam (5h drive)'], ['4:30 PM', 'Arrive KL'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner. Early night.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof Biergarten'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July Day Trip', desc: 'Long day trip via TGV. Eiffel Tower lunch, Montmartre, Champs-Élysées. Back by 10 PM.', schedule: [['6:30 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['8:00 AM', 'Park Tesla at Gare Centrale'], ['8:30 AM', 'TGV departs Strasbourg (1h50)'], ['10:20 AM', 'Arrive Paris'], ['11:00 AM', 'Walk to Eiffel Tower area'], ['12:00 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:00 PM', 'Champs-Élysées + Arc de Triomphe'], ['4:00 PM', 'Montmartre + Sacré-Cœur'], ['6:00 PM', 'Quick dinner near Gare de l\'Est'], ['7:00 PM', 'TGV back to Strasbourg (1h50)'], ['8:50 PM', 'Pick up Tesla, drive home (1.5h)'], ['10:20 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h + TGV 1h50 each way', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery after the Paris run. Sleep in, coffee shops, cook dinner.', schedule: [['10:30 AM', 'Sleep in — recovery day'], ['11:30 AM', 'Brunch at a café'], ['1:00 PM', 'Japanischer Garten or Altstadt stroll'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 4, date: 'Mon Jul 6', dest: 'KL → Neuschwanstein', desc: 'Early drive to Füssen. Monday = smallest crowds. Castle, Marienbrücke, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel, drop bags'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge — photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Drive to Munich (2h). Marienplatz, Viktualienmarkt, Englischer Garten.', schedule: [['8:30 AM', 'Breakfast, Füssen old town walk'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive Füssen → Munich (2h)'], ['12:30 PM', 'Arrive Munich, check into hotel'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Walk through Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Dinner at a beer hall']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 6, date: 'Wed Jul 8', dest: 'Munich → Kaiserslautern', desc: 'Munich morning. Drive back to KL (4h). Rest + pack for Amsterdam.', schedule: [['9:00 AM', 'Last Munich morning — Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h drive)'], ['3:00 PM', 'Arrive KL'], ['4:00 PM', 'Rest + recharge'], ['7:00 PM', 'Easy dinner at home'], ['9:00 PM', 'Pack for Amsterdam']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'KL → Amsterdam', desc: 'Morning departure. Canal cruise, Anne Frank House, Jordaan canals.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check into hotel'], ['1:00 PM', 'Lunch in Jordaan'], ['2:30 PM', 'Anne Frank House (timed entry)'], ['4:30 PM', 'Walk Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Amsterdam — Full Day', desc: 'Rijksmuseum, Van Gogh Museum, Vondelpark, Albert Cuyp Market.', schedule: [['9:00 AM', 'Rijksmuseum (2–3 hours)'], ['12:00 PM', 'Lunch near Museumplein'], ['1:30 PM', 'Van Gogh Museum (2 hours)'], ['3:30 PM', 'Vondelpark stroll'], ['4:30 PM', 'Albert Cuyp Market'], ['6:30 PM', 'Canal walk'], ['8:00 PM', 'Dinner']], overnight: 'Amsterdam hotel', transport: '—', tags: [{ text: 'Rijksmuseum', cls: 'tag-landmark' }, { text: 'Van Gogh Museum', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam'], color: '#f97316' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Saturday morning — last walk, market. Drive back. Farewell dinner.', schedule: [['9:00 AM', 'Last canal walk, coffee in Jordaan'], ['10:30 AM', 'Albert Cuyp Market (open Sat)'], ['11:30 AM', 'Depart Amsterdam (5h drive)'], ['4:30 PM', 'Arrive KL'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
             { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Sunday morning — empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive Frankfurt Airport'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs FRA → MUC → SAN']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
         ],
         bookings: [
-            { title: 'Madame Brasserie lunch (x2)', detail: 'Jul 4, book at tour-eiffel.fr — sells out fast', priority: 'urgent', key: 'b-brasserie' },
-            { title: 'Neuschwanstein Castle tickets (x2)', detail: 'Jul 6, timed entry — ticket-center-hohenschwangau.de', priority: 'urgent', key: 'b-castle' },
-            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 9, released ~6 weeks out — set reminder', priority: 'urgent', key: 'b-anne' },
+            { title: 'Madame Brasserie lunch (x2)', detail: 'Jul 4, tour-eiffel.fr', priority: 'urgent', key: 'b-brasserie' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 6, timed entry', priority: 'urgent', key: 'b-castle' },
+            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 9, released ~6 weeks out', priority: 'urgent', key: 'b-anne' },
             { title: 'TGV Strasbourg–Paris round trip (x2)', detail: 'Jul 4, sncf-connect.com — early AM + ~7pm return', priority: 'soon', key: 'b-tgv' },
-            { title: 'Fussen hotel (1 night)', detail: 'Jul 6, near Neuschwanstein', priority: 'soon', key: 'b-fussen' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 6', priority: 'soon', key: 'b-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 7', priority: 'soon', key: 'b-munich' },
             { title: 'Amsterdam hotel (2 nights)', detail: 'Jul 9–10, canal-side', priority: 'soon', key: 'b-ams' },
             { title: 'Rijksmuseum + Van Gogh Museum (x2)', detail: 'Jul 10, pre-book', priority: 'later', key: 'b-museums' }
         ],
         budget: [
-            { cat: 'Gas (~1,800 km)', amt: '~$155' },
+            { cat: 'Gas (~2,200 km)', amt: '~$190' },
             { cat: 'TGV Strasbourg–Paris round trip (x2)', amt: '~$160–240' },
             { cat: 'Strasbourg parking (1 day)', amt: '~$10' },
-            { cat: 'Hotels (3 nights: Fussen, Amsterdam x2)', amt: '~$400–550' },
+            { cat: 'Hotels (4 nights: Füssen, Munich, Amsterdam x2)', amt: '~$550–800' },
             { cat: 'Madame Brasserie lunch (x2)', amt: '~$130' },
             { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
             { cat: 'Anne Frank House + museums (x2)', amt: '~$125' },
             { cat: 'Food & activities', amt: '~$500–700' }
         ],
-        budgetTotal: '~$1,520–1,950'
+        budgetTotal: '~$1,705–2,235'
     },
 
     chill: {
-        name: 'Castle + Paris',
+        name: 'Paris + Castle + Munich',
         badge: 'MOST CHILL', badgeClass: 'badge-chill',
-        subtitle: 'Drop Amsterdam for maximum relaxation. Paris overnight + castle. <strong>4 KL chill days.</strong>',
-        stats: { days: 10, countries: 2, cities: 4, km: '~1,400', hotelNights: 2, klDays: 4, chill: 5, overnights: 'Paris 1 · Füssen 1 · KL 7', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · Paris→Strasbourg 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h' },
-        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein'],
+        subtitle: 'Drop Amsterdam for maximum relaxation. Paris overnight + castle + Munich. <strong>4 KL chill days.</strong>',
+        stats: { days: 10, countries: 2, cities: 5, km: '~1,400', hotelNights: 3, klDays: 4, chill: 4, overnights: 'Paris 1 · Füssen 1 · Munich 1 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · Strasbourg→Paris 🚄 1h50 · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
+        locs: ['kl', 'frankfurt', 'strasbourg', 'paris', 'neuschwanstein', 'munich'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
             { from: 'strasbourg', to: 'paris', color: '#3b82f6', dash: '8, 12' },
             { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
             { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
         ],
         popups: {
-            kl: { sub: 'Home Base', desc: '4 full chill days. Japanischer Garten, Pfalzerwald, Weinfest, cook together.' },
-            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3 at 11:15 AM. Departure Jul 12 at 9:45 AM.' },
-            strasbourg: { sub: 'Jul 4 transit + Jul 5', desc: 'Park Tesla, TGV to Paris. Explore Petite France + tarte flambee on the return.' },
-            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July in France! Eiffel Tower lunch at Madame Brasserie. Montmartre, Champs-Elysees. Overnight.' },
-            neuschwanstein: { sub: 'Day 6 (Jul 8)', desc: 'The Disney castle. Marienbrucke bridge photo. Overnight Fussen.' }
+            kl: { sub: 'Home Base', desc: '4 full chill days. Maximum time together at home.' },
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
+            strasbourg: { sub: 'Jul 4 + Jul 5', desc: 'Park Tesla, TGV to Paris. Petite France on return.' },
+            paris: { sub: 'Day 2 (Jul 4)', desc: '4th of July! Eiffel Tower lunch, Montmartre, Champs-Élysées. Overnight.' },
+            neuschwanstein: { sub: 'Day 6 (Jul 8)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 7 (Jul 9)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
         },
         days: [
-            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, clear customs, drive to KL. Afternoon exploring, Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July', desc: 'Drive to Strasbourg, TGV to Paris. Eiffel Tower lunch, Montmartre sunset, Champs-Élysées.', schedule: [['7:00 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['8:30 AM', 'Park Tesla at Gare Centrale'], ['9:00 AM', 'TGV departs Strasbourg (1h50)'], ['10:50 AM', 'Arrive Paris'], ['11:30 AM', 'Check into hotel, freshen up'], ['12:30 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:30 PM', 'Champs-Élysées + Arc de Triomphe'], ['5:00 PM', 'Montmartre + Sacré-Cœur'], ['7:30 PM', 'Dinner in Montmartre'], ['9:00 PM', 'Sunset views']], overnight: 'Paris hotel', transport: 'Drive 1.5h + TGV 1h50', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
-            { day: 3, date: 'Sun Jul 5', dest: 'Paris → Strasbourg → KL', desc: 'Sunday morning at the Louvre (open Sun, closed Tue). TGV back, Petite France afternoon.', schedule: [['9:00 AM', 'Louvre opens — 3 hours inside'], ['12:00 PM', 'Lunch near Tuileries Garden'], ['2:00 PM', 'TGV Paris → Strasbourg (1h50)'], ['3:50 PM', 'Arrive Strasbourg'], ['4:00 PM', 'Walk Petite France, cathedral'], ['5:30 PM', 'Tarte flambée'], ['6:15 PM', 'Pick up Tesla, drive home (1.5h)'], ['7:45 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'TGV 1h50 + Drive 1.5h', tags: [{ text: 'TGV 1h50', cls: 'tag-train' }, { text: '1.5h drive', cls: 'tag-drive' }, { text: 'Louvre', cls: 'tag-landmark' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['paris', 'strasbourg', 'kl'], color: '#3b82f6' },
-            { day: 4, date: 'Mon Jul 6', dest: 'Kaiserslautern — Chill Day', desc: 'Sleep in. Japanischer Garten, Stiftskirche, coffee shops. Cook together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch at a café'], ['1:00 PM', 'Japanischer Garten'], ['3:00 PM', 'Stiftskirche + Altstadt exploring'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 5, date: 'Tue Jul 7', dest: 'Kaiserslautern — Chill Day', desc: 'Wochenmarkt morning (Tuesday is market day). Pfalzerwald walk, her pick of activities.', schedule: [['9:30 AM', 'Wochenmarkt (Tuesday market day)'], ['11:00 AM', 'Coffee + stroll'], ['1:00 PM', 'Pfalzerwald walk or bookstores'], ['4:00 PM', 'Her pick of activities'], ['7:00 PM', 'Dinner out']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 6, date: 'Wed Jul 8', dest: 'KL → Neuschwanstein', desc: 'Early drive to Füssen. Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge — photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
-            { day: 7, date: 'Thu Jul 9', dest: 'Füssen → Kaiserslautern', desc: 'Füssen old town, Lechfall waterfall. Drive back to KL.', schedule: [['9:00 AM', 'Breakfast, Füssen old town'], ['10:00 AM', 'Lechfall waterfall'], ['11:00 AM', 'Depart Füssen (4h drive)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'kl'], color: '#eab308' },
-            { day: 8, date: 'Fri Jul 10', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Revisit her favorite spots. Maybe a sunset walk.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Revisit favorite spots from the week'], ['5:00 PM', 'Sunset walk'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day — Saturday. Wochenmarkt, farewell dinner, Weinfest if running.', schedule: [['9:30 AM', 'Wochenmarkt morning (Saturday market)'], ['11:00 AM', 'Revisit her favorite KL spot'], ['1:00 PM', 'Lunch out'], ['3:00 PM', 'Pfalz Weinfest if running (peak weekend)'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Paris — 4th of July', desc: 'Drive to Strasbourg, TGV to Paris. Eiffel Tower lunch, Montmartre, Champs-Élysées.', schedule: [['7:00 AM', 'Leave KL → Strasbourg (1.5h)'], ['8:30 AM', 'Park Tesla, Gare Centrale'], ['9:00 AM', 'TGV to Paris (1h50)'], ['10:50 AM', 'Arrive Paris'], ['11:30 AM', 'Check into hotel'], ['12:30 PM', 'Madame Brasserie lunch — Eiffel Tower'], ['2:30 PM', 'Champs-Élysées + Arc de Triomphe'], ['5:00 PM', 'Montmartre + Sacré-Cœur'], ['7:30 PM', 'Dinner in Montmartre'], ['9:00 PM', 'Sunset views']], overnight: 'Paris hotel', transport: 'Drive 1.5h + TGV 1h50', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'TGV 1h50', cls: 'tag-train' }, { text: 'Madame Brasserie', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg', 'paris'], color: '#3b82f6' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Paris → Strasbourg → KL', desc: 'Louvre morning (open Sun). TGV back, Petite France, tarte flambée.', schedule: [['9:00 AM', 'Louvre (3 hours)'], ['12:00 PM', 'Lunch near Tuileries'], ['2:00 PM', 'TGV back (1h50)'], ['3:50 PM', 'Arrive Strasbourg'], ['4:00 PM', 'Walk Petite France, cathedral'], ['5:30 PM', 'Tarte flambée'], ['6:15 PM', 'Drive home (1.5h)'], ['7:45 PM', 'Home in KL']], overnight: 'Kaiserslautern', transport: 'TGV 1h50 + Drive 1.5h', tags: [{ text: 'TGV 1h50', cls: 'tag-train' }, { text: '1.5h drive', cls: 'tag-drive' }, { text: 'Louvre', cls: 'tag-landmark' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['paris', 'strasbourg', 'kl'], color: '#3b82f6' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Kaiserslautern — Chill Day', desc: 'Sleep in. Japanischer Garten, Stiftskirche, coffee shops.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch at a café'], ['1:00 PM', 'Japanischer Garten'], ['3:00 PM', 'Stiftskirche + Altstadt'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Kaiserslautern — Chill Day', desc: 'Wochenmarkt morning (Tuesday). Pfalzerwald walk.', schedule: [['9:30 AM', 'Wochenmarkt (Tuesday market day)'], ['11:00 AM', 'Coffee + stroll'], ['1:00 PM', 'Pfalzerwald walk or bookstores'], ['4:00 PM', 'Her pick of activities'], ['7:00 PM', 'Dinner out']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 6, date: 'Wed Jul 8', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge — photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Drive Munich (2h). Marienplatz, Viktualienmarkt, beer hall.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive Füssen → Munich (2h)'], ['12:30 PM', 'Arrive Munich, check in'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Munich → Kaiserslautern', desc: 'Munich morning. Drive back to KL (4h).', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h drive)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite KL spot'], ['1:00 PM', 'Lunch out'], ['3:00 PM', 'Pfalz Weinfest if running'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
             { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Sunday morning — empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive Frankfurt Airport'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs FRA → MUC → SAN']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
         ],
         bookings: [
-            { title: 'Madame Brasserie lunch (x2)', detail: 'Jul 4, book at tour-eiffel.fr — sells out fast', priority: 'urgent', key: 'c-brasserie' },
-            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 8, timed entry — ticket-center-hohenschwangau.de', priority: 'urgent', key: 'c-castle' },
-            { title: 'TGV Strasbourg–Paris round trip (x2)', detail: 'Jul 4–5, sncf-connect.com', priority: 'soon', key: 'c-tgv' },
-            { title: 'Paris hotel (1 night)', detail: 'Jul 4, near Eiffel Tower or Le Marais', priority: 'soon', key: 'c-paris' },
-            { title: 'Fussen hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'c-fussen' }
+            { title: 'Madame Brasserie lunch (x2)', detail: 'Jul 4', priority: 'urgent', key: 'c-brasserie' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 8', priority: 'urgent', key: 'c-castle' },
+            { title: 'TGV round trip (x2)', detail: 'Jul 4–5', priority: 'soon', key: 'c-tgv' },
+            { title: 'Paris hotel (1 night)', detail: 'Jul 4', priority: 'soon', key: 'c-paris' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'c-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 9', priority: 'soon', key: 'c-munich' }
         ],
         budget: [
             { cat: 'Gas (~1,400 km)', amt: '~$120' },
-            { cat: 'TGV Strasbourg–Paris round trip (x2)', amt: '~$160–240' },
+            { cat: 'TGV round trip (x2)', amt: '~$160–240' },
             { cat: 'Strasbourg parking (2 days)', amt: '~$20' },
-            { cat: 'Hotels (2 nights: Paris, Fussen)', amt: '~$250–400' },
-            { cat: 'Madame Brasserie lunch (x2)', amt: '~$130' },
+            { cat: 'Hotels (3 nights: Paris, Füssen, Munich)', amt: '~$350–550' },
+            { cat: 'Madame Brasserie (x2)', amt: '~$130' },
             { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
             { cat: 'Food & activities', amt: '~$400–600' }
         ],
-        budgetTotal: '~$1,120–1,550'
+        budgetTotal: '~$1,220–1,700'
     },
 
     minimal: {
-        name: 'Castle + Amsterdam',
+        name: 'Strasbourg + Castle + Munich + Amsterdam',
         badge: 'SIMPLE', badgeClass: 'badge-chill',
-        subtitle: 'Just two big trips. Neuschwanstein + Amsterdam. Strasbourg day trip on 4th of July. <strong>3 KL chill days.</strong>',
-        stats: { days: 10, countries: 3, cities: 4, km: '~2,000', hotelNights: 3, klDays: 3, chill: 4, overnights: 'Füssen 1 · Amsterdam 2 · KL 6', legs: 'KL→Strasbourg 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
-        locs: ['kl', 'frankfurt', 'strasbourg', 'neuschwanstein', 'amsterdam'],
+        subtitle: 'Strasbourg day trip on the 4th (still France!). Castle + Munich. Amsterdam. <strong>3 KL chill days.</strong>',
+        stats: { days: 10, countries: 3, cities: 5, km: '~2,000', hotelNights: 4, klDays: 3, chill: 3, overnights: 'Füssen 1 · Munich 1 · Amsterdam 2 · KL 5', legs: 'KL→Strasbourg 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h · KL→Amsterdam 🚗 5h · Amsterdam→KL 🚗 5h' },
+        locs: ['kl', 'frankfurt', 'strasbourg', 'neuschwanstein', 'munich', 'amsterdam'],
         routes: [
             { from: 'kl', to: 'strasbourg', color: '#8b5cf6', dash: null },
             { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
             { from: 'kl', to: 'amsterdam', color: '#f97316', dash: null },
             { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
         ],
         popups: {
             kl: { sub: 'Home Base', desc: '3 full chill days. Maximum time together at home.' },
-            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3 at 11:15 AM. Departure Jul 12 at 9:45 AM.' },
-            strasbourg: { sub: 'Day 2 (Jul 4)', desc: '4th of July in France! Petite France, cathedral, tarte flambee.' },
-            neuschwanstein: { sub: 'Day 4 (Jul 6)', desc: 'Disney castle, Marienbrucke bridge. Overnight Fussen.' },
-            amsterdam: { sub: 'Days 7–9 (Jul 9–11)', desc: 'Canal cruise, Anne Frank House, Rijksmuseum, Van Gogh Museum. 2 nights.' }
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
+            strasbourg: { sub: 'Day 2 (Jul 4)', desc: '4th of July in France! Petite France, cathedral, tarte flambée.' },
+            neuschwanstein: { sub: 'Day 4 (Jul 6)', desc: 'Disney castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 5 (Jul 7)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' },
+            amsterdam: { sub: 'Days 7–9 (Jul 9–11)', desc: 'Canal cruise, Anne Frank House, Rijksmuseum. 2 nights.' }
         },
         days: [
-            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, clear customs, drive to KL. Bremerhof dinner. Early night.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt, settle in'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Strasbourg — 4th of July', desc: 'Day trip to Strasbourg. Petite France, cathedral, tarte flambée, wine bar. 4th of July in France!', schedule: [['9:30 AM', 'Leave KL, drive to Strasbourg (1.5h)'], ['11:00 AM', 'Arrive Strasbourg'], ['11:15 AM', 'Walk Petite France quarter'], ['12:30 PM', 'Tarte flambée lunch'], ['2:00 PM', 'Strasbourg Cathedral + clock'], ['3:30 PM', 'Wine bar in Petite France'], ['5:00 PM', 'River cruise or more exploring'], ['6:30 PM', 'Drive home to KL (1.5h)'], ['8:00 PM', 'Home — easy evening']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h each way', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'Tarte Flambee', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg'], color: '#8b5cf6' },
-            { day: 3, date: 'Sun Jul 5', dest: 'Kaiserslautern — Chill Day', desc: 'Lazy Sunday. Japanischer Garten, Altstadt, coffee shops. Cook dinner together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch at a café'], ['1:00 PM', 'Japanischer Garten or Altstadt'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 4, date: 'Mon Jul 6', dest: 'KL → Neuschwanstein', desc: 'Early drive to Füssen. Monday = smallest crowds. Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge — photo'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Walk Alpsee lake'], ['7:00 PM', 'Dinner in Füssen old town']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
-            { day: 5, date: 'Tue Jul 7', dest: 'Füssen → Kaiserslautern', desc: 'Füssen old town, Lechfall waterfall. Drive back to KL.', schedule: [['9:00 AM', 'Breakfast, Füssen old town'], ['10:00 AM', 'Lechfall waterfall'], ['11:00 AM', 'Depart Füssen (4h drive)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'kl'], color: '#eab308' },
-            { day: 6, date: 'Wed Jul 8', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Pfalzerwald hike or lounge at home. Pack for Amsterdam.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Coffee + brunch'], ['1:00 PM', 'Pfalzerwald hike or stay home'], ['7:00 PM', 'Cook dinner'], ['9:00 PM', 'Pack for Amsterdam']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 7, date: 'Thu Jul 9', dest: 'KL → Amsterdam', desc: 'Morning departure. Canal cruise, Jordaan walk, Anne Frank House.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check into hotel'], ['1:00 PM', 'Lunch in Jordaan'], ['2:30 PM', 'Anne Frank House (timed entry)'], ['4:30 PM', 'Walk Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
-            { day: 8, date: 'Fri Jul 10', dest: 'Amsterdam — Full Day', desc: 'Rijksmuseum, Van Gogh Museum, Vondelpark, Albert Cuyp Market. No driving.', schedule: [['9:00 AM', 'Rijksmuseum (2–3 hours)'], ['12:00 PM', 'Lunch near Museumplein'], ['1:30 PM', 'Van Gogh Museum (2 hours)'], ['3:30 PM', 'Vondelpark stroll'], ['4:30 PM', 'Albert Cuyp Market'], ['6:30 PM', 'Canal walk'], ['8:00 PM', 'Dinner']], overnight: 'Amsterdam hotel', transport: '—', tags: [{ text: 'Rijksmuseum', cls: 'tag-landmark' }, { text: 'Van Gogh Museum', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam'], color: '#f97316' },
-            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Saturday morning — last walk, Albert Cuyp Market. Drive back. Farewell dinner.', schedule: [['9:00 AM', 'Last canal walk, coffee in Jordaan'], ['10:30 AM', 'Albert Cuyp Market (open Sat)'], ['11:30 AM', 'Depart Amsterdam (5h drive)'], ['4:30 PM', 'Arrive KL'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
-            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Sunday morning — empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive Frankfurt Airport'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs FRA → MUC → SAN']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Bremerhof dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Strasbourg — 4th of July', desc: 'Day trip to Strasbourg. Petite France, cathedral, tarte flambée. 4th of July in France!', schedule: [['9:30 AM', 'Leave KL → Strasbourg (1.5h)'], ['11:00 AM', 'Arrive Strasbourg'], ['11:15 AM', 'Walk Petite France quarter'], ['12:30 PM', 'Tarte flambée lunch'], ['2:00 PM', 'Strasbourg Cathedral + clock'], ['3:30 PM', 'Wine bar in Petite France'], ['5:00 PM', 'River cruise or more exploring'], ['6:30 PM', 'Drive home (1.5h)'], ['8:00 PM', 'Home — easy evening']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h each way', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'Tarte Flambée', cls: 'tag-food' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'strasbourg'], color: '#8b5cf6' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Kaiserslautern — Chill Day', desc: 'Lazy Sunday. Japanischer Garten, coffee shops, cook dinner.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Japanischer Garten or Altstadt'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 4, date: 'Mon Jul 6', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Alpsee lake'], ['7:00 PM', 'Dinner in Füssen']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Munich afternoon.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive Füssen → Munich (2h)'], ['12:30 PM', 'Arrive Munich'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 6, date: 'Wed Jul 8', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Last Munich morning'], ['11:00 AM', 'Depart Munich (4h drive)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner'], ['9:00 PM', 'Pack for Amsterdam']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'KL → Amsterdam', desc: 'Canal cruise, Anne Frank House, Jordaan.', schedule: [['7:00 AM', 'Leave KL (5h drive)'], ['12:00 PM', 'Arrive Amsterdam'], ['12:30 PM', 'Check in'], ['1:00 PM', 'Lunch in Jordaan'], ['2:30 PM', 'Anne Frank House'], ['4:30 PM', 'Jordaan canals + Nine Streets'], ['6:00 PM', 'Canal cruise — golden hour'], ['8:00 PM', 'Dinner in De Pijp']], overnight: 'Amsterdam hotel', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'Anne Frank House', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['kl', 'amsterdam'], color: '#f97316' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Amsterdam — Full Day', desc: 'Rijksmuseum, Van Gogh Museum, Vondelpark, Albert Cuyp Market.', schedule: [['9:00 AM', 'Rijksmuseum (2–3 hours)'], ['12:00 PM', 'Lunch near Museumplein'], ['1:30 PM', 'Van Gogh Museum (2 hours)'], ['3:30 PM', 'Vondelpark stroll'], ['4:30 PM', 'Albert Cuyp Market'], ['6:30 PM', 'Canal walk'], ['8:00 PM', 'Dinner']], overnight: 'Amsterdam hotel', transport: '—', tags: [{ text: 'Rijksmuseum', cls: 'tag-landmark' }, { text: 'Van Gogh Museum', cls: 'tag-landmark' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam'], color: '#f97316' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Amsterdam → Kaiserslautern', desc: 'Last walk, market. Drive back. Farewell dinner.', schedule: [['9:00 AM', 'Last canal walk'], ['10:30 AM', 'Albert Cuyp Market'], ['11:30 AM', 'Depart Amsterdam (5h)'], ['4:30 PM', 'Arrive KL'], ['7:30 PM', 'Farewell dinner']], overnight: 'Kaiserslautern', transport: 'Drive 5h', tags: [{ text: '5h drive', cls: 'tag-drive' }, { text: 'NL', cls: 'tag-country-nl' }], locs: ['amsterdam', 'kl'], color: '#f97316' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h drive)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
         ],
         bookings: [
-            { title: 'Neuschwanstein Castle tickets (x2)', detail: 'Jul 6, timed entry', priority: 'urgent', key: 'm-castle' },
-            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 9, released ~6 weeks out', priority: 'urgent', key: 'm-anne' },
-            { title: 'Fussen hotel (1 night)', detail: 'Jul 6', priority: 'soon', key: 'm-fussen' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 6', priority: 'urgent', key: 'm-castle' },
+            { title: 'Anne Frank House tickets (x2)', detail: 'Jul 9', priority: 'urgent', key: 'm-anne' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 6', priority: 'soon', key: 'm-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 7', priority: 'soon', key: 'm-munich' },
             { title: 'Amsterdam hotel (2 nights)', detail: 'Jul 9–10', priority: 'soon', key: 'm-ams' },
             { title: 'Rijksmuseum + Van Gogh Museum (x2)', detail: 'Jul 10', priority: 'later', key: 'm-museums' }
         ],
         budget: [
             { cat: 'Gas (~2,000 km)', amt: '~$170' },
-            { cat: 'Hotels (3 nights: Fussen, Amsterdam x2)', amt: '~$400–550' },
+            { cat: 'Hotels (4 nights: Füssen, Munich, Amsterdam x2)', amt: '~$550–800' },
             { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
             { cat: 'Anne Frank House + museums (x2)', amt: '~$125' },
             { cat: 'Food & activities', amt: '~$450–650' }
         ],
-        budgetTotal: '~$1,185–1,535'
+        budgetTotal: '~$1,335–1,785'
+    },
+
+    provence: {
+        name: 'Arles + Castle + Munich',
+        badge: 'PROVENCE', badgeClass: 'badge-primary',
+        subtitle: '4th of July in Provence — fly to Marseille, explore Arles + Les Baux. Castle + Munich. <strong>3 KL chill days.</strong>',
+        stats: { days: 10, countries: 2, cities: 5, km: '~600', hotelNights: 4, klDays: 3, chill: 3, overnights: 'Arles 2 · Füssen 1 · Munich 1 · KL 5', legs: 'KL→FRA ✈️ MRS 🚗 1h · Arles→MRS ✈️ FRA 🚗 1.5h · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
+        locs: ['kl', 'frankfurt', 'marseille', 'arles', 'neuschwanstein', 'munich'],
+        routes: [
+            { from: 'frankfurt', to: 'marseille', color: '#f472b6', dash: '8, 12' },
+            { from: 'marseille', to: 'arles', color: '#a78bfa', dash: null },
+            { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
+            { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
+        ],
+        popups: {
+            kl: { sub: 'Home Base', desc: '3 chill days. Hub for castle and Munich.' },
+            frankfurt: { sub: 'Airport Hub', desc: 'Arrival Jul 3. Fly to Marseille Jul 4 AM. Departure Jul 12.' },
+            marseille: { sub: 'Jul 4 + Jul 6', desc: 'Fly in, rent car at MRS. Drop car + fly home Jul 6.' },
+            arles: { sub: 'Days 2–4 (Jul 4–6)', desc: '4th of July in Provence! Amphitheater, Van Gogh trail, Les Baux, Pont du Gard.' },
+            neuschwanstein: { sub: 'Day 6 (Jul 8)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 7 (Jul 9)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
+        },
+        days: [
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Settle in, Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Provence — 4th of July', desc: 'Fly FRA→MRS, rent car, drive to Arles. Amphitheater, Van Gogh trail, dinner under the stars.', schedule: [['5:00 AM', 'Leave KL → FRA (1.5h)'], ['6:30 AM', 'Park Tesla at FRA P2'], ['7:15 AM', 'Lufthansa FRA → MRS (1h35)'], ['8:50 AM', 'Land Marseille, pick up rental car'], ['10:00 AM', 'Arrive Arles — check in'], ['11:00 AM', 'Walk old town'], ['12:00 PM', 'Lunch at Place du Forum'], ['1:30 PM', 'Roman Amphitheater'], ['3:00 PM', 'Van Gogh trail — Café Terrace at Night spot'], ['5:00 PM', 'Starry Night Over the Rhône riverbank'], ['8:00 PM', '4th of July dinner under the stars']], overnight: 'Arles hotel', transport: 'Drive 1.5h + Flight 1h35 + Drive 1h', tags: [{ text: 'LH flight', cls: 'tag-flight' }, { text: 'Rental car', cls: 'tag-rental' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['kl', 'frankfurt', 'marseille', 'arles'], color: '#a78bfa' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Provence Day Trip', desc: 'Les Baux, Pont du Gard, Saint-Rémy. Full day by rental car.', schedule: [['8:30 AM', 'Breakfast in Arles'], ['9:30 AM', 'Drive to Les Baux (30 min)'], ['10:00 AM', 'Les Baux + Carrières de Lumières'], ['12:00 PM', 'Drive to Saint-Rémy (15 min), lunch'], ['2:30 PM', 'Drive to Pont du Gard (45 min)'], ['3:15 PM', 'Pont du Gard — swim in the Gardon river'], ['5:30 PM', 'Drive back to Arles (45 min)'], ['8:00 PM', 'Farewell Arles dinner']], overnight: 'Arles hotel', transport: 'Rental car day trips', tags: [{ text: 'Les Baux', cls: 'tag-landmark' }, { text: 'Pont du Gard', cls: 'tag-landmark' }, { text: 'FR', cls: 'tag-country-fr' }], locs: ['arles'], color: '#a78bfa' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Arles → Home', desc: 'Morning walk, drive MRS, fly home. KL by ~4 PM.', schedule: [['8:30 AM', 'Last morning walk in Arles'], ['9:30 AM', 'Drive to MRS (1h)'], ['10:30 AM', 'Drop rental car'], ['12:00 PM', 'Lufthansa MRS → FRA (1h35)'], ['1:35 PM', 'Land Frankfurt, pick up Tesla'], ['3:15 PM', 'Home in KL'], ['7:00 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Drive 1h + Flight 1h35 + Drive 1.5h', tags: [{ text: 'LH flight', cls: 'tag-flight' }, { text: '1.5h drive', cls: 'tag-drive' }], locs: ['arles', 'marseille', 'frankfurt', 'kl'], color: '#a78bfa' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Sleep in, coffee shops, cook together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Japanischer Garten'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 6, date: 'Wed Jul 8', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Alpsee lake'], ['7:00 PM', 'Dinner in Füssen']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Munich afternoon.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive to Munich (2h)'], ['12:30 PM', 'Arrive Munich'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+        ],
+        bookings: [
+            { title: 'Lufthansa FRA→MRS flights (x2)', detail: 'Jul 4 + Jul 6 return', priority: 'urgent', key: 'pv-flights' },
+            { title: 'Rental car at MRS (2 days)', detail: 'Jul 4–6', priority: 'urgent', key: 'pv-rental' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 8', priority: 'urgent', key: 'pv-castle' },
+            { title: 'Arles hotel (2 nights)', detail: 'Jul 4–5', priority: 'soon', key: 'pv-arles' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'pv-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 9', priority: 'soon', key: 'pv-munich' },
+            { title: 'Carrières de Lumières (x2)', detail: 'Jul 5, Les Baux', priority: 'later', key: 'pv-carrieres' }
+        ],
+        budget: [
+            { cat: 'Flights FRA↔MRS round trip (x2)', amt: '~$400–500' },
+            { cat: 'Rental car at MRS (2 days)', amt: '~$80–120' },
+            { cat: 'FRA Tesla parking (2 days)', amt: '~$60' },
+            { cat: 'Gas (~600 km Tesla)', amt: '~$50' },
+            { cat: 'Hotels (4 nights: Arles x2, Füssen, Munich)', amt: '~$500–750' },
+            { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
+            { cat: 'Carrières de Lumières (x2)', amt: '~$30' },
+            { cat: 'Food & activities', amt: '~$450–650' }
+        ],
+        budgetTotal: '~$1,610–2,200'
+    },
+
+    milan: {
+        name: 'Milan + Castle + Munich',
+        badge: 'MILAN', badgeClass: 'badge-primary',
+        subtitle: '4th of July in Italy — €63/pp flights! Duomo, Lake Como. Castle + Munich. <strong>2 KL chill days.</strong>',
+        stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 5, klDays: 2, chill: 2, overnights: 'Milan 3 · Füssen 1 · Munich 1 · KL 4', legs: 'KL→LUX ✈️ BGY · BGY→LUX ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
+        locs: ['kl', 'frankfurt', 'luxembourg', 'milan', 'neuschwanstein', 'munich'],
+        routes: [
+            { from: 'luxembourg', to: 'milan', color: '#dc2626', dash: '8, 12' },
+            { from: 'kl', to: 'luxembourg', color: '#059669', dash: null },
+            { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
+            { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
+        ],
+        popups: {
+            kl: { sub: 'Home Base', desc: '2 chill days. Hub for castle + Munich.' },
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
+            luxembourg: { sub: 'Jul 4 + Jul 7', desc: 'Fly Ryanair to Milan. 1h drive from KL.' },
+            milan: { sub: 'Days 2–5 (Jul 4–7)', desc: '4th of July in Italy! Duomo, Galleria, Last Supper, Lake Como. 3 nights.' },
+            neuschwanstein: { sub: 'Day 6 (Jul 8)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 7 (Jul 9)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
+        },
+        days: [
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Milan — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Milan Bergamo (1h20). Evening dinner in Navigli district.', schedule: [['4:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['5:00 PM', 'Arrive LUX, check in'], ['6:25 PM', 'Ryanair FR 411 departs LUX (1h20)'], ['7:45 PM', 'Land at Milan Bergamo'], ['8:30 PM', 'Bus/taxi to Milan city center (1h)'], ['9:30 PM', 'Check into hotel'], ['10:00 PM', 'Late dinner in Navigli district']], overnight: 'Milan hotel', transport: 'Drive 1h + Flight 1h20 + Bus 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'IT', cls: 'tag-country-it' }], locs: ['kl', 'luxembourg', 'milan'], color: '#dc2626' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Milan — Full Day', desc: 'Duomo, Galleria Vittorio Emanuele, The Last Supper, Navigli canals.', schedule: [['9:00 AM', 'Breakfast at a Milanese café'], ['10:00 AM', 'Duomo di Milano — climb to the rooftop'], ['12:00 PM', 'Galleria Vittorio Emanuele II'], ['1:00 PM', 'Lunch near Duomo'], ['2:30 PM', 'Santa Maria delle Grazie — The Last Supper'], ['4:30 PM', 'Castello Sforzesco + Parco Sempione'], ['7:00 PM', 'Aperitivo in Navigli'], ['8:30 PM', 'Dinner']], overnight: 'Milan hotel', transport: '—', tags: [{ text: 'Duomo', cls: 'tag-landmark' }, { text: 'Last Supper', cls: 'tag-landmark' }, { text: 'IT', cls: 'tag-country-it' }], locs: ['milan'], color: '#dc2626' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Lake Como Day Trip', desc: 'Train to Lake Como (1h). Bellagio, Varenna, ferry ride. Back to Milan for dinner.', schedule: [['8:30 AM', 'Train Milan → Varenna (1h)'], ['9:30 AM', 'Arrive Varenna — walk the lakefront'], ['10:30 AM', 'Ferry to Bellagio (15 min)'], ['11:00 AM', 'Explore Bellagio — gardens, cobbled streets'], ['1:00 PM', 'Lunch with lake views'], ['2:30 PM', 'Villa Melzi gardens'], ['4:00 PM', 'Ferry back to Varenna'], ['5:00 PM', 'Train back to Milan (1h)'], ['7:00 PM', 'Dinner in Brera district']], overnight: 'Milan hotel', transport: 'Train 1h each way + ferries', tags: [{ text: 'Lake Como', cls: 'tag-landmark' }, { text: 'IT', cls: 'tag-country-it' }], locs: ['milan'], color: '#dc2626' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Milan → Luxembourg → KL', desc: 'Fly back to Luxembourg. Home by ~2 PM.', schedule: [['8:00 AM', 'Breakfast, last Milan walk'], ['9:00 AM', 'Bus/taxi to Milan Bergamo (1h)'], ['10:25 AM', 'Ryanair FR 410 departs BGY (1h20)'], ['11:45 AM', 'Land at Luxembourg'], ['12:00 PM', 'Pick up car, drive to KL (1h)'], ['1:00 PM', 'Home in KL'], ['2:00 PM', 'Rest + unpack'], ['7:00 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Bus 1h + Flight 1h20 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['milan', 'luxembourg', 'kl'], color: '#dc2626' },
+            { day: 6, date: 'Wed Jul 8', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Alpsee lake'], ['7:00 PM', 'Dinner in Füssen']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Munich afternoon.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive to Munich (2h)'], ['12:30 PM', 'Arrive Munich'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+        ],
+        bookings: [
+            { title: 'Ryanair LUX→BGY flights (x2)', detail: 'Jul 4 evening + Jul 7 morning return — ryanair.com', priority: 'urgent', key: 'mi-flights' },
+            { title: 'Last Supper tickets (x2)', detail: 'Jul 5, cenacolovinciano.org — sells out months ahead', priority: 'urgent', key: 'mi-supper' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 8, timed entry', priority: 'urgent', key: 'mi-castle' },
+            { title: 'Milan hotel (3 nights)', detail: 'Jul 4–6, near Duomo or Navigli', priority: 'soon', key: 'mi-milan' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'mi-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 9', priority: 'soon', key: 'mi-munich' }
+        ],
+        budget: [
+            { cat: 'Ryanair LUX↔BGY round trip (x2)', amt: '~$140' },
+            { cat: 'LUX airport parking (3 days)', amt: '~$30' },
+            { cat: 'BGY→Milan transport (x2 round trips)', amt: '~$40' },
+            { cat: 'Gas (~600 km Tesla)', amt: '~$50' },
+            { cat: 'Hotels (5 nights: Milan x3, Füssen, Munich)', amt: '~$600–900' },
+            { cat: 'Last Supper tickets (x2)', amt: '~$30' },
+            { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
+            { cat: 'Food & activities', amt: '~$500–700' }
+        ],
+        budgetTotal: '~$1,430–1,930'
+    },
+
+    porto: {
+        name: 'Porto + Castle + Munich',
+        badge: 'PORTO', badgeClass: 'badge-primary',
+        subtitle: '4th of July in Portugal — Ribeira waterfront, port wine. Castle + Munich. <strong>4 KL chill days.</strong>',
+        stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 4, klDays: 4, chill: 4, overnights: 'Porto 2 · Füssen 1 · Munich 1 · KL 5', legs: 'KL→LUX ✈️ OPO · OPO→LUX ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
+        locs: ['kl', 'frankfurt', 'luxembourg', 'porto', 'neuschwanstein', 'munich'],
+        routes: [
+            { from: 'luxembourg', to: 'porto', color: '#d97706', dash: '8, 12' },
+            { from: 'kl', to: 'luxembourg', color: '#059669', dash: null },
+            { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
+            { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
+        ],
+        popups: {
+            kl: { sub: 'Home Base', desc: '4 chill days. Maximum time at home between trips.' },
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
+            luxembourg: { sub: 'Jul 4 + Jul 6', desc: 'Fly Ryanair to Porto. 1h drive from KL.' },
+            porto: { sub: 'Days 2–3 (Jul 4–6)', desc: '4th of July in Portugal! Ribeira, Dom Luís Bridge, port wine cellars. 2 nights.' },
+            neuschwanstein: { sub: 'Day 5 (Jul 7)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 6 (Jul 8)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
+        },
+        days: [
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Porto — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Porto (2h35). Arrive 4:30 PM — evening in Ribeira with port wine.', schedule: [['12:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['1:00 PM', 'Arrive LUX, check in'], ['2:55 PM', 'Ryanair FR 2863 departs LUX (2h35)'], ['4:30 PM', 'Land at Porto (local time)'], ['5:15 PM', 'Taxi to hotel in Ribeira'], ['5:45 PM', 'Check in, freshen up'], ['6:30 PM', 'Walk the Ribeira waterfront'], ['7:30 PM', '4th of July dinner — riverside restaurant'], ['9:00 PM', 'Port wine tasting at sunset on Dom Luís Bridge']], overnight: 'Porto hotel', transport: 'Drive 1h + Flight 2h35', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'Ribeira', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['kl', 'luxembourg', 'porto'], color: '#d97706' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Porto — Full Day', desc: 'Dom Luís Bridge, Livraria Lello, Clérigos Tower, port wine cellars in Vila Nova de Gaia.', schedule: [['9:00 AM', 'Breakfast — pastéis de nata + galão'], ['10:00 AM', 'Clérigos Tower — climb for panoramic views'], ['11:00 AM', 'Livraria Lello (Harry Potter bookshop)'], ['12:00 PM', 'Walk through Ribeira to Dom Luís Bridge'], ['1:00 PM', 'Cross to Vila Nova de Gaia, lunch'], ['2:30 PM', 'Port wine cellar tour (Taylor\'s or Sandeman)'], ['4:30 PM', 'São Bento Station — stunning tiles'], ['5:30 PM', 'Jardins do Palácio de Cristal — sunset views'], ['8:00 PM', 'Dinner — francesinha (Porto specialty)']], overnight: 'Porto hotel', transport: '—', tags: [{ text: 'Dom Luís Bridge', cls: 'tag-landmark' }, { text: 'Port wine', cls: 'tag-food' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['porto'], color: '#d97706' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Porto → Luxembourg → KL', desc: 'Fly back to Luxembourg. Home by ~6 PM.', schedule: [['9:00 AM', 'Last breakfast in Ribeira'], ['10:00 AM', 'Morning walk — Foz do Douro beach'], ['11:30 AM', 'Taxi to Porto airport'], ['1:10 PM', 'Ryanair FR 2862 departs OPO (2h25)'], ['4:35 PM', 'Land at Luxembourg (local time)'], ['5:00 PM', 'Pick up car, drive to KL (1h)'], ['6:00 PM', 'Home in KL'], ['7:30 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Flight 2h25 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['porto', 'luxembourg', 'kl'], color: '#d97706' },
+            { day: 5, date: 'Tue Jul 7', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Alpsee lake'], ['7:00 PM', 'Dinner in Füssen']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 6, date: 'Wed Jul 8', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Munich afternoon.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive to Munich (2h)'], ['12:30 PM', 'Arrive Munich'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Coffee shops, Pfalzerwald, cook together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Pfalzerwald walk or Japanischer Garten'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+        ],
+        bookings: [
+            { title: 'Ryanair LUX→OPO flights (x2)', detail: 'Jul 4 (14:55) + Jul 6 return (13:10) — ryanair.com. Jul 4 flight has 1 seat at €145!', priority: 'urgent', key: 'po-flights' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 7, timed entry', priority: 'urgent', key: 'po-castle' },
+            { title: 'Porto hotel (2 nights)', detail: 'Jul 4–5, Ribeira waterfront area', priority: 'soon', key: 'po-porto' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 7', priority: 'soon', key: 'po-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'po-munich' },
+            { title: 'Port wine cellar tour (x2)', detail: 'Jul 5, Taylor\'s or Sandeman in Vila Nova de Gaia', priority: 'later', key: 'po-wine' }
+        ],
+        budget: [
+            { cat: 'Ryanair LUX↔OPO round trip (x2)', amt: '~$500' },
+            { cat: 'LUX airport parking (2 days)', amt: '~$20' },
+            { cat: 'Gas (~600 km Tesla)', amt: '~$50' },
+            { cat: 'Hotels (4 nights: Porto x2, Füssen, Munich)', amt: '~$450–700' },
+            { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
+            { cat: 'Port wine tour (x2)', amt: '~$30' },
+            { cat: 'Food & activities', amt: '~$400–600' }
+        ],
+        budgetTotal: '~$1,490–1,940'
+    },
+
+    palma: {
+        name: 'Palma + Castle + Munich',
+        badge: 'PALMA', badgeClass: 'badge-primary',
+        subtitle: '4th of July on the beach in Mallorca! Castle + Munich after. <strong>2 KL chill days.</strong>',
+        stats: { days: 10, countries: 3, cities: 5, km: '~600', hotelNights: 5, klDays: 2, chill: 2, overnights: 'Palma 3 · Füssen 1 · Munich 1 · KL 4', legs: 'KL→HHN ✈️ PMI · PMI→HHN ✈️ · KL→Füssen 🚗 4h · Füssen→Munich 🚗 2h · Munich→KL 🚗 4h' },
+        locs: ['kl', 'frankfurt', 'hahn', 'palma', 'neuschwanstein', 'munich'],
+        routes: [
+            { from: 'hahn', to: 'palma', color: '#0284c7', dash: '8, 12' },
+            { from: 'kl', to: 'hahn', color: '#059669', dash: null },
+            { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
+            { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
+        ],
+        popups: {
+            kl: { sub: 'Home Base', desc: '2 chill days between trips.' },
+            frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
+            hahn: { sub: 'Jul 4 + Jul 7', desc: 'Ryanair to Palma. 1.25h drive from KL.' },
+            palma: { sub: 'Days 2–5 (Jul 4–7)', desc: '4th of July on the beach! Cathedral, Old Town, Deià, Serra de Tramuntana. 3 nights.' },
+            neuschwanstein: { sub: 'Day 6 (Jul 8)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
+            munich: { sub: 'Day 7 (Jul 9)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
+        },
+        days: [
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Palma — 4th of July', desc: 'Drive to Frankfurt Hahn (1.25h), fly Ryanair to Palma (2h05). Evening on the beach!', schedule: [['5:00 PM', 'Leave KL, drive to Frankfurt Hahn (1.25h)'], ['6:15 PM', 'Arrive HHN, check in'], ['7:05 PM', 'Ryanair FR 4212 departs HHN (2h05)'], ['9:10 PM', 'Land at Palma de Mallorca'], ['9:45 PM', 'Taxi to hotel in Old Town'], ['10:15 PM', 'Check in, late walk along the marina'], ['10:45 PM', 'Tapas + sangria in Plaza Mayor']], overnight: 'Palma hotel', transport: 'Drive 1.25h + Flight 2h05', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'ES', cls: 'tag-country-es' }], locs: ['kl', 'hahn', 'palma'], color: '#0284c7' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Palma — Beach + Old Town', desc: 'Morning at Playa de Palma. Afternoon: Cathedral, Old Town, Arab Baths. Sunset cocktails.', schedule: [['9:00 AM', 'Breakfast at hotel'], ['10:00 AM', 'Beach — Playa de Palma or Cala Major'], ['1:00 PM', 'Lunch at a chiringuito (beach bar)'], ['3:00 PM', 'Palma Cathedral (La Seu) — Gaudí interior'], ['4:30 PM', 'Arab Baths + Old Town wander'], ['6:00 PM', 'Shopping on Passeig del Born'], ['7:30 PM', 'Sunset cocktails at Abaco or rooftop bar'], ['9:00 PM', 'Dinner in Santa Catalina neighborhood']], overnight: 'Palma hotel', transport: '—', tags: [{ text: 'Cathedral', cls: 'tag-landmark' }, { text: 'Beach', cls: 'tag-chill' }, { text: 'ES', cls: 'tag-country-es' }], locs: ['palma'], color: '#0284c7' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Deià + Serra de Tramuntana', desc: 'Day trip to the mountains. Deià village, Sa Calobra, Valldemossa. Stunning coastal road.', schedule: [['9:00 AM', 'Rent car or book tour'], ['10:00 AM', 'Drive to Valldemossa (30 min) — Chopin monastery'], ['11:30 AM', 'Continue to Deià (20 min) — artists\' village'], ['1:00 PM', 'Lunch in Deià with mountain views'], ['2:30 PM', 'Drive to Sa Calobra (45 min) — serpentine road'], ['3:30 PM', 'Sa Calobra beach + Torrent de Pareis gorge'], ['5:30 PM', 'Drive back to Palma (1.5h)'], ['7:00 PM', 'Rest at hotel'], ['8:30 PM', 'Farewell Mallorca dinner — seafood']], overnight: 'Palma hotel', transport: 'Rental car or tour', tags: [{ text: 'Deià', cls: 'tag-landmark' }, { text: 'Tramuntana', cls: 'tag-landmark' }, { text: 'ES', cls: 'tag-country-es' }], locs: ['palma'], color: '#0284c7' },
+            { day: 5, date: 'Tue Jul 7', dest: 'Palma → Frankfurt Hahn → KL', desc: 'Morning beach or market. Fly back to Hahn. Home by ~5 PM.', schedule: [['9:00 AM', 'Last breakfast, morning beach walk'], ['10:00 AM', 'Mercat de l\'Olivar (food market)'], ['11:00 AM', 'Taxi to Palma airport'], ['1:20 PM', 'Ryanair FR 370 departs PMI (2h15)'], ['3:35 PM', 'Land at Frankfurt Hahn'], ['3:50 PM', 'Pick up car, drive to KL (1.25h)'], ['5:15 PM', 'Home in KL'], ['7:00 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Flight 2h15 + Drive 1.25h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['palma', 'hahn', 'kl'], color: '#0284c7' },
+            { day: 6, date: 'Wed Jul 8', dest: 'KL → Neuschwanstein', desc: 'Castle, Marienbrücke bridge, Hohenschwangau.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Füssen'], ['11:30 AM', 'Check into hotel'], ['12:00 PM', 'Lunch in Schwangau'], ['1:00 PM', 'Neuschwanstein Castle (~2h)'], ['3:00 PM', 'Marienbrücke bridge'], ['3:30 PM', 'Hohenschwangau Castle (~1h)'], ['5:00 PM', 'Alpsee lake'], ['7:00 PM', 'Dinner in Füssen']], overnight: 'Füssen hotel', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein'], color: '#eab308' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Füssen → Munich', desc: 'Füssen old town, Lechfall. Munich afternoon.', schedule: [['8:30 AM', 'Breakfast, Füssen old town'], ['9:30 AM', 'Lechfall waterfall'], ['10:30 AM', 'Drive to Munich (2h)'], ['12:30 PM', 'Arrive Munich'], ['1:00 PM', 'Lunch at Viktualienmarkt'], ['2:30 PM', 'Marienplatz + Glockenspiel'], ['3:30 PM', 'Englischer Garten'], ['5:00 PM', 'Residenz or BMW World'], ['7:30 PM', 'Beer hall dinner']], overnight: 'Munich hotel', transport: 'Drive 2h', tags: [{ text: '2h drive', cls: 'tag-drive' }, { text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['neuschwanstein', 'munich'], color: '#eab308' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+        ],
+        bookings: [
+            { title: 'Ryanair HHN→PMI flights (x2)', detail: 'Jul 4 (19:05, €58) + Jul 7 return (13:20, €58) — ryanair.com', priority: 'urgent', key: 'pa-flights' },
+            { title: 'Neuschwanstein tickets (x2)', detail: 'Jul 8, timed entry', priority: 'urgent', key: 'pa-castle' },
+            { title: 'Palma hotel (3 nights)', detail: 'Jul 4–6, Old Town or near Passeig del Born', priority: 'soon', key: 'pa-palma' },
+            { title: 'Füssen hotel (1 night)', detail: 'Jul 8', priority: 'soon', key: 'pa-fussen' },
+            { title: 'Munich hotel (1 night)', detail: 'Jul 9', priority: 'soon', key: 'pa-munich' },
+            { title: 'Mallorca rental car or tour', detail: 'Jul 6, for Serra de Tramuntana day trip', priority: 'later', key: 'pa-rental' }
+        ],
+        budget: [
+            { cat: 'Ryanair HHN↔PMI round trip (x2)', amt: '~$220' },
+            { cat: 'HHN airport parking (3 days)', amt: '~$25' },
+            { cat: 'Gas (~600 km Tesla)', amt: '~$50' },
+            { cat: 'Hotels (5 nights: Palma x3, Füssen, Munich)', amt: '~$600–900' },
+            { cat: 'Neuschwanstein tickets (x2)', amt: '~$40' },
+            { cat: 'Mallorca rental car (1 day)', amt: '~$50' },
+            { cat: 'Food & activities', amt: '~$500–700' }
+        ],
+        budgetTotal: '~$1,485–1,985'
     }
 };
 
