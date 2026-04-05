@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Summer Trip">
     <meta name="theme-color" content="#0b0e1a">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU3VtbWVyIFRyaXAgMjAyNiIsInNob3J0X25hbWUiOiJTdW1tZXIgVHJpcCIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBiMGUxYSIsInRoZW1lX2NvbG9yIjoiIzBiMGUxYSJ9">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -3196,12 +3196,7 @@ if (bpEl) {
 
 // ===================== PWA SERVICE WORKER =====================
 if ('serviceWorker' in navigator) {
-    const swBlob = new Blob([
-        'self.addEventListener("install", e => { e.waitUntil(caches.open("trip-v1").then(c => c.addAll(["./"]))); self.skipWaiting(); });' +
-        'self.addEventListener("fetch", e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });'
-    ], { type: 'application/javascript' });
-    const swUrl = URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).catch(() => {});
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
 // Initial view: overview (no plan rendered yet)
