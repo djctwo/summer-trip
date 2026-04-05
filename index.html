@@ -1993,14 +1993,20 @@ function showRec() {
     document.getElementById('rec-view').classList.add('active');
 }
 
-// Patch renderPlan to hide other views
+// Patch renderPlan to hide other views and fix map bounds
 const _origRenderPlan = renderPlan;
 renderPlan = function(planKey) {
     hideAllViews();
     document.getElementById('plan-content').classList.remove('hidden');
     document.querySelectorAll('.tab-btn').forEach(t => t.classList.toggle('active', t.dataset.plan === planKey));
     _origRenderPlan(planKey);
-    setTimeout(() => map.invalidateSize(), 50);
+    // Map was hidden — invalidate size first, then re-fit bounds
+    setTimeout(() => {
+        map.invalidateSize();
+        const p = plans[planKey];
+        const coords = p.locs.map(k => [allLocations[k].lat, allLocations[k].lng]);
+        map.fitBounds(coords, { padding: [40, 40] });
+    }, 100);
 };
 
 // ===================== OVERVIEW: PLAN CARDS =====================
