@@ -1094,6 +1094,60 @@
             font-size: 13px;
         }
 
+        /* Hotel recommendations */
+        .hotel-recs { margin-bottom: 24px; }
+        .hotel-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+        }
+        .hotel-card {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px 20px;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.2s;
+            position: relative;
+        }
+        .hotel-card:hover { border-color: rgba(99, 130, 255, 0.3); }
+        .hotel-card.hotel-pick { border-color: rgba(52, 211, 153, 0.25); }
+        .hotel-pick-badge {
+            position: absolute;
+            top: -9px;
+            right: 14px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #34d399;
+            background: rgba(15, 19, 35, 0.95);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+        .hotel-name { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
+        .hotel-stars { font-size: 11px; color: #fbbf24; margin-bottom: 6px; }
+        .hotel-rating { display: inline-block; font-size: 11px; font-weight: 700; color: #34d399; background: rgba(52, 211, 153, 0.12); padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+        .hotel-detail { font-size: 12px; color: #8b94a6; line-height: 1.7; margin-bottom: 10px; }
+        .hotel-price { font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 10px; }
+        .hotel-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .hotel-tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: rgba(99, 130, 255, 0.1); color: #7eb8ff; }
+        .hotel-tag.hotel-tag-view { background: rgba(168, 85, 247, 0.12); color: #a78bfa; }
+        .hotel-book-btn {
+            display: inline-block;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 8px 20px;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .hotel-book-btn:hover { background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.4); }
+
         /* Share button */
         .share-btn {
             font-family: inherit;
@@ -1446,6 +1500,8 @@
     <div class="weather-row" id="weather-row"></div>
 
     <div class="dest-cards" id="dest-cards"></div>
+
+    <div class="hotel-recs" id="hotel-recs"></div>
 
     <div class="main-grid">
         <div class="map-container">
@@ -1930,7 +1986,7 @@ const plans = {
             kl: { sub: 'Home Base', desc: '4 chill days. Maximum time at home between trips.' },
             frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
             luxembourg: { sub: 'Jul 4 + Jul 6', desc: 'Fly Ryanair to Porto. 1h drive from KL.' },
-            porto: { sub: 'Days 2–3 (Jul 4–6)', desc: '4th of July in Portugal! Ribeira, Dom Luís Bridge, port wine cellars. 2 nights.' },
+            porto: { sub: 'Days 2–3 (Jul 4–6)', desc: '4th of July in Portugal! Ribeira, Dom Luís Bridge, port wine cellars. 2 nights.<br><br><strong>Hotels:</strong> Carris Porto Ribeira (top pick), Eurostars Porto Douro, Ribeira Douro Hotel — all in Ribeira with river views.' },
             neuschwanstein: { sub: 'Day 5 (Jul 7)', desc: 'Castle, Marienbrücke bridge. Overnight Füssen.' },
             munich: { sub: 'Day 6 (Jul 8)', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
         },
@@ -2510,6 +2566,41 @@ renderPlan = function(planKey) {
         const d = destData[k];
         return '<div class="dest-card"><div class="dest-card-hero" style="background:' + d.gradient + '">' + d.emoji + '</div><div class="dest-card-body"><div class="dest-card-name">' + (destCityNames[k] || k) + '</div><div class="dest-card-country">' + d.country + '</div><div class="dest-card-highlights">' + d.highlights + '</div></div></div>';
     }).join('');
+
+    // Hotel recommendations
+    const hotelEl = document.getElementById('hotel-recs');
+    const hotelData = {
+        porto: [
+            { name: 'Hotel Carris Porto Ribeira', stars: 4, rating: '8.4', reviews: '7,224', price: '~$100\u2013150/night', pick: true,
+              detail: 'Renovated historic building right in Ribeira. River-view rooms with balconies overlooking the Douro. Restaurant + lounge bar on site. Free WiFi, gym. S\u00E3o Bento Station 600m away. No parking (street only).',
+              tags: ['River view', 'Balcony', 'Ribeira', 'Breakfast buffet'],
+              url: 'https://www.booking.com/hotel/pt/carris-porto-ribeira.html' },
+            { name: 'Eurostars Porto Douro', stars: 4, rating: '9.0', reviews: '3,732', price: '~$120\u2013180/night', pick: false,
+              detail: 'Faces the Douro with views of Dom Lu\u00EDs Bridge and Serra do Pilar. Built into the stone riverbank \u2014 stunning building. Breakfast buffet. 3-min walk to Ribeira and UNESCO zone. 10-min walk to port wine cellars.',
+              tags: ['River view', 'Bridge view', 'Ribeira', 'Top rated'],
+              url: 'https://www.booking.com/hotel/pt/eurostars-porto-douro.html' },
+            { name: 'Ribeira Douro Hotel', stars: 2, rating: '9.6', reviews: '1,719', price: '~$98\u2013150/night', pick: false,
+              detail: 'Highest-rated hotel in Ribeira at 9.6/10. Quiet street, 1 minute from the riverwalk. Excellent daily breakfast with rotating hot food. 14 rooms \u2014 book early. Family rooms available with mini fridge + tea/coffee.',
+              tags: ['Best rated', 'Ribeira', 'Quiet street', 'Great breakfast'],
+              url: 'https://www.booking.com/hotel/pt/ribeira-douro.html' }
+        ]
+    };
+    const hotels = hotelData[planKey];
+    if (hotels) {
+        hotelEl.innerHTML = '<div class="panel-header" style="background:rgba(15,19,35,0.8);border:1px solid rgba(99,130,255,0.1);border-radius:12px 12px 0 0;border-bottom:none;margin-bottom:0">Hotel Recommendations \u2014 ' + (planKey.charAt(0).toUpperCase() + planKey.slice(1)) + '</div><div style="background:rgba(15,19,35,0.5);border:1px solid rgba(99,130,255,0.1);border-top:none;border-radius:0 0 12px 12px;padding:18px 20px"><div class="hotel-cards">' + hotels.map(h => {
+            const starsStr = '\u2605'.repeat(h.stars);
+            return '<div class="hotel-card' + (h.pick ? ' hotel-pick' : '') + '">' +
+                (h.pick ? '<div class="hotel-pick-badge">TOP PICK</div>' : '') +
+                '<div class="hotel-name">' + h.name + '</div>' +
+                '<div class="hotel-stars">' + starsStr + '<span class="hotel-rating">' + h.rating + '/10 (' + h.reviews + ' reviews)</span></div>' +
+                '<div class="hotel-detail">' + h.detail + '</div>' +
+                '<div class="hotel-price">' + h.price + ' (Jul peak)</div>' +
+                '<div class="hotel-tags">' + h.tags.map(t => '<span class="hotel-tag' + (t.includes('view') ? ' hotel-tag-view' : '') + '">' + t + '</span>').join('') + '</div>' +
+                '<a class="hotel-book-btn" href="' + h.url + '" target="_blank" rel="noopener">View on Booking.com \u2197</a></div>';
+        }).join('') + '</div></div>';
+    } else {
+        hotelEl.innerHTML = '';
+    }
 
     // Packing
     const packEl = document.getElementById('packing-grid');
