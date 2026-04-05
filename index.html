@@ -2315,8 +2315,18 @@ ovBtn.innerHTML = `Overview<span class="tab-badge" style="background:rgba(56,189
 ovBtn.addEventListener('click', () => showOverview());
 tabBar.appendChild(ovBtn);
 
-// Plan tabs
-Object.entries(plans).forEach(([key, p]) => {
+// Recommendation tab (second)
+const recBtn = document.createElement('button');
+recBtn.className = 'tab-btn';
+recBtn.dataset.plan = 'rec';
+recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(168,85,247,0.15);color:#a78bfa">&#9733;</span>`;
+recBtn.addEventListener('click', () => showRec());
+tabBar.appendChild(recBtn);
+
+// Plan tabs — Porto first, then the rest
+const planOrder = ['porto', ...Object.keys(plans).filter(k => k !== 'porto')];
+planOrder.forEach(key => {
+    const p = plans[key];
     const btn = document.createElement('button');
     btn.className = 'tab-btn';
     btn.dataset.plan = key;
@@ -2324,14 +2334,6 @@ Object.entries(plans).forEach(([key, p]) => {
     btn.addEventListener('click', () => renderPlan(key));
     tabBar.appendChild(btn);
 });
-
-// Recommendation tab (last)
-const recBtn = document.createElement('button');
-recBtn.className = 'tab-btn';
-recBtn.dataset.plan = 'rec';
-recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(168,85,247,0.15);color:#a78bfa">&#9733;</span>`;
-recBtn.addEventListener('click', () => showRec());
-tabBar.appendChild(recBtn);
 
 function hideAllViews() {
     document.getElementById('overview-view').classList.remove('active');
