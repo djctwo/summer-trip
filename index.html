@@ -884,6 +884,279 @@
             .bottom-row { grid-template-columns: 1fr; }
             .stats-row { grid-template-columns: repeat(4, 1fr); }
         }
+
+        /* Weather cards */
+        .weather-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .weather-card {
+            background: rgba(15, 19, 35, 0.8);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .weather-city { font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+        .weather-icon { font-size: 24px; margin-bottom: 4px; }
+        .weather-temp { font-size: 18px; font-weight: 800; color: #38bdf8; }
+        .weather-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
+        .weather-rain { font-size: 10px; color: #a78bfa; margin-top: 4px; }
+
+        /* Destination cards */
+        .dest-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .dest-card {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .dest-card:hover { transform: translateY(-2px); border-color: rgba(99, 130, 255, 0.3); }
+        .dest-card-hero {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            position: relative;
+        }
+        .dest-card-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 30px;
+            background: linear-gradient(transparent, rgba(15, 19, 35, 0.95));
+        }
+        .dest-card-body {
+            background: rgba(15, 19, 35, 0.95);
+            padding: 12px 14px;
+        }
+        .dest-card-name { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
+        .dest-card-country { font-size: 10px; color: #a78bfa; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .dest-card-highlights { font-size: 11px; color: #8b94a6; line-height: 1.6; }
+
+        /* Packing checklist */
+        .packing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .packing-category h3 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+        .pack-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .pack-item .pack-box {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(99, 130, 255, 0.3);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .pack-item.packed .pack-box {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+        }
+        .pack-item.packed .pack-box::after { content: '\2713'; color: #34d399; font-size: 10px; font-weight: 700; }
+        .pack-item.packed .pack-label { opacity: 0.4; text-decoration: line-through; }
+        .pack-label { font-size: 12px; color: #c8cdd8; }
+        .pack-conditional { font-size: 10px; color: #a78bfa; font-style: italic; margin-left: auto; }
+
+        /* Booking links */
+        .booking-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .booking-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+            background: rgba(20, 25, 45, 0.6);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .booking-link:hover {
+            border-color: rgba(99, 130, 255, 0.3);
+            background: rgba(25, 32, 60, 0.8);
+        }
+        .booking-link-icon { font-size: 20px; flex-shrink: 0; }
+        .booking-link-text { flex: 1; }
+        .booking-link-title { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+        .booking-link-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
+        .booking-link-arrow { color: #4b5563; font-size: 14px; }
+
+        /* Emergency info */
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .emergency-card {
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+            background: rgba(20, 25, 45, 0.6);
+        }
+        .emergency-card h4 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+        .emergency-item {
+            font-size: 12px;
+            color: #c8cdd8;
+            padding: 4px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .emergency-item .em-label { color: #6b7280; }
+        .emergency-item .em-value { font-weight: 600; }
+
+        /* Comparison picker */
+        .compare-picker {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .compare-pill {
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 130, 255, 0.2);
+            background: transparent;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .compare-pill:hover { border-color: rgba(99, 130, 255, 0.4); color: #c8cdd8; }
+        .compare-pill.selected {
+            background: rgba(99, 130, 255, 0.15);
+            border-color: rgba(99, 130, 255, 0.4);
+            color: #e2e8f0;
+        }
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .compare-table th {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(99, 130, 255, 0.15);
+        }
+        .compare-table td {
+            font-size: 13px;
+            color: #c8cdd8;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(99, 130, 255, 0.05);
+        }
+        .compare-table tr:hover td { background: rgba(99, 130, 255, 0.03); }
+        .compare-empty {
+            text-align: center;
+            padding: 40px;
+            color: #4b5563;
+            font-size: 13px;
+        }
+
+        /* Share button */
+        .share-btn {
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 8px 20px;
+            background: rgba(99, 130, 255, 0.1);
+            color: #7eb8ff;
+            border: 1px solid rgba(99, 130, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .share-btn:hover { background: rgba(99, 130, 255, 0.2); }
+        .share-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: #34d399;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+        .share-toast.show { transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 1200px) {
+            .packing-grid { grid-template-columns: 1fr 1fr; }
+            .emergency-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; color: #1a1a2e; }
+            body::before { display: none; }
+            .pw-overlay, .tab-bar, .topbar, .share-btn { display: none !important; }
+            .app-content.locked { display: block !important; }
+            .overview-view, .rec-view { display: none !important; }
+            .plan-content { display: block !important; }
+            .plan-content.hidden { display: block !important; }
+            .container { max-width: 100%; padding: 0; }
+            .stat-card, .info-card, .trip-overview, .map-container, .timeline-panel,
+            .checklist-panel, .budget-panel, .flights-panel, .notes-panel,
+            .weather-card, .dest-card, .dest-card-body, .emergency-card,
+            .booking-link { background: #fff; border-color: #ddd; color: #1a1a2e; }
+            .stat-value, .ov-stat-value, .rec-pick-name { -webkit-text-fill-color: #1a1a2e; }
+            .stat-label, .info-label, .trip-overview-label, .panel-header,
+            .weather-city, .dest-card-name, .booking-link-title, .emergency-item .em-value,
+            .pack-label, .day-dest { color: #1a1a2e; }
+            .day-desc, .trip-overview-text, .weather-desc, .dest-card-highlights,
+            .booking-link-desc, .emergency-item .em-label, .info-value { color: #555; }
+            .plan-subtitle, .day-date, .stat-label, .weather-rain, .dest-card-country,
+            .pack-conditional { color: #777; }
+            .plan-subtitle strong { color: #5b21b6; }
+            #map { height: 300px; }
+            .main-grid { grid-template-columns: 1fr 360px; }
+        }
     </style>
 </head>
 <body>
@@ -1052,6 +1325,12 @@
         </div>
 
         <div class="ov-section">
+            <div class="ov-section-title">Compare Plans Side-by-Side</div>
+            <div class="compare-picker" id="compare-picker"></div>
+            <div id="compare-result"></div>
+        </div>
+
+        <div class="ov-section">
             <div class="ov-section-title">Key Decisions</div>
             <div class="rec-paragraph" style="margin-bottom:16px">
                 Every plan shares the same bones: Melissa arrives Friday Jul 3 at Frankfurt, you drive home to Kaiserslautern, and 10 days later she flies out Sunday Jul 12. In between, Neuschwanstein Castle and Munich are locked in as a 2-day block. The 4th of July must be spent outside Germany. What changes between plans is <em>where</em> you go for the 4th, <em>how many</em> chill days you keep at home, and whether you add Amsterdam on top.
@@ -1164,6 +1443,10 @@
 
     <div class="trip-overview" id="trip-overview"></div>
 
+    <div class="weather-row" id="weather-row"></div>
+
+    <div class="dest-cards" id="dest-cards"></div>
+
     <div class="main-grid">
         <div class="map-container">
             <div class="map-header">
@@ -1246,6 +1529,27 @@
         <div class="notes-panel">
             <div class="panel-header">Travel Notes</div>
             <div class="notes-grid" id="notes-grid"></div>
+        </div>
+    </div>
+
+    <div class="bottom-row">
+        <div class="checklist-panel">
+            <div class="panel-header">Packing Checklist</div>
+            <div class="packing-grid" id="packing-grid"></div>
+        </div>
+        <div class="checklist-panel">
+            <div class="panel-header" style="display:flex;justify-content:space-between;align-items:center">
+                <span>Quick Book</span>
+                <button class="share-btn" id="share-btn">Copy Itinerary</button>
+            </div>
+            <div class="booking-links" id="booking-links" style="padding:16px 20px"></div>
+        </div>
+    </div>
+
+    <div class="bottom-row">
+        <div class="checklist-panel" style="grid-column: 1 / -1">
+            <div class="panel-header">Emergency &amp; Practical Info</div>
+            <div class="emergency-grid" id="emergency-grid" style="padding:16px 20px"></div>
         </div>
     </div>
     </div><!-- /plan-content -->
@@ -2074,6 +2378,272 @@ Object.entries(plans).forEach(([key, p]) => {
     chillChartEl.appendChild(col);
 });
 
+// ===================== WEATHER DATA =====================
+const weatherData = {
+    kl:             { icon: '\u2600\uFE0F', temp: '75\u00B0F / 24\u00B0C', desc: 'Warm, partly cloudy', rain: '40% rain chance' },
+    paris:          { icon: '\u26C5', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, occasional showers', rain: '35% rain chance' },
+    strasbourg:     { icon: '\u2600\uFE0F', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, sunny spells', rain: '35% rain chance' },
+    amsterdam:      { icon: '\u26C5', temp: '72\u00B0F / 22\u00B0C', desc: 'Mild, variable clouds', rain: '45% rain chance' },
+    neuschwanstein: { icon: '\u26C5', temp: '73\u00B0F / 23\u00B0C', desc: 'Alpine, can change fast', rain: '50% rain chance' },
+    munich:         { icon: '\u2600\uFE0F', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, summer storms', rain: '40% rain chance' },
+    arles:          { icon: '\u2600\uFE0F', temp: '90\u00B0F / 32\u00B0C', desc: 'Hot & dry, mistral wind', rain: '10% rain chance' },
+    milan:          { icon: '\u2600\uFE0F', temp: '86\u00B0F / 30\u00B0C', desc: 'Hot & humid', rain: '30% rain chance' },
+    porto:          { icon: '\u2600\uFE0F', temp: '72\u00B0F / 22\u00B0C', desc: 'Warm, ocean breeze', rain: '15% rain chance' },
+    palma:          { icon: '\u2600\uFE0F', temp: '86\u00B0F / 30\u00B0C', desc: 'Hot, beach weather', rain: '5% rain chance' }
+};
+
+const weatherCityNames = {
+    kl: 'Kaiserslautern', paris: 'Paris', strasbourg: 'Strasbourg', amsterdam: 'Amsterdam',
+    neuschwanstein: 'Neuschwanstein', munich: 'Munich', arles: 'Arles', milan: 'Milan',
+    porto: 'Porto', palma: 'Palma'
+};
+
+// ===================== DESTINATION DATA =====================
+const destData = {
+    paris:          { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', country: 'France', highlights: 'Eiffel Tower \u2022 Montmartre \u2022 Louvre \u2022 Champs-\u00C9lys\u00E9es' },
+    strasbourg:     { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #60a5fa, #2563eb)', country: 'France', highlights: 'Petite France \u2022 Cathedral \u2022 Tarte flamb\u00E9e' },
+    amsterdam:      { emoji: '\uD83C\uDDF3\uD83C\uDDF1', gradient: 'linear-gradient(135deg, #fb923c, #ea580c)', country: 'Netherlands', highlights: 'Anne Frank House \u2022 Canals \u2022 Rijksmuseum' },
+    neuschwanstein: { emoji: '\uD83C\uDFF0', gradient: 'linear-gradient(135deg, #facc15, #ca8a04)', country: 'Germany', highlights: 'Fairy-tale castle \u2022 Marienbrücke \u2022 Alpsee' },
+    munich:         { emoji: '\uD83C\uDDE9\uD83C\uDDEA', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', country: 'Germany', highlights: 'Marienplatz \u2022 Viktualienmarkt \u2022 Beer halls' },
+    arles:          { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #a78bfa, #7c3aed)', country: 'France', highlights: 'Roman Amphitheater \u2022 Van Gogh trail \u2022 Pont du Gard' },
+    milan:          { emoji: '\uD83C\uDDEE\uD83C\uDDF9', gradient: 'linear-gradient(135deg, #f87171, #dc2626)', country: 'Italy', highlights: 'Duomo rooftop \u2022 Last Supper \u2022 Lake Como' },
+    porto:          { emoji: '\uD83C\uDDF5\uD83C\uDDF9', gradient: 'linear-gradient(135deg, #fbbf24, #b45309)', country: 'Portugal', highlights: 'Dom Lu\u00EDs Bridge \u2022 Port wine \u2022 Ribeira' },
+    palma:          { emoji: '\uD83C\uDDEA\uD83C\uDDF8', gradient: 'linear-gradient(135deg, #38bdf8, #0369a1)', country: 'Spain', highlights: 'Beach \u2022 Cathedral \u2022 Serra de Tramuntana' }
+};
+
+const destCityNames = {
+    paris: 'Paris', strasbourg: 'Strasbourg', amsterdam: 'Amsterdam',
+    neuschwanstein: 'Neuschwanstein Castle', munich: 'Munich', arles: 'Arles',
+    milan: 'Milan', porto: 'Porto', palma: 'Palma de Mallorca'
+};
+
+// ===================== BOOKING LINKS DATA =====================
+const bookingLinksData = {
+    primary:  [
+        { icon: '\uD83D\uDE84', title: 'TGV Tickets', desc: 'Strasbourg\u2013Paris round trip', url: 'https://www.sncf-connect.com/en-en/' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDFE0', title: 'Anne Frank House', desc: 'Timed entry, released 6 wks out', url: 'https://www.annefrank.org/en/tickets/' },
+        { icon: '\uD83C\uDFA8', title: 'Rijksmuseum', desc: 'Skip-the-line tickets', url: 'https://www.rijksmuseum.nl/en/tickets' },
+        { icon: '\uD83C\uDF7D\uFE0F', title: 'Madame Brasserie', desc: 'Eiffel Tower restaurant', url: 'https://www.tour-eiffel.fr/en' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    balanced: [
+        { icon: '\uD83D\uDE84', title: 'TGV Tickets', desc: 'Strasbourg\u2013Paris round trip', url: 'https://www.sncf-connect.com/en-en/' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDFE0', title: 'Anne Frank House', desc: 'Timed entry, released 6 wks out', url: 'https://www.annefrank.org/en/tickets/' },
+        { icon: '\uD83C\uDFA8', title: 'Rijksmuseum', desc: 'Skip-the-line tickets', url: 'https://www.rijksmuseum.nl/en/tickets' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    chill:    [
+        { icon: '\uD83D\uDE84', title: 'TGV Tickets', desc: 'Strasbourg\u2013Paris round trip', url: 'https://www.sncf-connect.com/en-en/' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDF7D\uFE0F', title: 'Madame Brasserie', desc: 'Eiffel Tower restaurant', url: 'https://www.tour-eiffel.fr/en' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    minimal:  [
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDFE0', title: 'Anne Frank House', desc: 'Timed entry, released 6 wks out', url: 'https://www.annefrank.org/en/tickets/' },
+        { icon: '\uD83C\uDFA8', title: 'Rijksmuseum', desc: 'Skip-the-line tickets', url: 'https://www.rijksmuseum.nl/en/tickets' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    provence: [
+        { icon: '\u2708\uFE0F', title: 'Lufthansa', desc: 'FRA\u2013MRS round trip', url: 'https://www.lufthansa.com' },
+        { icon: '\uD83D\uDE97', title: 'Rental Car', desc: 'Pick up at Marseille MRS', url: 'https://www.rentalcars.com' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    milan:    [
+        { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'LUX\u2013BGY round trip (\u20AC63/pp!)', url: 'https://www.ryanair.com' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDFA8', title: 'Last Supper Tickets', desc: 'Book months ahead', url: 'https://www.cenacolovinciano.org/en/' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    porto:    [
+        { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'LUX\u2013OPO round trip', url: 'https://www.ryanair.com' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83C\uDF77', title: 'Port Wine Tour', desc: "Taylor's or Sandeman cellar", url: 'https://www.taylor.pt/en/visit-us' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ],
+    palma:    [
+        { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'HHN\u2013PMI round trip (\u20AC101/pp)', url: 'https://www.ryanair.com' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\uD83D\uDE97', title: 'Mallorca Rental', desc: 'For Tramuntana day trip', url: 'https://www.rentalcars.com' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+    ]
+};
+
+// ===================== PACKING DATA =====================
+const packingBase = [
+    { cat: 'Essentials', items: ['Passport','Phone + charger','Travel adapter (US\u2192EU)','Wallet + cards','Travel insurance docs','Copies of reservations'] },
+    { cat: 'Clothing', items: ['Walking shoes (broken in)','Sandals','Light jacket / rain layer','7 days casual outfits','1 nice dinner outfit','Sunglasses + hat','Swimsuit'] },
+    { cat: 'Toiletries & Misc', items: ['Sunscreen SPF 50','Medications','Toothbrush + toiletries','Day backpack','Reusable water bottle','Neck pillow (flight)','Snacks for drives'] }
+];
+
+const packingConditional = {
+    paris: ['Comfortable walking shoes (Louvre)', 'Light scarf (restaurants)'],
+    amsterdam: ['Rain jacket (45% chance)', 'Bike-friendly shoes'],
+    arles: ['Strong sunscreen (90\u00B0F!)', 'Light breathable fabrics'],
+    milan: ['Modest clothing (churches)', 'Italian phrasebook'],
+    porto: ['Layers (ocean breeze)', 'Comfortable walking shoes (hills)'],
+    palma: ['Beach towel', 'Reef-safe sunscreen', 'Hiking shoes (Tramuntana)'],
+    neuschwanstein: ['Sturdy shoes (castle hike)', 'Light rain layer (Alpine)']
+};
+
+// ===================== RENDER NEW FEATURES IN renderPlan =====================
+const _origRenderPlan2 = renderPlan;
+renderPlan = function(planKey) {
+    _origRenderPlan2(planKey);
+    const p = plans[planKey];
+
+    // Weather
+    const weatherEl = document.getElementById('weather-row');
+    const weatherLocs = [...new Set(p.locs.filter(k => k !== 'frankfurt' && k !== 'luxembourg' && k !== 'hahn' && k !== 'marseille' && weatherData[k]))];
+    weatherEl.innerHTML = weatherLocs.map(k => {
+        const w = weatherData[k];
+        return '<div class="weather-card"><div class="weather-city">' + (weatherCityNames[k] || k) + '</div><div class="weather-icon">' + w.icon + '</div><div class="weather-temp">' + w.temp + '</div><div class="weather-desc">' + w.desc + '</div><div class="weather-rain">' + w.rain + '</div></div>';
+    }).join('');
+
+    // Destination cards
+    const destEl = document.getElementById('dest-cards');
+    const destLocs = p.locs.filter(k => k !== 'kl' && k !== 'frankfurt' && k !== 'luxembourg' && k !== 'hahn' && k !== 'marseille' && destData[k]);
+    destEl.innerHTML = destLocs.map(k => {
+        const d = destData[k];
+        return '<div class="dest-card"><div class="dest-card-hero" style="background:' + d.gradient + '">' + d.emoji + '</div><div class="dest-card-body"><div class="dest-card-name">' + (destCityNames[k] || k) + '</div><div class="dest-card-country">' + d.country + '</div><div class="dest-card-highlights">' + d.highlights + '</div></div></div>';
+    }).join('');
+
+    // Packing
+    const packEl = document.getElementById('packing-grid');
+    const packSaved = JSON.parse(localStorage.getItem('trip-packing') || '{}');
+    let packHtml = '';
+    packingBase.forEach(cat => {
+        packHtml += '<div class="packing-category"><h3>' + cat.cat + '</h3>';
+        cat.items.forEach(item => {
+            const key = 'b-' + item.replace(/\s+/g, '-').toLowerCase();
+            const checked = packSaved[key] ? ' packed' : '';
+            packHtml += '<div class="pack-item' + checked + '" data-pack-key="' + key + '"><div class="pack-box"></div><span class="pack-label">' + item + '</span></div>';
+        });
+        packHtml += '</div>';
+    });
+    // Conditional items
+    const condItems = [];
+    p.locs.forEach(k => {
+        if (packingConditional[k]) {
+            packingConditional[k].forEach(item => {
+                if (!condItems.includes(item)) condItems.push(item);
+            });
+        }
+    });
+    if (condItems.length) {
+        packHtml += '<div class="packing-category"><h3>For This Plan</h3>';
+        condItems.forEach(item => {
+            const key = 'c-' + item.replace(/\s+/g, '-').toLowerCase();
+            const checked = packSaved[key] ? ' packed' : '';
+            packHtml += '<div class="pack-item' + checked + '" data-pack-key="' + key + '"><div class="pack-box"></div><span class="pack-label">' + item + '</span></div>';
+        });
+        packHtml += '</div>';
+    }
+    packEl.innerHTML = packHtml;
+    packEl.querySelectorAll('.pack-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const key = item.dataset.packKey;
+            packSaved[key] = !packSaved[key];
+            localStorage.setItem('trip-packing', JSON.stringify(packSaved));
+            item.classList.toggle('packed');
+        });
+    });
+
+    // Booking links
+    const linksEl = document.getElementById('booking-links');
+    const links = bookingLinksData[planKey] || [];
+    linksEl.innerHTML = links.map(l => '<a class="booking-link" href="' + l.url + '" target="_blank" rel="noopener"><span class="booking-link-icon">' + l.icon + '</span><div class="booking-link-text"><div class="booking-link-title">' + l.title + '</div><div class="booking-link-desc">' + l.desc + '</div></div><span class="booking-link-arrow">\u2197</span></a>').join('');
+
+    // Emergency info
+    const emEl = document.getElementById('emergency-grid');
+    const embassies = {
+        paris: 'US Embassy Paris: +33 1 43 12 22 22',
+        amsterdam: 'US Consulate Amsterdam: +31 20 575 5309',
+        arles: 'US Embassy Marseille: +33 4 91 54 92 00',
+        milan: 'US Consulate Milan: +39 02 290 351',
+        porto: 'US Embassy Lisbon: +351 21 727 3300',
+        palma: 'US Embassy Madrid: +34 91 587 2200'
+    };
+    let embassyHtml = '';
+    p.locs.forEach(k => { if (embassies[k]) embassyHtml += '<div class="emergency-item"><span class="em-value">' + embassies[k] + '</span></div>'; });
+    if (!embassyHtml) embassyHtml = '<div class="emergency-item"><span class="em-value">US Embassy Berlin: +49 30 8305 0</span></div>';
+    embassyHtml = '<div class="emergency-item"><span class="em-value">US Embassy Berlin: +49 30 8305 0</span></div>' + embassyHtml;
+
+    emEl.innerHTML = '<div class="emergency-card"><h4>Emergency Numbers</h4><div class="emergency-item"><span class="em-label">Europe-wide emergency</span><span class="em-value">112</span></div><div class="emergency-item"><span class="em-label">Germany police</span><span class="em-value">110</span></div><div class="emergency-item"><span class="em-label">Germany ambulance</span><span class="em-value">112</span></div><div class="emergency-item"><span class="em-label">Roadside assistance (ADAC)</span><span class="em-value">+49 89 22 22 22</span></div></div><div class="emergency-card"><h4>US Embassies</h4>' + embassyHtml + '</div><div class="emergency-card"><h4>Practical</h4><div class="emergency-item"><span class="em-label">Tesla Supercharger app</span><span class="em-value">Tesla app</span></div><div class="emergency-item"><span class="em-label">Currency</span><span class="em-value">EUR (\u20AC1 \u2248 $1.08)</span></div><div class="emergency-item"><span class="em-label">Power adapter</span><span class="em-value">Type C/F (EU standard)</span></div><div class="emergency-item"><span class="em-label">Tipping</span><span class="em-value">Round up 5\u201310%</span></div></div>';
+
+    // Share button
+    document.getElementById('share-btn').onclick = function() {
+        let text = p.name + ' \u2014 Summer Trip 2026\n';
+        text += 'Jul 3\u201312 | Home base: Kaiserslautern\n\n';
+        p.days.forEach(d => {
+            text += 'Day ' + d.day + ' (' + d.date + '): ' + d.dest + '\n';
+            text += '  ' + d.desc + '\n';
+            if (d.overnight) text += '  Overnight: ' + d.overnight + '\n';
+            text += '\n';
+        });
+        text += 'Budget: ' + p.budgetTotal + '\n';
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('share-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        });
+    };
+};
+
+// ===================== OVERVIEW: COMPARISON PICKER =====================
+const comparePicker = document.getElementById('compare-picker');
+const compareResult = document.getElementById('compare-result');
+const compareSelected = new Set();
+
+Object.entries(plans).forEach(([key, p]) => {
+    const pill = document.createElement('button');
+    pill.className = 'compare-pill';
+    pill.textContent = p.name.split('+')[0].trim();
+    pill.addEventListener('click', () => {
+        if (compareSelected.has(key)) {
+            compareSelected.delete(key);
+            pill.classList.remove('selected');
+        } else {
+            compareSelected.add(key);
+            pill.classList.add('selected');
+        }
+        renderComparison();
+    });
+    comparePicker.appendChild(pill);
+});
+
+function renderComparison() {
+    if (compareSelected.size < 2) {
+        compareResult.innerHTML = '<div class="compare-empty">Select 2 or more plans to compare</div>';
+        return;
+    }
+    const keys = [...compareSelected];
+    let html = '<table class="compare-table"><thead><tr><th>Metric</th>';
+    keys.forEach(k => html += '<th>' + plans[k].name.split('+')[0].trim() + '</th>');
+    html += '</tr></thead><tbody>';
+    const rows = [
+        ['4th of July', k => { const m = {primary:'Paris',balanced:'Paris (day)',chill:'Paris',minimal:'Strasbourg',provence:'Arles',milan:'Milan',porto:'Porto',palma:'Palma'}; return m[k]; }],
+        ['Countries', k => plans[k].stats.countries],
+        ['Cities', k => plans[k].stats.cities],
+        ['Hotel Nights', k => plans[k].stats.hotelNights],
+        ['Chill Days', k => plans[k].stats.chill],
+        ['Driving', k => plans[k].stats.km],
+        ['Budget', k => plans[k].budgetTotal],
+        ['Overnights', k => plans[k].stats.overnights]
+    ];
+    rows.forEach(([label, fn]) => {
+        html += '<tr><td style="font-weight:600;color:#a78bfa">' + label + '</td>';
+        keys.forEach(k => html += '<td>' + fn(k) + '</td>');
+        html += '</tr>';
+    });
+    html += '</tbody></table>';
+    compareResult.innerHTML = html;
+}
+renderComparison();
+
 // Initial view: overview (no plan rendered yet)
 // renderPlan('primary') is NOT called — overview is shown by default
 </script>
@@ -2109,5 +2679,6 @@ Object.entries(plans).forEach(([key, p]) => {
     document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
 })();
 </script>
+<div class="share-toast" id="share-toast">Itinerary copied to clipboard!</div>
 </body>
 </html>
