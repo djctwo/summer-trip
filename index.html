@@ -139,6 +139,24 @@
         .badge-primary { background: rgba(52, 211, 153, 0.15); color: #34d399; }
         .badge-chill { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
         .badge-adventure { background: rgba(251, 146, 60, 0.15); color: #fb923c; }
+        .badge-chosen { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+        .tab-btn.archived { opacity: 0.4; }
+        .tab-btn.archived:hover { opacity: 0.7; }
+        .tab-btn.archived.active { opacity: 1; }
+        .tab-divider {
+            display: flex; align-items: center; padding: 0 8px; color: #374151; font-size: 10px;
+            white-space: nowrap; user-select: none; gap: 6px;
+        }
+        .tab-divider::before, .tab-divider::after {
+            content: ''; flex: 0; width: 12px; border-top: 1px solid #374151;
+        }
+        .archive-toggle {
+            font-family: inherit; font-size: 10px; font-weight: 600; padding: 6px 12px;
+            border-radius: 6px 6px 0 0; border: 1px solid rgba(99, 130, 255, 0.12);
+            border-bottom: none; background: rgba(99, 130, 255, 0.05); color: #6b7280;
+            cursor: pointer; white-space: nowrap; transition: all 0.2s;
+        }
+        .archive-toggle:hover { color: #c8cdd8; background: rgba(99, 130, 255, 0.1); }
 
         .container {
             max-width: 1500px;
@@ -1241,8 +1259,8 @@
     <div class="overview-view active" id="overview-view">
         <div class="ov-hero">
             <div class="ov-hero-title">Melissa's Summer Visit</div>
-            <div class="ov-hero-sub">10 days in Europe &mdash; Jul 3 to Jul 12, 2026</div>
-            <div class="ov-hero-detail">8 itinerary options &bull; 6 countries &bull; Home base: Kaiserslautern, Germany</div>
+            <div class="ov-hero-sub">Porto + Castle + Munich &mdash; Jul 3 to Jul 12, 2026</div>
+            <div class="ov-hero-detail" style="color:#34d399">&#10003; Plan confirmed &bull; 3 countries &bull; Home base: Kaiserslautern</div>
         </div>
 
         <div class="ov-stats-bar">
@@ -1251,44 +1269,49 @@
                 <div class="ov-stat-label">Days Together</div>
             </div>
             <div class="ov-stat">
-                <div class="ov-stat-value">8</div>
-                <div class="ov-stat-label">Plan Options</div>
-            </div>
-            <div class="ov-stat">
-                <div class="ov-stat-value">6</div>
+                <div class="ov-stat-value">3</div>
                 <div class="ov-stat-label">Countries</div>
             </div>
             <div class="ov-stat">
-                <div class="ov-stat-value">2</div>
-                <div class="ov-stat-label">Must-Do's</div>
+                <div class="ov-stat-value">4</div>
+                <div class="ov-stat-label">Hotel Nights</div>
             </div>
             <div class="ov-stat">
-                <div class="ov-stat-value" style="font-size:16px">$1.2K&ndash;2.4K</div>
-                <div class="ov-stat-label">Budget Range</div>
+                <div class="ov-stat-value">4</div>
+                <div class="ov-stat-label">Chill Days</div>
+            </div>
+            <div class="ov-stat">
+                <div class="ov-stat-value" style="font-size:16px">$1.5K&ndash;1.9K</div>
+                <div class="ov-stat-label">Est. Budget</div>
             </div>
         </div>
 
         <div class="ov-section">
-            <div class="ov-section-title">What's Locked In</div>
+            <div class="ov-section-title">The Itinerary</div>
             <div class="ov-fixed-grid">
                 <div class="ov-fixed-card">
                     <div class="ov-fixed-icon">&#9992;&#65039;</div>
-                    <div class="ov-fixed-title">Arrival &mdash; Fri Jul 3</div>
+                    <div class="ov-fixed-title">Arrive &mdash; Fri Jul 3</div>
                     <div class="ov-fixed-desc">UA1565/UA8879 lands FRA 11:15 AM<br>Drive to Kaiserslautern (1.5h)</div>
                 </div>
                 <div class="ov-fixed-card">
-                    <div class="ov-fixed-icon">&#127984;</div>
-                    <div class="ov-fixed-title">Neuschwanstein Castle</div>
-                    <div class="ov-fixed-desc">Must-do. Marienbrücke bridge, Hohenschwangau. Overnight in Füssen.</div>
+                    <div class="ov-fixed-icon">&#127477;&#127481;</div>
+                    <div class="ov-fixed-title">Porto &mdash; Jul 4&ndash;6</div>
+                    <div class="ov-fixed-desc">4th of July in Portugal! Ribeira, Dom Lu&iacute;s Bridge, port wine cellars. 2 nights.</div>
                 </div>
                 <div class="ov-fixed-card">
-                    <div class="ov-fixed-icon">&#127866;</div>
-                    <div class="ov-fixed-title">Munich</div>
-                    <div class="ov-fixed-desc">Must-do. Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.</div>
+                    <div class="ov-fixed-icon">&#127984;</div>
+                    <div class="ov-fixed-title">Castle + Munich &mdash; Jul 7&ndash;8</div>
+                    <div class="ov-fixed-desc">Neuschwanstein &rarr; Munich. 2 nights in Munich.</div>
+                </div>
+                <div class="ov-fixed-card">
+                    <div class="ov-fixed-icon">&#127968;</div>
+                    <div class="ov-fixed-title">Chill &mdash; Jul 9&ndash;11</div>
+                    <div class="ov-fixed-desc">4 days at home in KL. Cook, explore, Saturday market, farewell dinner.</div>
                 </div>
                 <div class="ov-fixed-card">
                     <div class="ov-fixed-icon">&#9992;&#65039;</div>
-                    <div class="ov-fixed-title">Departure &mdash; Sun Jul 12</div>
+                    <div class="ov-fixed-title">Depart &mdash; Sun Jul 12</div>
                     <div class="ov-fixed-desc">LH100/UA8918 departs FRA 9:45 AM<br>Leave KL by 6:30 AM</div>
                 </div>
             </div>
@@ -1305,42 +1328,42 @@
                 <div class="ov-cal-day ov-cal-july4">
                     <div class="ov-cal-dow">Sat</div>
                     <div class="ov-cal-num">4</div>
-                    <div class="ov-cal-label">4th of July</div>
+                    <div class="ov-cal-label">Fly to Porto</div>
                 </div>
-                <div class="ov-cal-day ov-cal-flex">
+                <div class="ov-cal-day ov-cal-july4">
                     <div class="ov-cal-dow">Sun</div>
                     <div class="ov-cal-num">5</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Porto</div>
                 </div>
-                <div class="ov-cal-day ov-cal-flex">
+                <div class="ov-cal-day ov-cal-july4">
                     <div class="ov-cal-dow">Mon</div>
                     <div class="ov-cal-num">6</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Fly home</div>
                 </div>
-                <div class="ov-cal-day ov-cal-flex">
+                <div class="ov-cal-day" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.25)">
                     <div class="ov-cal-dow">Tue</div>
                     <div class="ov-cal-num">7</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Castle&rarr;Munich</div>
                 </div>
-                <div class="ov-cal-day ov-cal-flex">
+                <div class="ov-cal-day" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.25)">
                     <div class="ov-cal-dow">Wed</div>
                     <div class="ov-cal-num">8</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Munich</div>
                 </div>
                 <div class="ov-cal-day ov-cal-flex">
                     <div class="ov-cal-dow">Thu</div>
                     <div class="ov-cal-num">9</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Drive home</div>
                 </div>
                 <div class="ov-cal-day ov-cal-flex">
                     <div class="ov-cal-dow">Fri</div>
                     <div class="ov-cal-num">10</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Chill</div>
                 </div>
                 <div class="ov-cal-day ov-cal-flex">
                     <div class="ov-cal-dow">Sat</div>
                     <div class="ov-cal-num">11</div>
-                    <div class="ov-cal-label">Flexible</div>
+                    <div class="ov-cal-label">Farewell</div>
                 </div>
                 <div class="ov-cal-day ov-cal-fixed">
                     <div class="ov-cal-dow">Sun</div>
@@ -1349,15 +1372,33 @@
                 </div>
             </div>
             <div class="ov-legend">
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(239,68,68,0.3)"></div>Fixed (flights)</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.3)"></div>4th of July (abroad)</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.12)"></div>Flexible</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(239,68,68,0.3)"></div>Flights</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.3)"></div>Porto (Portugal)</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(234,179,8,0.25)"></div>Castle + Munich</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.12)"></div>KL / Chill</div>
+            </div>
+        </div>
+
+        <div class="ov-section" style="text-align:center; border-color:rgba(52,211,153,0.2)">
+            <div class="rec-paragraph" style="margin-bottom:16px">
+                <button class="rec-cta-btn" onclick="renderPlan('porto')" style="font-size:13px;padding:12px 32px">View Full Day-by-Day Itinerary &rarr;</button>
             </div>
         </div>
 
         <div class="ov-section">
-            <div class="ov-section-title">All 8 Plans</div>
-            <div class="ov-plan-cards" id="ov-plan-cards"></div>
+            <div class="ov-section-title">How We Decided</div>
+            <div class="rec-paragraph" style="margin-bottom:16px">
+                We evaluated 8 itinerary options across 6 countries. The tradeoff was always the same: more destinations = less downtime. Porto won because it delivers a stunning international weekend <em>and</em> the most chill days at home (4). The castle and Munich are locked in as must-do's. The 4th of July is spent in Portugal instead of fighting crowds in Paris or Strasbourg.
+            </div>
+            <div class="rec-paragraph" style="margin-bottom:20px">
+                <strong style="color:#e2e8f0">The other plans are archived below</strong> &mdash; click "Show other plans" in the tab bar to browse them. They range from Paris + Amsterdam (most ambitious) to Palma de Mallorca (beach-focused) to a minimal Strasbourg day trip.
+            </div>
+        </div>
+
+        <div class="ov-section">
+            <div class="ov-section-title">All Plans Comparison</div>
+            <div class="compare-picker" id="compare-picker"></div>
+            <div id="compare-result"></div>
         </div>
 
         <div class="ov-section">
@@ -1376,26 +1417,6 @@
                 <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#38bdf8"></div>Chill days at home</div>
                 <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#fb923c"></div>Hotel nights away</div>
             </div>
-        </div>
-
-        <div class="ov-section">
-            <div class="ov-section-title">Compare Plans Side-by-Side</div>
-            <div class="compare-picker" id="compare-picker"></div>
-            <div id="compare-result"></div>
-        </div>
-
-        <div class="ov-section">
-            <div class="ov-section-title">Key Decisions</div>
-            <div class="rec-paragraph" style="margin-bottom:16px">
-                Every plan shares the same bones: Melissa arrives Friday Jul 3 at Frankfurt, you drive home to Kaiserslautern, and 10 days later she flies out Sunday Jul 12. In between, Neuschwanstein Castle and Munich are locked in as a 2-day block. The 4th of July must be spent outside Germany. What changes between plans is <em>where</em> you go for the 4th, <em>how many</em> chill days you keep at home, and whether you add Amsterdam on top.
-            </div>
-            <div class="rec-paragraph">
-                <strong style="color:#e2e8f0">The tradeoff is simple:</strong> more destinations = less downtime. The Primary plan hits 4 countries and 6 cities but only gives you 1 day to breathe. The Chill plan maxes out home time but only visits France. Plans like Porto and Provence split the difference &mdash; a focused international trip plus the Bavarian must-do's, with enough KL days to actually relax together. The budget spread is ~$1,200 on the low end (Chill) to ~$2,400 on the high end (Primary), driven mostly by hotel nights and whether you fly or drive.
-            </div>
-        </div>
-
-        <div class="ov-section" style="text-align:center; border-color:rgba(99,130,255,0.2)">
-            <div class="rec-paragraph" style="margin-bottom:16px">Click any plan tab above to see the full day-by-day itinerary, route map, budget breakdown, and booking checklist.</div>
         </div>
     </div>
 
@@ -2323,16 +2344,39 @@ recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(16
 recBtn.addEventListener('click', () => showRec());
 tabBar.appendChild(recBtn);
 
-// Plan tabs — Porto first, then the rest
-const planOrder = ['porto', ...Object.keys(plans).filter(k => k !== 'porto')];
-planOrder.forEach(key => {
-    const p = plans[key];
+// Porto tab (chosen plan — third)
+const portoP = plans['porto'];
+const portoBtn = document.createElement('button');
+portoBtn.className = 'tab-btn';
+portoBtn.dataset.plan = 'porto';
+portoBtn.innerHTML = `${portoP.name}<span class="tab-badge badge-chosen">&#10003; CHOSEN</span>`;
+portoBtn.addEventListener('click', () => renderPlan('porto'));
+tabBar.appendChild(portoBtn);
+
+// Archive toggle button
+const archiveToggle = document.createElement('button');
+archiveToggle.className = 'archive-toggle';
+archiveToggle.textContent = 'Show other plans';
+let archiveVisible = false;
+const archivedBtns = [];
+archiveToggle.addEventListener('click', () => {
+    archiveVisible = !archiveVisible;
+    archiveToggle.textContent = archiveVisible ? 'Hide other plans' : 'Show other plans';
+    archivedBtns.forEach(b => b.style.display = archiveVisible ? '' : 'none');
+});
+tabBar.appendChild(archiveToggle);
+
+// Archived plan tabs (hidden by default)
+Object.entries(plans).forEach(([key, p]) => {
+    if (key === 'porto') return;
     const btn = document.createElement('button');
-    btn.className = 'tab-btn';
+    btn.className = 'tab-btn archived';
     btn.dataset.plan = key;
     btn.innerHTML = `${p.name}<span class="tab-badge ${p.badgeClass}">${p.badge}</span>`;
     btn.addEventListener('click', () => renderPlan(key));
+    btn.style.display = 'none';
     tabBar.appendChild(btn);
+    archivedBtns.push(btn);
 });
 
 function hideAllViews() {
@@ -2370,24 +2414,7 @@ renderPlan = function(planKey) {
     }, 100);
 };
 
-// ===================== OVERVIEW: PLAN CARDS =====================
-const planCardsEl = document.getElementById('ov-plan-cards');
-const july4Map = { primary: 'Paris', balanced: 'Paris (day trip)', chill: 'Paris', minimal: 'Strasbourg', provence: 'Arles', milan: 'Milan', porto: 'Porto', palma: 'Palma' };
-Object.entries(plans).forEach(([key, p]) => {
-    const card = document.createElement('div');
-    card.className = 'ov-plan-card' + (key === 'porto' ? ' ov-card-rec' : '');
-    card.innerHTML = `
-        <div class="ov-plan-name">${p.name}</div>
-        <div class="ov-plan-july4">4th of July: ${july4Map[key]}</div>
-        <div class="ov-plan-meta"><span>Countries</span><span class="ov-plan-meta-val">${p.stats.countries}</span></div>
-        <div class="ov-plan-meta"><span>Hotel Nights</span><span class="ov-plan-meta-val">${p.stats.hotelNights}</span></div>
-        <div class="ov-plan-meta"><span>Driving</span><span class="ov-plan-meta-val">${p.stats.km}</span></div>
-        <div class="ov-plan-chill">${Array.from({length:5}, (_,i) => `<div class="ov-plan-chill-dot${i < p.stats.chill ? ' filled' : ''}"></div>`).join('')}</div>
-        <div class="ov-plan-budget">${p.budgetTotal}</div>
-    `;
-    card.addEventListener('click', () => renderPlan(key));
-    planCardsEl.appendChild(card);
-});
+// ===================== OVERVIEW: PLAN CARDS (removed — plans archived) =====================
 
 // ===================== OVERVIEW: BUDGET CHART =====================
 const budgetChartEl = document.getElementById('ov-budget-chart');
