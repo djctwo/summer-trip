@@ -19,7 +19,13 @@ Melissa's Jul 3–12, 2026 trip dashboard. Interactive single-file HTML with Lea
 - **Password**: hashed with SHA-256 (`hotcheetos123!@#`)
 - **Theme**: Dark (deep navy, frosted panels, Inter font)
 - **Maps**: Leaflet.js via CDN, dark CartoDB tiles
-- **Single-file**: ~1300 lines, all JS/CSS embedded
+- **Single-file**: ~3200 lines, all JS/CSS embedded
+
+## Views / Tabs
+Three view modes managed by `hideAllViews()`:
+1. **Overview** (default landing) — hero, stats bar, "What's Locked In", 10-day calendar strip, plan cards grid, budget chart (Chart.js bar), chill chart (Chart.js doughnut), plan comparison picker with dynamic analysis, key decisions
+2. **Plan Content** (8 plan tabs) — trip overview summary, route map, day-by-day itinerary, weather cards, destination cards, travel notes, packing checklist, booking links, emergency info, hotel recommendations (Porto), share/copy itinerary
+3. **Recommended Pick** — Porto recommendation with pros/cons, why-Porto rationale
 
 ## Current Plans (8 tabs)
 All plans include **Neuschwanstein Castle + Munich** as a locked 2-day block (must-do's).
@@ -36,6 +42,24 @@ All plans include **Neuschwanstein Castle + Munich** as a locked 2-day block (mu
 | 7 | porto | Porto 2 nights (Ryanair €229/pp) | Jul 7-8 | 4 KL chill days |
 | 8 | palma | Palma 3 nights (Ryanair €101/pp) | Jul 8-9 | 2 KL chill days |
 
+## Features Per Plan Tab
+- **Trip Overview Summary**: paragraph-style overview (~900-1050 chars)
+- **Route Map**: Leaflet.js with plan-specific markers and routes
+- **Day-by-Day Itinerary**: timeline with destinations, drives, activities
+- **Weather Cards**: avg temp, rain chance, description per city
+- **Destination Cards**: emoji hero + highlights per destination
+- **Travel Notes**: plan-aware (only shows info for cities in that plan)
+- **Packing Checklist**: base items + conditional items per plan, localStorage persistence
+- **Booking Links**: plan-specific booking resources
+- **Emergency Info**: embassy, insurance, emergency numbers
+- **Hotel Recommendations**: Porto plan has 3 hotel picks (Carris Porto Ribeira TOP PICK, Eurostars Porto Douro, Ribeira Douro Hotel) with Booking.com links
+- **Share/Copy Itinerary**: Clipboard API, share toast notification
+
+## Plan Comparison Picker
+- Interactive pill selector for comparing 2+ plans side-by-side
+- Compares: duration, hotel nights, transport, destinations, budget, chill days
+- Dynamic analysis summary below the table with best-for recommendations
+
 ## Locations on Map
 KL, Frankfurt (FRA), Strasbourg, Paris, Neuschwanstein, Munich, Amsterdam, Marseille (MRS), Arles, Luxembourg (LUX), Porto (OPO), Milan Bergamo (BGY), Palma (PMI), Frankfurt Hahn (HHN)
 
@@ -45,6 +69,14 @@ KL, Frankfurt (FRA), Strasbourg, Paris, Neuschwanstein, Munich, Amsterdam, Marse
 - **Home base**: Kaiserslautern (KL)
 - **Vehicle**: Tesla Model 3
 - **Who**: Melissa visiting Doug
+
+## Technical Architecture
+- `renderPlan()` function wrapped twice: `_origRenderPlan` (view toggle + map fix) → `_origRenderPlan2` (new features rendering)
+- `hideAllViews()` manages visibility of `overview-view`, `rec-view`, `plan-content`
+- `map.invalidateSize()` called before `fitBounds()` to fix hidden container sizing
+- `sessionStorage` for password unlock persistence across page navigations
+- `localStorage` for packing checklist state persistence
+- Chart.js for budget bar chart and chill days doughnut chart in Overview
 
 ## Conventions
 - Update CLAUDE.md and Session_History continuously
