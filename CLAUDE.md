@@ -21,7 +21,9 @@ Melissa's Jul 3–12, 2026 trip dashboard. Interactive single-file HTML with Lea
 - **Design context**: `.impeccable.md` in both repos defines brand personality (Warm, Excited, Polished), color palette, typography, spacing
 - **Day/Evening modes**: Toggle in topbar with localStorage persistence. Day = light/airy (#f8fbfd bg), Evening = warm/intimate (#1e2a3a bg)
 - **Maps**: Leaflet.js via CDN, dark CartoDB tiles
-- **Single-file**: ~3950 lines, all JS/CSS embedded
+- **Single-file**: ~4120 lines, all JS/CSS embedded
+- **Evening mode coverage**: 100+ `.eve-mode` rules cover all views (Overview, Rec, Plan tabs, footer, passport stamps)
+- **Color palette**: Strictly Costa Azul — no Tailwind colors, all route/timeline/text colors from `.impeccable.md` palette
 - **Animations**: Scroll-triggered section reveals (IntersectionObserver), view fade transitions, password gate fade-out, tab indicator, map marker hover scale, shimmer pause on tab hidden
 - **Accessibility**: `prefers-reduced-motion` global override, WCAG AA contrast ratios, 44px minimum touch targets
 
