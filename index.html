@@ -1311,6 +1311,8 @@
         .photo-icon { font-size: 20px; float: right; margin: -2px 0 0 8px; }
         .photo-tip { font-size: 11px; color: #8b94a6; line-height: 1.6; }
         .photo-time { font-size: 10px; color: #38bdf8; font-weight: 600; margin-top: 4px; }
+        .card-link { display: inline-block; font-size: 10px; font-weight: 600; margin-top: 6px; color: #6382ff; text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
+        .card-link:hover { opacity: 1; text-decoration: underline; }
         .share-toast {
             position: fixed;
             bottom: 30px;
@@ -2930,12 +2932,14 @@ renderPlan = function(planKey) {
     if (p.locs.includes('amsterdam')) restos.push(
         { city: 'Amsterdam', name: 'Foodhallen', type: 'Food hall', desc: 'Indoor food market in De Hallen. 20+ stalls — Vietnamese, burgers, oysters, bitterballen. Great for grazing.', must: true }
     );
-    restoEl.innerHTML = restos.map(r =>
-        '<div class="resto-card"><div class="resto-city">' + r.city + '</div>' +
+    restoEl.innerHTML = restos.map(r => {
+        const mapsQ = encodeURIComponent(r.name + ' ' + r.city);
+        return '<div class="resto-card"><div class="resto-city">' + r.city + '</div>' +
         '<div class="resto-name">' + r.name + (r.must ? '<span class="resto-must">MUST TRY</span>' : '') + '</div>' +
         '<div class="resto-type">' + r.type + '</div>' +
-        '<div class="resto-desc">' + r.desc + '</div></div>'
-    ).join('');
+        '<div class="resto-desc">' + r.desc + '</div>' +
+        '<a class="card-link" href="https://www.google.com/maps/search/' + mapsQ + '" target="_blank" rel="noopener">Google Maps ↗</a></div>';
+    }).join('');
 
     // Photo spots
     const photoEl = document.getElementById('photo-grid');
@@ -2971,13 +2975,15 @@ renderPlan = function(planKey) {
             { city: 'Amsterdam', spot: 'Canal Houses', icon: '🏡', tip: 'Shoot the narrow canal houses from a bridge. Keizersgracht and Herengracht are the most photogenic.', time: 'Golden hour' }
         );
     }
-    photoEl.innerHTML = photos.map(ph =>
-        '<div class="photo-card"><div class="photo-icon">' + ph.icon + '</div>' +
+    photoEl.innerHTML = photos.map(ph => {
+        const imgQ = encodeURIComponent(ph.spot + ' ' + ph.city + ' photography');
+        return '<div class="photo-card"><div class="photo-icon">' + ph.icon + '</div>' +
         '<div class="photo-city">' + ph.city + '</div>' +
         '<div class="photo-spot">' + ph.spot + '</div>' +
         '<div class="photo-tip">' + ph.tip + '</div>' +
-        '<div class="photo-time">Best time: ' + ph.time + '</div></div>'
-    ).join('');
+        '<div class="photo-time">Best time: ' + ph.time + '</div>' +
+        '<a class="card-link" href="https://www.google.com/images?q=' + imgQ + '" target="_blank" rel="noopener">Google Images ↗</a></div>';
+    }).join('');
 
     // Language cheat sheet
     const langEl = document.getElementById('lang-sections');
