@@ -1425,7 +1425,7 @@
             </div>
             <div class="ov-stat">
                 <div class="ov-stat-value" style="font-size:18px" id="ov-eur-rate">...</div>
-                <div class="ov-stat-label">EUR &rarr; USD</div>
+                <div class="ov-stat-label">USD &rarr; EUR</div>
             </div>
         </div>
 
@@ -3305,15 +3305,15 @@ setInterval(updateCountdown, 1000);
     const cached = sessionStorage.getItem(cacheKey);
     if (cached) {
         const c = JSON.parse(cached);
-        if (Date.now() - c.ts < 3600000) { rateEl.textContent = '$' + c.rate; return; }
+        if (Date.now() - c.ts < 3600000) { rateEl.textContent = '€' + c.rate; return; }
     }
     try {
-        const res = await fetch('https://api.frankfurter.app/latest?from=EUR&to=USD');
+        const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR');
         const data = await res.json();
-        const rate = data.rates.USD.toFixed(4);
-        rateEl.textContent = '$' + rate;
+        const rate = data.rates.EUR.toFixed(4);
+        rateEl.textContent = '€' + rate;
         sessionStorage.setItem(cacheKey, JSON.stringify({ rate, ts: Date.now() }));
-    } catch { rateEl.textContent = '~$1.08'; }
+    } catch { rateEl.textContent = '~€0.92'; }
 })();
 
 // ===================== BOOKING PROGRESS TRACKER =====================
