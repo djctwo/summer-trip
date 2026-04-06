@@ -811,6 +811,45 @@
             border-radius: 12px;
             backdrop-filter: blur(10px);
         }
+
+        /* Tier 3 — tertiary panels: lighter treatment */
+        .tier-tertiary {
+            background: rgba(15, 19, 35, 0.5);
+            border-color: rgba(99, 130, 255, 0.06);
+            backdrop-filter: none;
+        }
+        .tier-tertiary .panel-header {
+            font-size: 13px;
+            color: #c8cdd8;
+        }
+
+        /* Collapsible sections */
+        .panel-header.collapsible {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-header.collapsible::after {
+            content: '▾';
+            font-size: 12px;
+            color: #6b7280;
+            transition: transform 0.3s;
+        }
+        .panel-header.collapsible.collapsed::after {
+            transform: rotate(-90deg);
+        }
+        .collapsible-body {
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            max-height: 2000px;
+            opacity: 1;
+        }
+        .collapsible-body.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
         .checklist-items { padding: 16px 20px; }
         .check-item {
             display: flex; align-items: flex-start; gap: 12px;
@@ -908,6 +947,22 @@
             .stats-row { grid-template-columns: repeat(4, 1fr); }
         }
 
+        /* Mobile: tighter spacing, hint on tappable calendar */
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .ov-hero { padding: 24px 16px 20px; }
+            .ov-hero-title { font-size: 24px; }
+            .ov-stats-bar { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .ov-stat { padding: 12px 10px; }
+            .ov-stat-value { font-size: 22px; }
+            .ov-section { padding: 18px 16px; }
+            .ov-cal-day { padding: 8px 2px; }
+            .ov-cal-num { font-size: 16px; }
+            .bottom-row { gap: 16px; margin-top: 16px; }
+            .ov-cal-day:active { transform: scale(0.95); }
+            .day-card { padding: 10px 12px; }
+        }
+
         /* Weather cards */
         .weather-row {
             display: grid;
@@ -931,6 +986,7 @@
         .weather-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
         .weather-rain { font-size: 10px; color: #a78bfa; margin-top: 4px; }
         .weather-src { font-size: 8px; color: #4b5563; margin-top: 4px; }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         /* Destination cards */
         .dest-cards {
@@ -1202,27 +1258,31 @@
             display: flex; flex-direction: column; align-items: center;
         }
         .ov-cd-val {
-            font-size: 32px; font-weight: 800;
+            font-size: 36px; font-weight: 800;
             background: linear-gradient(135deg, #38bdf8, #a78bfa);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .ov-cd-label { font-size: 10px; color: #4b5563; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Booking progress */
+        /* Booking progress — tier 1, visually prominent */
+        .ov-section.tier-primary {
+            border-color: rgba(52, 211, 153, 0.2);
+            background: rgba(15, 19, 35, 0.9);
+        }
         .booking-progress {
             margin-bottom: 24px;
         }
         .bp-bar-bg {
-            height: 8px; border-radius: 4px;
+            height: 10px; border-radius: 5px;
             background: rgba(99, 130, 255, 0.1);
             margin-bottom: 10px; overflow: hidden;
         }
         .bp-bar-fill {
-            height: 100%; border-radius: 4px;
+            height: 100%; border-radius: 5px;
             background: linear-gradient(90deg, #34d399, #38bdf8);
             transition: width 0.4s ease;
         }
-        .bp-status { font-size: 12px; color: #6b7280; margin-bottom: 12px; }
+        .bp-status { font-size: 13px; font-weight: 600; color: #c8cdd8; margin-bottom: 12px; }
         .bp-items { display: flex; flex-direction: column; gap: 6px; }
         .bp-item {
             display: flex; align-items: center; gap: 10px;
@@ -1522,7 +1582,7 @@
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section tier-primary">
             <div class="ov-section-title">Booking Progress</div>
             <div class="booking-progress" id="booking-progress"></div>
         </div>
@@ -1755,18 +1815,22 @@
                 <div class="flight-number">FR2862 · Ryanair (2h 25m)</div>
             </div>
         </div>
-        <div class="notes-panel">
-            <div class="panel-header">Travel Notes</div>
-            <div class="notes-grid" id="notes-grid"></div>
+        <div class="notes-panel tier-tertiary">
+            <div class="panel-header collapsible" onclick="toggleCollapse(this)">Travel Notes</div>
+            <div class="collapsible-body">
+                <div class="notes-grid" id="notes-grid"></div>
+            </div>
         </div>
     </div>
 
     <div class="bottom-row">
-        <div class="checklist-panel">
-            <div class="panel-header">Packing Checklist</div>
-            <div class="packing-grid" id="packing-grid"></div>
+        <div class="checklist-panel tier-tertiary">
+            <div class="panel-header collapsible" onclick="toggleCollapse(this)">Packing Checklist</div>
+            <div class="collapsible-body">
+                <div class="packing-grid" id="packing-grid"></div>
+            </div>
         </div>
-        <div class="checklist-panel">
+        <div class="checklist-panel tier-tertiary">
             <div class="panel-header" style="display:flex;justify-content:space-between;align-items:center">
                 <span>Quick Book</span>
                 <button class="share-btn" id="share-btn">Copy Itinerary</button>
@@ -1776,20 +1840,26 @@
     </div>
 
     <div class="bottom-row">
-        <div class="checklist-panel">
-            <div class="panel-header">Restaurant &amp; Food Wishlist</div>
-            <div id="restaurant-grid" style="padding:16px 20px"></div>
+        <div class="checklist-panel tier-tertiary">
+            <div class="panel-header collapsible" onclick="toggleCollapse(this)">Restaurant &amp; Food Wishlist</div>
+            <div class="collapsible-body">
+                <div id="restaurant-grid" style="padding:16px 20px"></div>
+            </div>
         </div>
-        <div class="checklist-panel">
-            <div class="panel-header">Photo Spots</div>
-            <div id="photo-grid" style="padding:16px 20px"></div>
+        <div class="checklist-panel tier-tertiary">
+            <div class="panel-header collapsible" onclick="toggleCollapse(this)">Photo Spots</div>
+            <div class="collapsible-body">
+                <div id="photo-grid" style="padding:16px 20px"></div>
+            </div>
         </div>
     </div>
 
     <div class="bottom-row">
-        <div class="checklist-panel" style="grid-column: 1 / -1">
-            <div class="panel-header">Language Cheat Sheet</div>
-            <div class="lang-sections" id="lang-sections" style="padding:16px 20px"></div>
+        <div class="checklist-panel tier-tertiary" style="grid-column: 1 / -1">
+            <div class="panel-header collapsible" onclick="toggleCollapse(this)">Language Cheat Sheet</div>
+            <div class="collapsible-body">
+                <div class="lang-sections" id="lang-sections" style="padding:16px 20px"></div>
+            </div>
         </div>
     </div>
 
@@ -2696,6 +2766,18 @@ async function fetchTripWeather() {
     await Promise.all(fetches);
     sessionStorage.setItem('trip-weather-cache', JSON.stringify(weatherCache));
 }
+function renderWeatherLoading() {
+    const el = document.getElementById('weather-row');
+    if (!el) return;
+    el.innerHTML = tripWeatherDays.map(d =>
+        '<div class="weather-card" style="opacity:0.5">' +
+        '<div class="weather-day-label">' + d.label + '</div>' +
+        '<div class="weather-city">' + d.city + '</div>' +
+        '<div class="weather-icon" style="animation:pulse 1.5s ease-in-out infinite">\u2026</div>' +
+        '<div class="weather-temp" style="color:#4b5563">--\u00B0</div>' +
+        '<div class="weather-desc">Loading...</div></div>'
+    ).join('');
+}
 function renderTripWeather() {
     const el = document.getElementById('weather-row');
     if (!el) return;
@@ -2830,7 +2912,8 @@ renderPlan = function(planKey) {
 
     // Weather — live per-day for Porto plan, static for others
     if (planKey === 'porto') {
-        renderTripWeather();
+        if (!weatherCache || Object.keys(weatherCache).length === 0) renderWeatherLoading();
+        else renderTripWeather();
     } else {
         const weatherEl = document.getElementById('weather-row');
         const weatherLocs = [...new Set(p.locs.filter(k => k !== 'frankfurt' && k !== 'luxembourg' && k !== 'hahn' && k !== 'marseille' && weatherData[k]))];
@@ -3369,6 +3452,41 @@ if ('serviceWorker' in navigator) {
 fetchTripWeather().then(() => {
     // If Porto plan is already visible, refresh weather cards
     if (activePlan === 'porto') renderTripWeather();
+});
+
+// ===================== COLLAPSIBLE SECTIONS =====================
+function toggleCollapse(header) {
+    header.classList.toggle('collapsed');
+    const body = header.nextElementSibling;
+    if (body && body.classList.contains('collapsible-body')) {
+        body.classList.toggle('collapsed');
+    }
+}
+
+// Auto-collapse tertiary sections on mobile
+if (window.innerWidth <= 768) {
+    document.querySelectorAll('.tier-tertiary .panel-header.collapsible').forEach(h => {
+        h.classList.add('collapsed');
+        const body = h.nextElementSibling;
+        if (body && body.classList.contains('collapsible-body')) body.classList.add('collapsed');
+    });
+}
+
+// ===================== JUMP-TO-DAY FROM CALENDAR =====================
+document.querySelectorAll('.ov-cal-day').forEach((cal, i) => {
+    cal.style.cursor = 'pointer';
+    cal.addEventListener('click', () => {
+        // Switch to the Porto plan tab and scroll to matching day card
+        if (typeof renderPlan === 'function') renderPlan('porto');
+        setTimeout(() => {
+            const dayCards = document.querySelectorAll('.day-card');
+            if (dayCards[i]) {
+                dayCards[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                dayCards[i].classList.add('active');
+                setTimeout(() => dayCards[i].classList.remove('active'), 2000);
+            }
+        }, 100);
+    });
 });
 
 // Initial view: overview (no plan rendered yet)
