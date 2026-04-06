@@ -2168,15 +2168,15 @@ const plans = {
             kl: { sub: 'Home Base', desc: '4 chill days. Maximum time at home between trips.' },
             frankfurt: { sub: 'Airport', desc: 'Arrival Jul 3. Departure Jul 12.' },
             luxembourg: { sub: 'Jul 4 + Jul 6', desc: 'Fly Ryanair to Porto. 1h drive from KL.' },
-            porto: { sub: 'Days 2–3 (Jul 4–6)', desc: '4th of July in Portugal! Ribeira, Dom Luís Bridge, port wine cellars. 2 nights.<br><br><strong>Hotels:</strong> Carris Porto Ribeira (top pick), Eurostars Porto Douro, Ribeira Douro Hotel — all in Ribeira with river views.' },
+            porto: { sub: 'Days 2–3 (Jul 4–6)', desc: '4th of July in Portugal! Ribeira, Dom Luís Bridge, port wine cellars. 2 nights.<br><br><strong>Airport → Downtown:</strong> Metro Line E (violet), Airport → Trindade, ~35 min, Zone 4 ticket ~\u20AC2.45. Or taxi/Uber ~\u20AC25, 20 min.<br><br><strong>Hotels:</strong> Carris Porto Ribeira (top pick), Eurostars Porto Douro, Ribeira Douro Hotel — all in Ribeira with river views.' },
             neuschwanstein: { sub: 'Day 5 (Jul 7)', desc: 'Castle, Marienbrücke bridge. Drive to Munich after.' },
             munich: { sub: 'Days 5–6 (Jul 7–8)', desc: '2 nights. Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
         },
         days: [
             { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Porto — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Porto (2h35). Arrive 4:30 PM — evening in Ribeira with port wine.', schedule: [['12:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['1:00 PM', 'Arrive LUX, check in'], ['2:55 PM', 'Ryanair FR 2863 departs LUX (2h35)'], ['4:30 PM', 'Land at Porto (local time)'], ['5:15 PM', 'Taxi to hotel in Ribeira'], ['5:45 PM', 'Check in, freshen up'], ['6:30 PM', 'Walk the Ribeira waterfront'], ['7:30 PM', '4th of July dinner — riverside restaurant'], ['9:00 PM', 'Port wine tasting at sunset on Dom Luís Bridge']], overnight: 'Porto hotel', transport: 'Drive 1h + Flight 2h35', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'Ribeira', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['kl', 'luxembourg', 'porto'], color: '#d97706' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Porto — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Porto (2h35). Arrive 4:30 PM — evening in Ribeira with port wine.', schedule: [['12:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['1:00 PM', 'Arrive LUX, check in'], ['2:55 PM', 'Ryanair FR 2863 departs LUX (2h35)'], ['4:30 PM', 'Land at Porto (local time)'], ['5:00 PM', 'Metro Line E (violet) from Airport → Trindade (~35 min, Zone 4 ticket ~\u20AC2.45)'], ['5:45 PM', 'Check into hotel in Ribeira'], ['6:30 PM', 'Walk the Ribeira waterfront'], ['7:30 PM', '4th of July dinner — riverside restaurant'], ['9:00 PM', 'Port wine tasting at sunset on Dom Luís Bridge']], overnight: 'Porto hotel', transport: 'Drive 1h + Flight 2h35 + Metro 35min', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'Ribeira', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['kl', 'luxembourg', 'porto'], color: '#d97706' },
             { day: 3, date: 'Sun Jul 5', dest: 'Porto — Full Day', desc: 'Dom Luís Bridge, Livraria Lello, Clérigos Tower, port wine cellars in Vila Nova de Gaia.', schedule: [['9:00 AM', 'Breakfast — pastéis de nata + galão'], ['10:00 AM', 'Clérigos Tower — climb for panoramic views'], ['11:00 AM', 'Livraria Lello (Harry Potter bookshop)'], ['12:00 PM', 'Walk through Ribeira to Dom Luís Bridge'], ['1:00 PM', 'Cross to Vila Nova de Gaia, lunch'], ['2:30 PM', 'Port wine cellar tour (Taylor\'s or Sandeman)'], ['4:30 PM', 'São Bento Station — stunning tiles'], ['5:30 PM', 'Jardins do Palácio de Cristal — sunset views'], ['8:00 PM', 'Dinner — francesinha (Porto specialty)']], overnight: 'Porto hotel', transport: '—', tags: [{ text: 'Dom Luís Bridge', cls: 'tag-landmark' }, { text: 'Port wine', cls: 'tag-food' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['porto'], color: '#d97706' },
-            { day: 4, date: 'Mon Jul 6', dest: 'Porto → Luxembourg → KL', desc: 'Fly back to Luxembourg. Home by ~6 PM.', schedule: [['9:00 AM', 'Last breakfast in Ribeira'], ['10:00 AM', 'Morning walk — Foz do Douro beach'], ['11:30 AM', 'Taxi to Porto airport'], ['1:10 PM', 'Ryanair FR 2862 departs OPO (2h25)'], ['4:35 PM', 'Land at Luxembourg (local time)'], ['5:00 PM', 'Pick up car, drive to KL (1h)'], ['6:00 PM', 'Home in KL'], ['7:30 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Flight 2h25 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['porto', 'luxembourg', 'kl'], color: '#d97706' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Porto → Luxembourg → KL', desc: 'Fly back to Luxembourg. Home by ~6 PM.', schedule: [['9:00 AM', 'Last breakfast in Ribeira'], ['10:00 AM', 'Morning walk — Foz do Douro beach'], ['11:15 AM', 'Metro Trindade → Airport (~35 min) or taxi (~20 min, ~\u20AC25)'], ['1:10 PM', 'Ryanair FR 2862 departs OPO (2h25)'], ['4:35 PM', 'Land at Luxembourg (local time)'], ['5:00 PM', 'Pick up car, drive to KL (1h)'], ['6:00 PM', 'Home in KL'], ['7:30 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Metro/taxi + Flight 2h25 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['porto', 'luxembourg', 'kl'], color: '#d97706' },
             { day: 5, date: 'Tue Jul 7', dest: 'KL → Neuschwanstein → Munich', desc: 'Castle, Marienbrücke bridge, then drive to Munich.', schedule: [['7:00 AM', 'Leave KL (4h drive)'], ['11:00 AM', 'Arrive Schwangau'], ['11:30 AM', 'Lunch in Schwangau'], ['12:30 PM', 'Neuschwanstein Castle (~2h)'], ['2:30 PM', 'Marienbrücke bridge'], ['3:00 PM', 'Hohenschwangau Castle (~1h)'], ['4:00 PM', 'Drive to Munich (2h)'], ['6:00 PM', 'Arrive Munich, check into hotel'], ['7:30 PM', 'Dinner at beer hall']], overnight: 'Munich hotel', transport: 'Drive 4h + 2h', tags: [{ text: '6h driving', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein', 'munich'], color: '#eab308' },
             { day: 6, date: 'Wed Jul 8', dest: 'Munich — Full Day', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, Residenz.', schedule: [['9:00 AM', 'Breakfast at hotel'], ['10:00 AM', 'Marienplatz + Glockenspiel'], ['11:00 AM', 'Viktualienmarkt — browse + snack'], ['12:30 PM', 'Lunch at Viktualienmarkt'], ['2:00 PM', 'Englischer Garten — walk to Chinese Tower'], ['3:30 PM', 'Munich Residenz or BMW World'], ['5:00 PM', 'Shopping — Maximilianstraße or Kaufingerstraße'], ['7:00 PM', 'Dinner at Augustiner-Keller or Hofbräuhaus'], ['9:00 PM', 'Evening walk along the Isar']], overnight: 'Munich hotel', transport: '—', tags: [{ text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich'], color: '#eab308' },
             { day: 7, date: 'Thu Jul 9', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
@@ -2710,10 +2710,12 @@ const bookingLinksData = {
         { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
     ],
     porto:    [
-        { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'LUX\u2013OPO round trip', url: 'https://www.ryanair.com' },
-        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein', desc: 'Timed entry tickets', url: 'https://www.hohenschwangau.de/en' },
+        { icon: '\u2708\uFE0F', title: 'Ryanair — BOOKED \u2713', desc: 'FR2863 Jul 4 + FR2862 Jul 6. Check-in opens May 5.', url: 'https://www.ryanair.com/trip/flights' },
+        { icon: '\uD83C\uDFF0', title: 'Neuschwanstein Tickets', desc: 'Timed entry — sells out weeks ahead!', url: 'https://www.hohenschwangau.de/en/show-rooms/ticket-center' },
         { icon: '\uD83C\uDF77', title: 'Port Wine Tour', desc: "Taylor's or Sandeman cellar", url: 'https://www.taylor.pt/en/visit-us' },
-        { icon: '\uD83C\uDFE8', title: 'Booking.com', desc: 'Hotels for all stops', url: 'https://www.booking.com' }
+        { icon: '\uD83D\uDE87', title: 'Porto Metro', desc: 'Airport → Trindade (Zone 4 ticket, ~35 min)', url: 'https://en.metrodoporto.pt/' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com — Porto', desc: 'Ribeira area, 2 nights Jul 4\u20135', url: 'https://www.booking.com/searchresults.html?ss=Ribeira%2C+Porto&checkin=2026-07-04&checkout=2026-07-06&group_adults=2' },
+        { icon: '\uD83C\uDFE8', title: 'Booking.com — Munich', desc: 'Central, 2 nights Jul 7\u20138', url: 'https://www.booking.com/searchresults.html?ss=Munich+City+Centre&checkin=2026-07-07&checkout=2026-07-09&group_adults=2' }
     ],
     palma:    [
         { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'HHN\u2013PMI round trip (\u20AC101/pp)', url: 'https://www.ryanair.com' },
@@ -2778,11 +2780,26 @@ renderPlan = function(planKey) {
               detail: 'Highest-rated hotel in Ribeira at 9.6/10. Quiet street, 1 minute from the riverwalk. Excellent daily breakfast with rotating hot food. 14 rooms \u2014 book early. Family rooms available with mini fridge + tea/coffee.',
               tags: ['Best rated', 'Ribeira', 'Quiet street', 'Great breakfast'],
               url: 'https://www.booking.com/hotel/pt/ribeira-douro.html' }
+        ],
+        munich: [
+            { name: 'Hotel M\u00FCnchen Palace', stars: 5, rating: '9.2', reviews: '2,100', price: '~$180\u2013260/night', pick: false,
+              detail: 'Boutique luxury near Maximilianstra\u00DFe. Rooftop terrace with Alps views. Walking distance to Marienplatz, Viktualienmarkt, and the Isar. Excellent breakfast buffet.',
+              tags: ['Central', 'Rooftop', 'Luxury', 'Near Marienplatz'],
+              url: 'https://www.booking.com/hotel/de/munchen-palace.html' },
+            { name: 'Motel One M\u00FCnchen-Sendlinger Tor', stars: 3, rating: '8.8', reviews: '8,500', price: '~$100\u2013140/night', pick: true,
+              detail: 'Best value in central Munich. Modern design hotel 5 min from Marienplatz. Stylish lobby bar. No frills but everything you need \u2014 great beds, rain showers, fast WiFi. Book early, sells out fast in summer.',
+              tags: ['Best value', 'Central', 'Modern', 'Near Marienplatz'],
+              url: 'https://www.booking.com/hotel/de/motel-one-munchen-sendlinger-tor.html' },
+            { name: 'Hotel Laimer Hof', stars: 3, rating: '9.0', reviews: '1,850', price: '~$110\u2013160/night', pick: false,
+              detail: 'Charming villa near Nymphenburg Palace. Quieter neighborhood, beautiful garden. 10 min by U-Bahn to Marienplatz. Free parking \u2014 great for the Tesla. Homemade breakfast.',
+              tags: ['Free parking', 'Quiet', 'Garden', 'Near Nymphenburg'],
+              url: 'https://www.booking.com/hotel/de/laimer-hof.html' }
         ]
     };
-    const hotels = hotelData[planKey];
-    if (hotels) {
-        hotelEl.innerHTML = '<div class="panel-header" style="background:rgba(15,19,35,0.8);border:1px solid rgba(99,130,255,0.1);border-radius:12px 12px 0 0;border-bottom:none;margin-bottom:0">Hotel Recommendations \u2014 ' + (planKey.charAt(0).toUpperCase() + planKey.slice(1)) + '</div><div style="background:rgba(15,19,35,0.5);border:1px solid rgba(99,130,255,0.1);border-top:none;border-radius:0 0 12px 12px;padding:18px 20px"><div class="hotel-cards">' + hotels.map(h => {
+    // Collect hotels for all cities in this plan
+    const hotelCities = Object.keys(hotelData).filter(k => p.locs.includes(k) || k === planKey);
+    if (hotelCities.length) {
+        function renderHotelCard(h) {
             const starsStr = '\u2605'.repeat(h.stars);
             return '<div class="hotel-card' + (h.pick ? ' hotel-pick' : '') + '">' +
                 (h.pick ? '<div class="hotel-pick-badge">TOP PICK</div>' : '') +
@@ -2792,7 +2809,13 @@ renderPlan = function(planKey) {
                 '<div class="hotel-price">' + h.price + ' (Jul peak)</div>' +
                 '<div class="hotel-tags">' + h.tags.map(t => '<span class="hotel-tag' + (t.includes('view') ? ' hotel-tag-view' : '') + '">' + t + '</span>').join('') + '</div>' +
                 '<a class="hotel-book-btn" href="' + h.url + '" target="_blank" rel="noopener">View on Booking.com \u2197</a></div>';
-        }).join('') + '</div></div>';
+        }
+        hotelEl.innerHTML = hotelCities.map(city => {
+            const label = city.charAt(0).toUpperCase() + city.slice(1);
+            return '<div class="panel-header" style="background:rgba(15,19,35,0.8);border:1px solid rgba(99,130,255,0.1);border-radius:12px 12px 0 0;border-bottom:none;margin-bottom:0">Hotel Recommendations \u2014 ' + label + '</div>' +
+                '<div style="background:rgba(15,19,35,0.5);border:1px solid rgba(99,130,255,0.1);border-top:none;border-radius:0 0 12px 12px;padding:18px 20px;margin-bottom:16px"><div class="hotel-cards">' +
+                hotelData[city].map(renderHotelCard).join('') + '</div></div>';
+        }).join('');
     } else {
         hotelEl.innerHTML = '';
     }
