@@ -17,9 +17,13 @@ Melissa's Jul 3–12, 2026 trip dashboard. Interactive single-file HTML with Lea
 
 ## Dashboard Details
 - **Password**: hashed with SHA-256 (`hotcheetos123!@#`)
-- **Theme**: Dark (deep navy, frosted panels, Inter font)
+- **Theme**: Costa Azul (coastal European warmth — Playfair Display + Outfit fonts, terracotta/ocean blue/olive/golden palette)
+- **Design context**: `.impeccable.md` in both repos defines brand personality (Warm, Excited, Polished), color palette, typography, spacing
+- **Day/Evening modes**: Toggle in topbar with localStorage persistence. Day = light/airy (#f8fbfd bg), Evening = warm/intimate (#1e2a3a bg)
 - **Maps**: Leaflet.js via CDN, dark CartoDB tiles
-- **Single-file**: ~3200 lines, all JS/CSS embedded
+- **Single-file**: ~3950 lines, all JS/CSS embedded
+- **Animations**: Scroll-triggered section reveals (IntersectionObserver), view fade transitions, password gate fade-out, tab indicator, map marker hover scale, shimmer pause on tab hidden
+- **Accessibility**: `prefers-reduced-motion` global override, WCAG AA contrast ratios, 44px minimum touch targets
 
 ## Views / Tabs
 Three view modes managed by `hideAllViews()`:
@@ -52,7 +56,7 @@ All plans include **Neuschwanstein Castle + Munich** as a locked 2-day block (mu
 - **Packing Checklist**: base items + conditional items per plan, localStorage persistence
 - **Booking Links**: plan-specific booking resources
 - **Emergency Info**: embassy, insurance, emergency numbers
-- **Hotel Recommendations**: Porto plan has 3 hotel picks (Carris Porto Ribeira TOP PICK, Eurostars Porto Douro, Ribeira Douro Hotel) with Booking.com links
+- **Hotel Recommendations**: Porto (6 hotels) + Munich (3 hotels) with Booking.com search-based links (direct URL slugs were broken — switched to `searchresults.html?ss=` format)
 - **Share/Copy Itinerary**: Clipboard API, share toast notification
 
 ## Plan Comparison Picker
