@@ -2261,6 +2261,12 @@ let activePlan = 'primary';
 let mapMarkers = [];
 let mapRoutes = [];
 
+// Shared booking state — used by both Overview and Trip tab checklists
+const bookingState = JSON.parse(localStorage.getItem('trip-booking-progress') || '{}');
+if (!bookingState['po-flights']) { bookingState['po-flights'] = true; localStorage.setItem('trip-booking-progress', JSON.stringify(bookingState)); }
+function saveBooking() { localStorage.setItem('trip-booking-progress', JSON.stringify(bookingState)); }
+let renderBP = null; // set when overview booking progress mounts
+
 // ===================== MAP SETUP =====================
 const map = L.map('map', { center: [48.5, 7.5], zoom: 5, zoomControl: false, attributionControl: false });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
@@ -2399,12 +2405,11 @@ function renderPlan(planKey) {
         timelineEl.appendChild(card);
     });
 
-    // Checklist
+    // Checklist — shares state with Overview booking progress
     const checklistEl = document.getElementById('checklist');
     checklistEl.innerHTML = '';
-    const saved = JSON.parse(localStorage.getItem('trip-checklist') || '{}');
     p.bookings.forEach(b => {
-        const isChecked = saved[b.key] || false;
+        const isChecked = bookingState[b.key] || false;
         const item = document.createElement('div');
         item.className = 'check-item' + (isChecked ? ' checked' : '');
         const prioClass = b.priority === 'urgent' ? 'priority-urgent' : b.priority === 'soon' ? 'priority-soon' : 'priority-later';
@@ -2415,9 +2420,10 @@ function renderPlan(planKey) {
             <span class="check-priority ${prioClass}">${prioLabel}</span>
         `;
         item.addEventListener('click', () => {
-            saved[b.key] = !saved[b.key];
-            localStorage.setItem('trip-checklist', JSON.stringify(saved));
+            bookingState[b.key] = !bookingState[b.key];
+            saveBooking();
             renderPlan(activePlan);
+            if (renderBP) renderBP();
         });
         checklistEl.appendChild(item);
     });
@@ -3164,20 +3170,18 @@ setInterval(updateCountdown, 1000);
 const bpEl = document.getElementById('booking-progress');
 if (bpEl) {
     const bpItems = plans.porto.bookings;
-    const bpSaved = JSON.parse(localStorage.getItem('trip-booking-progress') || '{}');
-    if (!bpSaved['po-flights']) { bpSaved['po-flights'] = true; localStorage.setItem('trip-booking-progress', JSON.stringify(bpSaved)); }
-    function renderBP() {
+    renderBP = function() {
         const total = bpItems.length;
-        const done = bpItems.filter(b => bpSaved[b.key]).length;
+        const done = bpItems.filter(b => bookingState[b.key]).length;
         const pct = Math.round((done / total) * 100);
         let html = '<div class="bp-bar-bg"><div class="bp-bar-fill" style="width:' + pct + '%"></div></div>';
         html += '<div class="bp-status">' + done + ' of ' + total + ' booked (' + pct + '%)</div>';
         html += '<div class="bp-items">';
         bpItems.forEach(b => {
-            const checked = bpSaved[b.key] ? ' booked' : '';
+            const checked = bookingState[b.key] ? ' booked' : '';
             const priClass = b.priority === 'urgent' ? 'bp-priority-urgent' : b.priority === 'soon' ? 'bp-priority-soon' : 'bp-priority-later';
             html += '<div class="bp-item' + checked + '" data-bp-key="' + b.key + '">' +
-                '<div class="bp-check">' + (bpSaved[b.key] ? '✓' : '') + '</div>' +
+                '<div class="bp-check">' + (bookingState[b.key] ? '✓' : '') + '</div>' +
                 '<div class="bp-label">' + b.title + '<br><span style="font-size:10px;color:#6b7280">' + b.detail + '</span></div>' +
                 '<span class="bp-priority ' + priClass + '">' + b.priority + '</span></div>';
         });
@@ -3186,12 +3190,18 @@ if (bpEl) {
         bpEl.querySelectorAll('.bp-item').forEach(item => {
             item.addEventListener('click', () => {
                 const key = item.dataset.bpKey;
-                bpSaved[key] = !bpSaved[key];
-                localStorage.setItem('trip-booking-progress', JSON.stringify(bpSaved));
+                bookingState[key] = !bookingState[key];
+                saveBooking();
                 renderBP();
+                // Sync the trip tab checklist if visible
+                const clEl = document.getElementById('checklist');
+                if (clEl) {
+                    const match = clEl.querySelector('.check-item:nth-child(' + (bpItems.findIndex(b => b.key === key) + 1) + ')');
+                    if (match) match.classList.toggle('checked', bookingState[key]);
+                }
             });
         });
-    }
+    };
     renderBP();
 }
 
