@@ -923,11 +923,14 @@
             text-align: center;
             backdrop-filter: blur(10px);
         }
+        .weather-day-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #a78bfa; margin-bottom: 2px; }
         .weather-city { font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
         .weather-icon { font-size: 24px; margin-bottom: 4px; }
         .weather-temp { font-size: 18px; font-weight: 800; color: #38bdf8; }
+        .weather-temp-lo { font-size: 12px; font-weight: 600; color: #6b7280; }
         .weather-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
         .weather-rain { font-size: 10px; color: #a78bfa; margin-top: 4px; }
+        .weather-src { font-size: 8px; color: #4b5563; margin-top: 4px; }
 
         /* Destination cards */
         .dest-cards {
@@ -2635,23 +2638,89 @@ Object.entries(plans).forEach(([key, p]) => {
 });
 
 // ===================== WEATHER DATA =====================
-const weatherData = {
-    kl:             { icon: '\u2600\uFE0F', temp: '75\u00B0F / 24\u00B0C', desc: 'Warm, partly cloudy', rain: '40% rain chance' },
-    paris:          { icon: '\u26C5', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, occasional showers', rain: '35% rain chance' },
-    strasbourg:     { icon: '\u2600\uFE0F', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, sunny spells', rain: '35% rain chance' },
-    amsterdam:      { icon: '\u26C5', temp: '72\u00B0F / 22\u00B0C', desc: 'Mild, variable clouds', rain: '45% rain chance' },
-    neuschwanstein: { icon: '\u26C5', temp: '73\u00B0F / 23\u00B0C', desc: 'Alpine, can change fast', rain: '50% rain chance' },
-    munich:         { icon: '\u2600\uFE0F', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, summer storms', rain: '40% rain chance' },
-    arles:          { icon: '\u2600\uFE0F', temp: '90\u00B0F / 32\u00B0C', desc: 'Hot & dry, mistral wind', rain: '10% rain chance' },
-    milan:          { icon: '\u2600\uFE0F', temp: '86\u00B0F / 30\u00B0C', desc: 'Hot & humid', rain: '30% rain chance' },
-    porto:          { icon: '\u2600\uFE0F', temp: '72\u00B0F / 22\u00B0C', desc: 'Warm, ocean breeze', rain: '15% rain chance' },
-    palma:          { icon: '\u2600\uFE0F', temp: '86\u00B0F / 30\u00B0C', desc: 'Hot, beach weather', rain: '5% rain chance' }
+// Per-day weather for the Porto plan — fetched live from Open-Meteo
+const tripWeatherDays = [
+    { date: '2026-07-03', label: 'Fri Jul 3', city: 'Kaiserslautern', lat: 49.44, lon: 7.77 },
+    { date: '2026-07-04', label: 'Sat Jul 4', city: 'Porto', lat: 41.15, lon: -8.63 },
+    { date: '2026-07-05', label: 'Sun Jul 5', city: 'Porto', lat: 41.15, lon: -8.63 },
+    { date: '2026-07-06', label: 'Mon Jul 6', city: 'Kaiserslautern', lat: 49.44, lon: 7.77 },
+    { date: '2026-07-07', label: 'Tue Jul 7', city: 'Neuschwanstein', lat: 47.56, lon: 10.75 },
+    { date: '2026-07-08', label: 'Wed Jul 8', city: 'Munich', lat: 48.14, lon: 11.58 },
+    { date: '2026-07-09', label: 'Thu Jul 9', city: 'Kaiserslautern', lat: 49.44, lon: 7.77 },
+    { date: '2026-07-10', label: 'Fri Jul 10', city: 'Kaiserslautern', lat: 49.44, lon: 7.77 },
+    { date: '2026-07-11', label: 'Sat Jul 11', city: 'Kaiserslautern', lat: 49.44, lon: 7.77 },
+    { date: '2026-07-12', label: 'Sun Jul 12', city: 'Frankfurt', lat: 50.03, lon: 8.57 }
+];
+const wmoIcons = { 0:'\u2600\uFE0F', 1:'\uD83C\uDF24', 2:'\u26C5', 3:'\u2601\uFE0F', 45:'\uD83C\uDF2B', 48:'\uD83C\uDF2B', 51:'\uD83C\uDF26', 53:'\uD83C\uDF26', 55:'\uD83C\uDF27', 61:'\uD83C\uDF27', 63:'\uD83C\uDF27', 65:'\uD83C\uDF27\uFE0F', 71:'\u2744\uFE0F', 73:'\u2744\uFE0F', 75:'\u2744\uFE0F', 80:'\uD83C\uDF26', 81:'\uD83C\uDF27', 82:'\u26C8', 95:'\u26C8', 96:'\u26C8', 99:'\u26C8' };
+const wmoDescs = { 0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast', 45:'Fog', 48:'Rime fog', 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 61:'Light rain', 63:'Moderate rain', 65:'Heavy rain', 71:'Light snow', 73:'Snow', 75:'Heavy snow', 80:'Light showers', 81:'Showers', 82:'Heavy showers', 95:'Thunderstorm', 96:'Thunderstorm + hail', 99:'Severe thunderstorm' };
+// Historical July averages as fallback (when forecast unavailable)
+const histAvg = {
+    '49.44,7.77':  { hi: 25, lo: 14, rain: 40, code: 2, city: 'Kaiserslautern' },
+    '41.15,-8.63': { hi: 25, lo: 15, rain: 10, code: 1, city: 'Porto' },
+    '47.56,10.75': { hi: 23, lo: 12, rain: 50, code: 2, city: 'Neuschwanstein' },
+    '48.14,11.58': { hi: 25, lo: 14, rain: 40, code: 2, city: 'Munich' },
+    '50.03,8.57':  { hi: 26, lo: 15, rain: 35, code: 1, city: 'Frankfurt' }
 };
-
+let weatherCache = null;
+async function fetchTripWeather() {
+    const cached = sessionStorage.getItem('trip-weather-cache');
+    if (cached) { try { weatherCache = JSON.parse(cached); return; } catch(e) {} }
+    const locs = {};
+    tripWeatherDays.forEach(d => { const k = d.lat + ',' + d.lon; if (!locs[k]) locs[k] = { lat: d.lat, lon: d.lon, dates: [] }; locs[k].dates.push(d.date); });
+    weatherCache = {};
+    const fetches = Object.values(locs).map(async loc => {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + loc.lat + '&longitude=' + loc.lon + '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode&timezone=auto&start_date=2026-07-03&end_date=2026-07-12';
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data.daily && data.daily.time) {
+                data.daily.time.forEach((t, i) => {
+                    weatherCache[loc.lat + ',' + loc.lon + ',' + t] = {
+                        hi: Math.round(data.daily.temperature_2m_max[i]),
+                        lo: Math.round(data.daily.temperature_2m_min[i]),
+                        rain: data.daily.precipitation_probability_max[i],
+                        code: data.daily.weathercode[i],
+                        live: true
+                    };
+                });
+            }
+        } catch(e) {}
+    });
+    await Promise.all(fetches);
+    sessionStorage.setItem('trip-weather-cache', JSON.stringify(weatherCache));
+}
+function renderTripWeather() {
+    const el = document.getElementById('weather-row');
+    if (!el) return;
+    el.innerHTML = tripWeatherDays.map(d => {
+        const k = d.lat + ',' + d.lon + ',' + d.date;
+        const w = (weatherCache && weatherCache[k]) || histAvg[d.lat + ',' + d.lon] || { hi: 24, lo: 14, rain: 30, code: 2 };
+        const icon = wmoIcons[w.code] || '\u26C5';
+        const desc = wmoDescs[w.code] || 'Variable';
+        const hiF = Math.round(w.hi * 9/5 + 32);
+        const loF = Math.round(w.lo * 9/5 + 32);
+        const src = w.live ? 'Forecast' : 'Jul avg';
+        return '<div class="weather-card">' +
+            '<div class="weather-day-label">' + d.label + '</div>' +
+            '<div class="weather-city">' + d.city + '</div>' +
+            '<div class="weather-icon">' + icon + '</div>' +
+            '<div class="weather-temp">' + hiF + '\u00B0F / ' + w.hi + '\u00B0C</div>' +
+            '<div class="weather-temp-lo">Low: ' + loF + '\u00B0F / ' + w.lo + '\u00B0C</div>' +
+            '<div class="weather-desc">' + desc + '</div>' +
+            '<div class="weather-rain">\uD83C\uDF27 ' + (w.rain != null ? w.rain : '—') + '% rain</div>' +
+            '<div class="weather-src">' + src + '</div></div>';
+    }).join('');
+}
+// Kept for compatibility with daily briefing lookup
+const weatherData = {
+    kl: { icon: '\u2600\uFE0F', temp: '75\u00B0F / 24\u00B0C', desc: 'Warm, partly cloudy', rain: '40% rain chance', city: 'Kaiserslautern' },
+    neuschwanstein: { icon: '\u26C5', temp: '73\u00B0F / 23\u00B0C', desc: 'Alpine, can change fast', rain: '50% rain chance', city: 'Neuschwanstein' },
+    munich: { icon: '\u2600\uFE0F', temp: '77\u00B0F / 25\u00B0C', desc: 'Warm, summer storms', rain: '40% rain chance', city: 'Munich' },
+    porto: { icon: '\u2600\uFE0F', temp: '72\u00B0F / 22\u00B0C', desc: 'Warm, ocean breeze', rain: '15% rain chance', city: 'Porto' }
+};
 const weatherCityNames = {
-    kl: 'Kaiserslautern', paris: 'Paris', strasbourg: 'Strasbourg', amsterdam: 'Amsterdam',
-    neuschwanstein: 'Neuschwanstein', munich: 'Munich', arles: 'Arles', milan: 'Milan',
-    porto: 'Porto', palma: 'Palma'
+    kl: 'Kaiserslautern', neuschwanstein: 'Neuschwanstein', munich: 'Munich', porto: 'Porto'
 };
 
 // ===================== DESTINATION DATA =====================
@@ -2753,13 +2822,17 @@ renderPlan = function(planKey) {
     _origRenderPlan2(planKey);
     const p = plans[planKey];
 
-    // Weather
-    const weatherEl = document.getElementById('weather-row');
-    const weatherLocs = [...new Set(p.locs.filter(k => k !== 'frankfurt' && k !== 'luxembourg' && k !== 'hahn' && k !== 'marseille' && weatherData[k]))];
-    weatherEl.innerHTML = weatherLocs.map(k => {
-        const w = weatherData[k];
-        return '<div class="weather-card"><div class="weather-city">' + (weatherCityNames[k] || k) + '</div><div class="weather-icon">' + w.icon + '</div><div class="weather-temp">' + w.temp + '</div><div class="weather-desc">' + w.desc + '</div><div class="weather-rain">' + w.rain + '</div></div>';
-    }).join('');
+    // Weather — live per-day for Porto plan, static for others
+    if (planKey === 'porto') {
+        renderTripWeather();
+    } else {
+        const weatherEl = document.getElementById('weather-row');
+        const weatherLocs = [...new Set(p.locs.filter(k => k !== 'frankfurt' && k !== 'luxembourg' && k !== 'hahn' && k !== 'marseille' && weatherData[k]))];
+        weatherEl.innerHTML = weatherLocs.map(k => {
+            const w = weatherData[k];
+            return '<div class="weather-card"><div class="weather-city">' + (weatherCityNames[k] || k) + '</div><div class="weather-icon">' + w.icon + '</div><div class="weather-temp">' + w.temp + '</div><div class="weather-desc">' + w.desc + '</div><div class="weather-rain">' + w.rain + '</div></div>';
+        }).join('');
+    }
 
     // Destination cards
     const destEl = document.getElementById('dest-cards');
@@ -3263,6 +3336,12 @@ if ('serviceWorker' in navigator) {
     const swUrl = URL.createObjectURL(swBlob);
     navigator.serviceWorker.register(swUrl).catch(() => {});
 }
+
+// Fetch live weather on page load so it's ready when Porto plan is viewed
+fetchTripWeather().then(() => {
+    // If Porto plan is already visible, refresh weather cards
+    if (activePlan === 'porto') renderTripWeather();
+});
 
 // Initial view: overview (no plan rendered yet)
 // renderPlan('primary') is NOT called — overview is shown by default
