@@ -23,6 +23,11 @@
             flex-direction: column; gap: 16px;
         }
         .pw-overlay.hidden { display: none; }
+        .pw-overlay.fade-out {
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
         .pw-title {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 22px; font-weight: 700;
@@ -158,7 +163,7 @@
         .eve-mode .tab-bar { background: #16202e; border-bottom-color: rgba(212,165,84,0.1); }
         .eve-mode .tab-btn { color: #8a9aaa; }
         .eve-mode .tab-btn:hover { color: #c8b8a0; }
-        .eve-mode .tab-btn.active { color: #e8c87a; border-bottom-color: #d4a554; }
+        .eve-mode .tab-btn.active { color: #e8c87a; border-bottom-color: #d4a554; box-shadow: inset 0 -2px 0 #d4a554; }
         .eve-mode .tab-badge { background: rgba(212,165,84,0.12) !important; color: #d4a554 !important; }
 
         .eve-mode .container { color: #c8b8a0; }
@@ -365,6 +370,7 @@
             color: #2a3442;
             background: #ffffff;
             border-color: #e4eef5;
+            box-shadow: inset 0 -2px 0 #d4874a;
         }
         .tab-btn .tab-badge {
             font-size: 9px;
@@ -521,12 +527,19 @@
         .chill-dot.filled { background: #4a8ba8; }
 
         /* Overview + Recommendation views */
-        .overview-view { display: none; }
-        .overview-view.active { display: block; }
-        .rec-view { display: none; }
-        .rec-view.active { display: block; }
-        .plan-content { }
-        .plan-content.hidden { display: none; }
+        .overview-view { display: none; opacity: 0; }
+        .overview-view.active { display: block; opacity: 1; }
+        .rec-view { display: none; opacity: 0; }
+        .rec-view.active { display: block; opacity: 1; }
+        .plan-content { opacity: 1; }
+        .plan-content.hidden { display: none; opacity: 0; }
+        .view-fade-in {
+            animation: viewFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .ov-hero {
             text-align: center;
@@ -1701,7 +1714,13 @@
         .reveal-d5 { transition-delay: 0.40s; }
 
         @media (prefers-reduced-motion: reduce) {
-            .reveal { opacity: 1; transform: none; transition: none; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
         }
 
         /* Print styles */
@@ -3021,6 +3040,12 @@ Object.entries(plans).forEach(([key, p]) => {
     archivedBtns.push(btn);
 });
 
+function fadeInView(el) {
+    el.classList.remove('view-fade-in');
+    void el.offsetWidth; // force reflow to restart animation
+    el.classList.add('view-fade-in');
+}
+
 function hideAllViews() {
     document.getElementById('overview-view').classList.remove('active');
     document.getElementById('rec-view').classList.remove('active');
@@ -3031,20 +3056,26 @@ function hideAllViews() {
 function showOverview() {
     hideAllViews();
     ovBtn.classList.add('active');
-    document.getElementById('overview-view').classList.add('active');
+    var ov = document.getElementById('overview-view');
+    ov.classList.add('active');
+    fadeInView(ov);
 }
 
 function showRec() {
     hideAllViews();
     recBtn.classList.add('active');
-    document.getElementById('rec-view').classList.add('active');
+    var rv = document.getElementById('rec-view');
+    rv.classList.add('active');
+    fadeInView(rv);
 }
 
 // Patch renderPlan to hide other views and fix map bounds
 const _origRenderPlan = renderPlan;
 renderPlan = function(planKey) {
     hideAllViews();
-    document.getElementById('plan-content').classList.remove('hidden');
+    var pc = document.getElementById('plan-content');
+    pc.classList.remove('hidden');
+    fadeInView(pc);
     document.querySelectorAll('.tab-btn').forEach(t => t.classList.toggle('active', t.dataset.plan === planKey));
     _origRenderPlan(planKey);
     // Map was hidden — invalidate size first, then re-fit bounds
@@ -3971,9 +4002,11 @@ document.querySelectorAll('.ov-cal-day').forEach((cal, i) => {
         const h = await sha256(val);
         if (h === hash) {
             sessionStorage.setItem('trip-unlocked', 'yes');
-            document.getElementById('pw-overlay').classList.add('hidden');
+            var overlay = document.getElementById('pw-overlay');
+            overlay.classList.add('fade-out');
             document.getElementById('app-content').classList.remove('locked');
-            setTimeout(() => map.invalidateSize(), 100);
+            setTimeout(function() { overlay.classList.add('hidden'); }, 450);
+            setTimeout(() => map.invalidateSize(), 150);
         } else {
             document.getElementById('pw-input').classList.add('error');
             setTimeout(() => document.getElementById('pw-input').classList.remove('error'), 400);
