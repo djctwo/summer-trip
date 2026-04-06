@@ -1264,13 +1264,15 @@
         .brief-row-val { color: #c8cdd8; font-weight: 600; }
 
         /* Restaurant wishlist */
-        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+        .city-section-header { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #a78bfa; padding: 18px 0 8px; border-bottom: 1px solid rgba(99, 130, 255, 0.12); margin-bottom: 12px; }
+        .city-section-header:first-child { padding-top: 0; }
+        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .restaurant-grid:last-child { margin-bottom: 0; }
         .resto-card {
             background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
             border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
         }
         .resto-card:hover { border-color: rgba(99, 130, 255, 0.25); }
-        .resto-city { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 4px; }
         .resto-name { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
         .resto-type { font-size: 11px; color: #fbbf24; margin-bottom: 6px; }
         .resto-desc { font-size: 11px; color: #8b94a6; line-height: 1.6; }
@@ -1303,13 +1305,13 @@
         .tl-label { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 
         /* Photo spots */
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .photo-grid:last-child { margin-bottom: 0; }
         .photo-card {
             background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
             border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
         }
         .photo-card:hover { border-color: rgba(99, 130, 255, 0.25); }
-        .photo-city { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 4px; }
         .photo-spot { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
         .photo-icon { font-size: 20px; float: right; margin: -2px 0 0 8px; }
         .photo-tip { font-size: 11px; color: #8b94a6; line-height: 1.6; }
@@ -1772,11 +1774,11 @@
     <div class="bottom-row">
         <div class="checklist-panel">
             <div class="panel-header">Restaurant &amp; Food Wishlist</div>
-            <div class="restaurant-grid" id="restaurant-grid" style="padding:16px 20px"></div>
+            <div id="restaurant-grid" style="padding:16px 20px"></div>
         </div>
         <div class="checklist-panel">
             <div class="panel-header">Photo Spots</div>
-            <div class="photo-grid" id="photo-grid" style="padding:16px 20px"></div>
+            <div id="photo-grid" style="padding:16px 20px"></div>
         </div>
     </div>
 
@@ -3034,25 +3036,28 @@ renderPlan = function(planKey) {
             { city: 'KL', name: 'Brauhaus an der Glanbrücke', type: 'Brewpub', desc: 'Local brewery restaurant on the river. Hearty Pfalz cooking, house-brewed beer.', must: false }
         ]
     };
-    const restos = [];
-    if (p.locs.includes('porto')) restos.push(...(restoData.porto || []));
-    if (p.locs.includes('munich')) restos.push(...(restoData.munich || []));
-    restos.push(...(restoData.kl || []));
-    // Add Paris if applicable
-    if (p.locs.includes('paris')) restos.push(
+    // Build ordered city groups for restaurants
+    const restoCityOrder = [];
+    if (p.locs.includes('porto')) restoCityOrder.push({ label: '🇵🇹 Porto', items: restoData.porto || [] });
+    if (p.locs.includes('paris')) restoCityOrder.push({ label: '🇫🇷 Paris', items: [
         { city: 'Paris', name: 'Le Bouillon Chartier', type: 'Traditional French', desc: 'Historic 1896 brasserie. Classic French at incredibly low prices. Steak frites, onion soup. No reservations.', must: true },
         { city: 'Paris', name: 'Du Pain et des Idées', type: 'Bakery', desc: 'One of Paris\'s best bakeries. Pain des amis, escargot pastry. Near Canal Saint-Martin.', must: false }
-    );
-    if (p.locs.includes('amsterdam')) restos.push(
+    ]});
+    if (p.locs.includes('amsterdam')) restoCityOrder.push({ label: '🇳🇱 Amsterdam', items: [
         { city: 'Amsterdam', name: 'Foodhallen', type: 'Food hall', desc: 'Indoor food market in De Hallen. 20+ stalls — Vietnamese, burgers, oysters, bitterballen. Great for grazing.', must: true }
-    );
-    restoEl.innerHTML = restos.map(r => {
-        const mapsQ = encodeURIComponent(r.name + ' ' + r.city);
-        return '<div class="resto-card"><div class="resto-city">' + r.city + '</div>' +
-        '<div class="resto-name">' + r.name + (r.must ? '<span class="resto-must">MUST TRY</span>' : '') + '</div>' +
-        '<div class="resto-type">' + r.type + '</div>' +
-        '<div class="resto-desc">' + r.desc + '</div>' +
-        '<a class="card-link" href="https://www.google.com/maps/search/' + mapsQ + '" target="_blank" rel="noopener">Google Maps ↗</a></div>';
+    ]});
+    if (p.locs.includes('neuschwanstein') || p.locs.includes('munich')) restoCityOrder.push({ label: '🇩🇪 Munich', items: restoData.munich || [] });
+    restoCityOrder.push({ label: '🇩🇪 Kaiserslautern', items: restoData.kl || [] });
+    restoEl.innerHTML = restoCityOrder.map(group => {
+        const cards = group.items.map(r => {
+            const mapsQ = encodeURIComponent(r.name + ' ' + r.city);
+            return '<div class="resto-card">' +
+            '<div class="resto-name">' + r.name + (r.must ? '<span class="resto-must">MUST TRY</span>' : '') + '</div>' +
+            '<div class="resto-type">' + r.type + '</div>' +
+            '<div class="resto-desc">' + r.desc + '</div>' +
+            '<a class="card-link" href="https://www.google.com/maps/search/' + mapsQ + '" target="_blank" rel="noopener">Google Maps ↗</a></div>';
+        }).join('');
+        return '<div class="city-section-header">' + group.label + '</div><div class="restaurant-grid">' + cards + '</div>';
     }).join('');
 
     // Photo spots
@@ -3078,28 +3083,27 @@ renderPlan = function(planKey) {
             { city: 'Munich', spot: 'Nymphenburg Palace', icon: '👑', tip: 'Baroque palace with reflecting pool. Stand centered on the canal for a symmetrical shot.', time: 'Morning' }
         ]
     };
-    const photos = [];
-    p.locs.forEach(k => { if (photoData[k]) photos.push(...photoData[k]); });
-    // Add Paris/Amsterdam if applicable
-    if (p.locs.includes('paris') && !photoData.paris) {
-        photos.push(
-            { city: 'Paris', spot: 'Eiffel Tower from Trocadéro', icon: '🗼', tip: 'Classic shot from Trocadéro esplanade. Best at sunrise for no crowds and golden light.', time: 'Sunrise or sunset' },
-            { city: 'Paris', spot: 'Sacré-Cœur Steps', icon: '⛪', tip: 'Panoramic view of all of Paris from the steps. Best at golden hour.', time: 'Sunset' }
-        );
-    }
-    if (p.locs.includes('amsterdam')) {
-        photos.push(
-            { city: 'Amsterdam', spot: 'Canal Houses', icon: '🏡', tip: 'Shoot the narrow canal houses from a bridge. Keizersgracht and Herengracht are the most photogenic.', time: 'Golden hour' }
-        );
-    }
-    photoEl.innerHTML = photos.map(ph => {
-        const imgQ = encodeURIComponent(ph.spot + ' ' + ph.city + ' photography');
-        return '<div class="photo-card"><div class="photo-icon">' + ph.icon + '</div>' +
-        '<div class="photo-city">' + ph.city + '</div>' +
-        '<div class="photo-spot">' + ph.spot + '</div>' +
-        '<div class="photo-tip">' + ph.tip + '</div>' +
-        '<div class="photo-time">Best time: ' + ph.time + '</div>' +
-        '<a class="card-link" href="https://www.google.com/images?q=' + imgQ + '" target="_blank" rel="noopener">Google Images ↗</a></div>';
+    // Build ordered city groups for photo spots
+    const photoCityOrder = [];
+    const photoCityLabels = { porto: '🇵🇹 Porto', neuschwanstein: '🏰 Neuschwanstein', munich: '🇩🇪 Munich' };
+    p.locs.forEach(k => { if (photoData[k]) photoCityOrder.push({ label: photoCityLabels[k] || k, items: photoData[k] }); });
+    if (p.locs.includes('paris')) photoCityOrder.push({ label: '🇫🇷 Paris', items: [
+        { city: 'Paris', spot: 'Eiffel Tower from Trocadéro', icon: '🗼', tip: 'Classic shot from Trocadéro esplanade. Best at sunrise for no crowds and golden light.', time: 'Sunrise or sunset' },
+        { city: 'Paris', spot: 'Sacré-Cœur Steps', icon: '⛪', tip: 'Panoramic view of all of Paris from the steps. Best at golden hour.', time: 'Sunset' }
+    ]});
+    if (p.locs.includes('amsterdam')) photoCityOrder.push({ label: '🇳🇱 Amsterdam', items: [
+        { city: 'Amsterdam', spot: 'Canal Houses', icon: '🏡', tip: 'Shoot the narrow canal houses from a bridge. Keizersgracht and Herengracht are the most photogenic.', time: 'Golden hour' }
+    ]});
+    photoEl.innerHTML = photoCityOrder.map(group => {
+        const cards = group.items.map(ph => {
+            const imgQ = encodeURIComponent(ph.spot + ' ' + ph.city + ' photography');
+            return '<div class="photo-card"><div class="photo-icon">' + ph.icon + '</div>' +
+            '<div class="photo-spot">' + ph.spot + '</div>' +
+            '<div class="photo-tip">' + ph.tip + '</div>' +
+            '<div class="photo-time">Best time: ' + ph.time + '</div>' +
+            '<a class="card-link" href="https://www.google.com/images?q=' + imgQ + '" target="_blank" rel="noopener">Google Images ↗</a></div>';
+        }).join('');
+        return '<div class="city-section-header">' + group.label + '</div><div class="photo-grid">' + cards + '</div>';
     }).join('');
 
     // Language cheat sheet
