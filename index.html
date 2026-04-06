@@ -7,12 +7,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Summer Trip">
-    <meta name="theme-color" content="#0b0e1a">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU3VtbWVyIFRyaXAgMjAyNiIsInNob3J0X25hbWUiOiJTdW1tZXIgVHJpcCIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBiMGUxYSIsInRoZW1lX2NvbG9yIjoiIzBiMGUxYSJ9">
+    <meta name="theme-color" content="#eef5fa">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU3VtbWVyIFRyaXAgMjAyNiIsInNob3J0X25hbWUiOiJTdW1tZXIgVHJpcCIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y4ZmJmZCIsInRoZW1lX2NvbG9yIjoiI2VlZjVmYSJ9">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
         /* Password gate */
         .pw-overlay {
@@ -23,13 +23,12 @@
         }
         .pw-overlay.hidden { display: none; }
         .pw-title {
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 22px; font-weight: 700;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            color: #e2e8f0;
         }
         .pw-input {
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Outfit', system-ui, sans-serif;
             font-size: 15px; padding: 12px 20px; width: 280px;
             background: rgba(15, 19, 35, 0.8); color: #e2e8f0;
             border: 1px solid rgba(99, 130, 255, 0.3); border-radius: 10px;
@@ -39,7 +38,7 @@
         .pw-input.error { border-color: #ef4444; animation: shake 0.3s; }
         @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
         .pw-btn {
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Outfit', system-ui, sans-serif;
             font-size: 13px; font-weight: 600; padding: 10px 32px;
             background: rgba(99, 130, 255, 0.15); color: #7eb8ff;
             border: 1px solid rgba(99, 130, 255, 0.3); border-radius: 8px;
@@ -51,9 +50,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #0b0e1a;
-            color: #c8cdd8;
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+            background: #f8fbfd;
+            color: #3d4f5f;
             min-height: 100vh;
         }
 
@@ -64,48 +63,61 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at 20% 20%, rgba(88, 130, 255, 0.06) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.03) 0%, transparent 40%);
+            background: radial-gradient(ellipse at 20% 20%, rgba(212, 135, 74, 0.03) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(74, 139, 168, 0.03) 0%, transparent 50%);
             z-index: 0;
             pointer-events: none;
         }
 
+        /* Animated sunset gradient bar */
+        .sunset-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #e8c87a, #d4874a, #c4626a, #8a5aa8, #4a8ba8, #6aaa8a, #e8c87a);
+            background-size: 200% 100%;
+            animation: shimmer 8s ease-in-out infinite;
+            position: relative;
+            z-index: 11;
+        }
+        @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: rgba(74, 139, 168, 0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
         .topbar {
-            background: rgba(13, 17, 30, 0.95);
-            border-bottom: 1px solid rgba(99, 130, 255, 0.12);
+            background: linear-gradient(180deg, #eef5fa 0%, #f8fbfd 100%);
+            border-bottom: 1px solid #e4eef5;
             padding: 16px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
             z-index: 10;
-            backdrop-filter: blur(20px);
         }
         .topbar::after {
             content: '';
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(99, 180, 255, 0.3), rgba(168, 85, 247, 0.3), rgba(56, 189, 248, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(74, 139, 168, 0.2), rgba(212, 135, 74, 0.2), rgba(74, 139, 168, 0.2), transparent);
         }
         .topbar h1 {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 20px;
             font-weight: 700;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #1a5276;
             letter-spacing: 1px;
         }
         .topbar .meta {
             display: flex; gap: 16px; align-items: center;
-            font-size: 12px; color: #6b7280;
+            font-size: 12px; color: #7a9ab5;
         }
-        .topbar .countdown { color: #38bdf8; font-weight: 600; font-size: 13px; }
+        .topbar .countdown { color: #4a8ba8; font-weight: 600; font-size: 13px; }
 
         /* Tabs */
         .tab-bar {
-            background: rgba(13, 17, 30, 0.9);
+            background: #eef5fa;
             padding: 12px 28px 0;
             display: flex;
             gap: 4px;
@@ -118,7 +130,7 @@
             font-size: 12px;
             font-weight: 600;
             font-family: inherit;
-            color: #6b7280;
+            color: #7a9ab5;
             background: transparent;
             border: 1px solid transparent;
             border-bottom: none;
@@ -127,11 +139,11 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
-        .tab-btn:hover { color: #c8cdd8; background: rgba(99, 130, 255, 0.06); }
+        .tab-btn:hover { color: #2a3442; background: rgba(74, 139, 168, 0.06); }
         .tab-btn.active {
-            color: #e2e8f0;
-            background: rgba(15, 19, 35, 0.8);
-            border-color: rgba(99, 130, 255, 0.15);
+            color: #2a3442;
+            background: #ffffff;
+            border-color: #e4eef5;
         }
         .tab-btn .tab-badge {
             font-size: 9px;
@@ -141,27 +153,27 @@
             font-weight: 700;
             vertical-align: middle;
         }
-        .badge-primary { background: rgba(52, 211, 153, 0.15); color: #34d399; }
-        .badge-chill { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-        .badge-adventure { background: rgba(251, 146, 60, 0.15); color: #fb923c; }
-        .badge-chosen { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+        .badge-primary { background: rgba(138, 173, 110, 0.15); color: #5a7d40; }
+        .badge-chill { background: rgba(74, 139, 168, 0.12); color: #4a8ba8; }
+        .badge-adventure { background: rgba(212, 135, 74, 0.15); color: #d4874a; }
+        .badge-chosen { background: rgba(138, 173, 110, 0.15); color: #5a7d40; }
         .tab-btn.archived { opacity: 0.4; }
         .tab-btn.archived:hover { opacity: 0.7; }
         .tab-btn.archived.active { opacity: 1; }
         .tab-divider {
-            display: flex; align-items: center; padding: 0 8px; color: #374151; font-size: 10px;
+            display: flex; align-items: center; padding: 0 8px; color: #b8c8d8; font-size: 10px;
             white-space: nowrap; user-select: none; gap: 6px;
         }
         .tab-divider::before, .tab-divider::after {
-            content: ''; flex: 0; width: 12px; border-top: 1px solid #374151;
+            content: ''; flex: 0; width: 12px; border-top: 1px solid #d4e4ee;
         }
         .archive-toggle {
             font-family: inherit; font-size: 10px; font-weight: 600; padding: 6px 12px;
-            border-radius: 6px 6px 0 0; border: 1px solid rgba(99, 130, 255, 0.12);
-            border-bottom: none; background: rgba(99, 130, 255, 0.05); color: #6b7280;
+            border-radius: 6px 6px 0 0; border: 1px solid #e4eef5;
+            border-bottom: none; background: rgba(74, 139, 168, 0.05); color: #7a9ab5;
             cursor: pointer; white-space: nowrap; transition: all 0.2s;
         }
-        .archive-toggle:hover { color: #c8cdd8; background: rgba(99, 130, 255, 0.1); }
+        .archive-toggle:hover { color: #2a3442; background: rgba(74, 139, 168, 0.1); }
 
         .container {
             max-width: 1500px;
@@ -176,9 +188,9 @@
             text-align: center;
             padding: 8px 0 20px;
             font-size: 13px;
-            color: #6b7280;
+            color: #7a9ab5;
         }
-        .plan-subtitle strong { color: #a78bfa; }
+        .plan-subtitle strong { color: #d4874a; }
 
         /* Stats row */
         .stats-row {
@@ -188,17 +200,16 @@
             margin-bottom: 10px;
         }
         .overnights-row {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 12px 20px;
             margin-bottom: 24px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
         .overnights-label {
             font-size: 10px;
-            color: #6b7280;
+            color: #7a9ab5;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 4px;
@@ -206,11 +217,11 @@
         .overnights-value {
             font-size: 14px;
             font-weight: 600;
-            color: #c8cdd8;
+            color: #3d4f5f;
             letter-spacing: 0.3px;
         }
-        .overnights-value .on-city { color: #a78bfa; }
-        .overnights-value .on-sep { color: #4b5563; }
+        .overnights-value .on-city { color: #d4874a; }
+        .overnights-value .on-sep { color: #b8c8d8; }
 
         .info-rows {
             display: grid;
@@ -219,16 +230,15 @@
             margin-bottom: 24px;
         }
         .info-card {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 12px 20px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
         .info-label {
             font-size: 10px;
-            color: #6b7280;
+            color: #7a9ab5;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 6px;
@@ -236,35 +246,44 @@
         .info-value {
             font-size: 13px;
             font-weight: 500;
-            color: #c8cdd8;
+            color: #3d4f5f;
             line-height: 1.6;
         }
         .leg-item { display: inline-block; white-space: nowrap; }
-        .leg-route { color: #e2e8f0; font-weight: 600; }
+        .leg-route { color: #2a3442; font-weight: 600; }
         .leg-mode { margin: 0 2px; }
-        .leg-time { color: #6b7280; }
-        .leg-sep { color: #374151; margin: 0 6px; }
+        .leg-time { color: #7a9ab5; }
+        .leg-sep { color: #d4e4ee; margin: 0 6px; }
         .stat-card {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 14px 16px;
             text-align: center;
-            backdrop-filter: blur(10px);
             transition: border-color 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .stat-card:hover { border-color: rgba(99, 130, 255, 0.3); }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4a8ba8, #85c1dc);
+            opacity: 0.4;
+        }
+        .stat-card:hover { border-color: #b0d0e4; }
         .stat-value {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            color: #1a5276;
             line-height: 1.2;
         }
         .stat-label {
-            font-size: 10px;
-            color: #6b7280;
+            font-size: 9px;
+            font-weight: 500;
+            color: #7a9ab5;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 4px;
@@ -276,9 +295,9 @@
         }
         .chill-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: rgba(99, 130, 255, 0.15);
+            background: rgba(74, 139, 168, 0.15);
         }
-        .chill-dot.filled { background: #38bdf8; }
+        .chill-dot.filled { background: #4a8ba8; }
 
         /* Overview + Recommendation views */
         .overview-view { display: none; }
@@ -293,21 +312,24 @@
             padding: 36px 24px 28px;
         }
         .ov-hero-title {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            color: #1a5276;
             margin-bottom: 6px;
+        }
+        .ov-hero-title em {
+            color: #d4874a;
+            font-style: italic;
         }
         .ov-hero-sub {
             font-size: 15px;
-            color: #8b94a6;
+            color: #7a9ab5;
             margin-bottom: 4px;
         }
         .ov-hero-detail {
             font-size: 12px;
-            color: #4b5563;
+            color: #a0b8cc;
         }
         .ov-stats-bar {
             display: grid;
@@ -316,44 +338,65 @@
             margin-bottom: 24px;
         }
         .ov-stat {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 18px 16px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .ov-stat::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4a8ba8, #85c1dc);
+            opacity: 0.4;
         }
         .ov-stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #1a5276;
             line-height: 1.2;
         }
         .ov-stat-label {
-            font-size: 10px;
-            color: #6b7280;
+            font-size: 9px;
+            font-weight: 500;
+            color: #7a9ab5;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 6px;
         }
 
         .ov-section {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 24px 28px;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
         }
         .ov-section-title {
-            font-size: 11px;
-            font-weight: 700;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #a78bfa;
+            color: #1a5276;
             margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e4eef5;
+            position: relative;
+        }
+        .ov-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #d4874a;
         }
 
         .ov-fixed-grid {
@@ -364,20 +407,20 @@
         .ov-fixed-card {
             padding: 16px;
             border-radius: 10px;
-            border: 1px solid rgba(99, 130, 255, 0.08);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            background: #f5fafc;
             text-align: center;
         }
         .ov-fixed-icon { font-size: 22px; margin-bottom: 8px; }
         .ov-fixed-title {
             font-size: 12px;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #2a3442;
             margin-bottom: 4px;
         }
         .ov-fixed-desc {
             font-size: 11px;
-            color: #6b7280;
+            color: #7a9ab5;
             line-height: 1.5;
         }
 
@@ -391,36 +434,44 @@
             padding: 14px 8px;
             border-radius: 10px;
             text-align: center;
-            border: 1px solid rgba(99, 130, 255, 0.08);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            background: #ffffff;
+            transition: transform 0.2s;
         }
+        .ov-cal-day:hover { transform: translateY(-2px); }
         .ov-cal-dow {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 9px;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #d1d5db;
+            color: #7a9ab5;
             margin-bottom: 4px;
         }
         .ov-cal-num {
-            font-size: 26px;
-            font-weight: 800;
-            color: #e2e8f0;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2a3442;
             line-height: 1.2;
         }
         .ov-cal-label {
             font-size: 13px;
-            color: #c9cfd9;
+            color: #7a9ab5;
             margin-top: 6px;
             line-height: 1.3;
         }
-        .ov-cal-day.ov-cal-fixed { border-color: rgba(239, 68, 68, 0.3); }
-        .ov-cal-day.ov-cal-fixed .ov-cal-num { color: #ef4444; }
-        .ov-cal-day.ov-cal-castle { border-color: rgba(234, 179, 8, 0.3); }
-        .ov-cal-day.ov-cal-castle .ov-cal-num { color: #eab308; }
-        .ov-cal-day.ov-cal-july4 { border-color: rgba(168, 85, 247, 0.3); }
-        .ov-cal-day.ov-cal-july4 .ov-cal-num { color: #a78bfa; }
-        .ov-cal-day.ov-cal-flex { border-color: rgba(99, 130, 255, 0.12); }
+        /* Arrive/Depart — dusty rose */
+        .ov-cal-day.ov-cal-fixed { border-color: #d4c4b4; background: rgba(138, 112, 96, 0.04); }
+        .ov-cal-day.ov-cal-fixed .ov-cal-num { color: #8a7060; }
+        /* Castle/Bavaria — olive green */
+        .ov-cal-day.ov-cal-castle { border-color: #b8d4a0; background: rgba(138, 173, 110, 0.06); }
+        .ov-cal-day.ov-cal-castle .ov-cal-num { color: #5a7d40; }
+        /* Porto — burnt orange */
+        .ov-cal-day.ov-cal-july4 { border-color: #e8c4a0; background: rgba(212, 135, 74, 0.06); }
+        .ov-cal-day.ov-cal-july4 .ov-cal-num { color: #a06030; }
+        /* Flex/Home — coastal blue */
+        .ov-cal-day.ov-cal-flex { border-color: #b0d0e4; background: rgba(74, 139, 168, 0.05); }
+        .ov-cal-day.ov-cal-flex .ov-cal-num { color: #3a7090; }
 
         .ov-plan-cards {
             display: grid;
@@ -429,20 +480,20 @@
         }
         .ov-plan-card {
             padding: 18px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            background: rgba(20, 25, 45, 0.6);
+            border-radius: 14px;
+            border: 1px solid #e4eef5;
+            background: #ffffff;
             cursor: pointer;
             transition: all 0.25s ease;
             position: relative;
         }
         .ov-plan-card:hover {
-            border-color: rgba(99, 130, 255, 0.3);
-            background: rgba(25, 32, 60, 0.8);
+            border-color: #b0d0e4;
             transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(74, 139, 168, 0.08);
         }
         .ov-plan-card.ov-card-rec {
-            border-color: rgba(168, 85, 247, 0.25);
+            border-color: rgba(212, 135, 74, 0.3);
         }
         .ov-plan-card.ov-card-rec::after {
             content: 'RECOMMENDED';
@@ -452,31 +503,31 @@
             font-size: 8px;
             font-weight: 800;
             letter-spacing: 1.5px;
-            color: #a78bfa;
-            background: rgba(15, 19, 35, 0.95);
+            color: #d4874a;
+            background: #ffffff;
             padding: 2px 8px;
             border-radius: 4px;
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            border: 1px solid rgba(212, 135, 74, 0.3);
         }
         .ov-plan-name {
             font-size: 14px;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #2a3442;
             margin-bottom: 3px;
         }
         .ov-plan-july4 {
             font-size: 11px;
-            color: #a78bfa;
+            color: #d4874a;
             margin-bottom: 10px;
         }
         .ov-plan-meta {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            color: #6b7280;
+            color: #7a9ab5;
             margin-bottom: 4px;
         }
-        .ov-plan-meta-val { color: #c8cdd8; font-weight: 600; }
+        .ov-plan-meta-val { color: #3d4f5f; font-weight: 600; }
         .ov-plan-chill {
             display: flex;
             gap: 3px;
@@ -484,13 +535,13 @@
         }
         .ov-plan-chill-dot {
             width: 7px; height: 7px; border-radius: 50%;
-            background: rgba(99, 130, 255, 0.15);
+            background: rgba(74, 139, 168, 0.15);
         }
-        .ov-plan-chill-dot.filled { background: #38bdf8; }
+        .ov-plan-chill-dot.filled { background: #4a8ba8; }
         .ov-plan-budget {
             font-size: 13px;
             font-weight: 700;
-            color: #38bdf8;
+            color: #4a8ba8;
             margin-top: 10px;
         }
 
@@ -519,14 +570,14 @@
         .ov-bar-label {
             font-size: 9px;
             font-weight: 700;
-            color: #6b7280;
+            color: #7a9ab5;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .ov-bar-value {
             font-size: 10px;
             font-weight: 600;
-            color: #c8cdd8;
+            color: #3d4f5f;
         }
 
         .ov-legend {
@@ -540,7 +591,7 @@
             align-items: center;
             gap: 6px;
             font-size: 11px;
-            color: #6b7280;
+            color: #7a9ab5;
         }
         .ov-legend-dot {
             width: 10px;
@@ -564,40 +615,39 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #a78bfa;
+            color: #d4874a;
             margin-bottom: 12px;
         }
         .rec-pick-name {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #7eb8ff, #a78bfa, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            color: #1a5276;
             margin-bottom: 8px;
         }
         .rec-pick-tagline {
             font-size: 14px;
-            color: #8b94a6;
+            color: #7a9ab5;
         }
         .rec-section {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 24px 28px;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
         }
         .rec-section-title {
-            font-size: 11px;
-            font-weight: 700;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #a78bfa;
+            color: #1a5276;
             margin-bottom: 14px;
         }
         .rec-paragraph {
             font-size: 14px;
-            color: #c8cdd8;
+            color: #3d4f5f;
             line-height: 1.9;
         }
         .rec-grid {
@@ -608,19 +658,19 @@
         .rec-factor {
             padding: 16px;
             border-radius: 10px;
-            border: 1px solid rgba(99, 130, 255, 0.08);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            background: #f5fafc;
         }
         .rec-factor-icon { font-size: 20px; margin-bottom: 8px; }
         .rec-factor-title {
             font-size: 13px;
             font-weight: 700;
-            color: #e2e8f0;
+            color: #2a3442;
             margin-bottom: 6px;
         }
         .rec-factor-desc {
             font-size: 12px;
-            color: #8b94a6;
+            color: #7a9ab5;
             line-height: 1.6;
         }
         .rec-comparison {
@@ -632,23 +682,23 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #6b7280;
+            color: #7a9ab5;
             text-align: left;
             padding: 8px 12px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.1);
+            border-bottom: 1px solid #e4eef5;
         }
         .rec-comparison td {
             font-size: 13px;
-            color: #c8cdd8;
+            color: #3d4f5f;
             padding: 10px 12px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.05);
+            border-bottom: 1px solid #f0f5fa;
         }
         .rec-comparison tr.rec-highlight td {
-            color: #e2e8f0;
+            color: #2a3442;
             font-weight: 600;
-            background: rgba(167, 139, 250, 0.06);
+            background: rgba(212, 135, 74, 0.05);
         }
-        .rec-comparison .rec-star { color: #a78bfa; margin-left: 6px; }
+        .rec-comparison .rec-star { color: #d4874a; margin-left: 6px; }
         .rec-cta-row {
             text-align: center;
             padding: 20px 0 8px;
@@ -658,17 +708,17 @@
             font-size: 13px;
             font-weight: 700;
             padding: 12px 36px;
-            background: linear-gradient(135deg, rgba(99, 130, 255, 0.2), rgba(168, 85, 247, 0.2));
-            color: #a78bfa;
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            background: rgba(74, 139, 168, 0.08);
+            color: #4a8ba8;
+            border: 1px solid #b0d0e4;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
             letter-spacing: 0.5px;
         }
         .rec-cta-btn:hover {
-            background: linear-gradient(135deg, rgba(99, 130, 255, 0.3), rgba(168, 85, 247, 0.3));
-            border-color: rgba(168, 85, 247, 0.5);
+            background: rgba(74, 139, 168, 0.15);
+            border-color: #85c1dc;
         }
 
         @media (max-width: 1200px) {
@@ -677,24 +727,23 @@
 
         /* Trip overview */
         .trip-overview {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 20px 24px;
             margin-bottom: 24px;
-            backdrop-filter: blur(10px);
         }
         .trip-overview-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #a78bfa;
+            color: #d4874a;
             margin-bottom: 10px;
         }
         .trip-overview-text {
             font-size: 13px;
-            color: #8b94a6;
+            color: #7a9ab5;
             line-height: 1.8;
         }
 
@@ -706,31 +755,30 @@
         }
 
         .map-container {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             overflow: hidden;
         }
         .map-header {
             padding: 16px 20px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.08);
+            border-bottom: 1px solid #e4eef5;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .map-header h2 { font-size: 14px; font-weight: 600; color: #e2e8f0; }
-        .map-legend { display: flex; gap: 14px; font-size: 11px; flex-wrap: wrap; }
+        .map-header h2 { font-size: 14px; font-weight: 600; color: #2a3442; }
+        .map-legend { display: flex; gap: 14px; font-size: 11px; flex-wrap: wrap; color: #7a9ab5; }
         .legend-item { display: flex; align-items: center; gap: 6px; }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-        #map { height: 520px; width: 100%; background: #0b0e1a; }
+        #map { height: 520px; width: 100%; background: #eef5fa; }
 
         .sidebar { display: flex; flex-direction: column; gap: 20px; }
 
         .timeline-panel {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             max-height: 560px;
             overflow: hidden;
             display: flex;
@@ -738,10 +786,11 @@
         }
         .panel-header {
             padding: 16px 20px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.08);
+            border-bottom: 1px solid #e4eef5;
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 14px;
             font-weight: 600;
-            color: #e2e8f0;
+            color: #1a5276;
             flex-shrink: 0;
         }
         .timeline-scroll {
@@ -749,54 +798,53 @@
         }
         .timeline-scroll::-webkit-scrollbar { width: 6px; }
         .timeline-scroll::-webkit-scrollbar-track { background: transparent; }
-        .timeline-scroll::-webkit-scrollbar-thumb { background: rgba(99, 130, 255, 0.2); border-radius: 3px; }
+        .timeline-scroll::-webkit-scrollbar-thumb { background: rgba(74, 139, 168, 0.2); border-radius: 3px; }
 
         .day-card {
             position: relative;
             padding: 12px 16px;
             margin-bottom: 8px;
             border-radius: 10px;
-            border: 1px solid rgba(99, 130, 255, 0.06);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            border-left: 3px solid #b0d0e4;
+            background: #f5fafc;
             cursor: pointer;
             transition: all 0.25s ease;
         }
         .day-card:hover, .day-card.active {
-            border-color: rgba(99, 130, 255, 0.25);
-            background: rgba(25, 32, 60, 0.8);
+            border-color: #b0d0e4;
+            transform: translateX(4px);
+            box-shadow: 0 2px 12px rgba(74, 139, 168, 0.08);
         }
-        .day-card.active { box-shadow: 0 0 20px rgba(99, 130, 255, 0.08); }
+        .day-card.active { box-shadow: 0 2px 16px rgba(74, 139, 168, 0.12); }
         .day-card .day-top {
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
         }
-        .day-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .day-date { font-size: 11px; color: #6b7280; }
-        .day-dest { font-size: 15px; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
-        .day-desc { font-size: 12px; color: #8b94a6; line-height: 1.5; }
-        .day-transport { font-size: 11px; color: #4b5563; margin-top: 6px; font-style: italic; }
-        .day-schedule { font-size: 11px; color: #8b94a6; margin-top: 8px; line-height: 1.7; }
-        .day-schedule .time { color: #38bdf8; font-weight: 600; font-variant-numeric: tabular-nums; }
-        .day-schedule .act { color: #c8cdd8; }
-        .day-overnight { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; margin-top: 8px; padding: 4px 10px; border-radius: 6px; background: rgba(168, 85, 247, 0.12); color: #c084fc; letter-spacing: 0.3px; }
+        .day-num { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #d4874a; }
+        .day-date { font-size: 11px; color: #7a9ab5; }
+        .day-dest { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; color: #2a3442; margin-bottom: 4px; }
+        .day-desc { font-size: 12px; color: #7a9ab5; line-height: 1.5; }
+        .day-transport { font-size: 11px; color: #a0b8cc; margin-top: 6px; font-style: italic; }
+        .day-schedule { font-size: 11px; color: #7a9ab5; margin-top: 8px; line-height: 1.7; }
+        .day-schedule .time { color: #4a8ba8; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .day-schedule .act { color: #3d4f5f; }
+        .day-overnight { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; margin-top: 8px; padding: 4px 10px; border-radius: 6px; background: rgba(212, 135, 74, 0.1); color: #d4874a; letter-spacing: 0.3px; }
         .day-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; letter-spacing: 0.3px; }
-        .tag-drive { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
-        .tag-train { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
-        .tag-food { background: rgba(251, 146, 60, 0.12); color: #fb923c; }
-        .tag-landmark { background: rgba(52, 211, 153, 0.12); color: #34d399; }
-        .tag-chill { background: rgba(99, 130, 255, 0.12); color: #6382ff; }
-        .tag-country-de { background: rgba(250, 204, 21, 0.12); color: #facc15; }
-        .tag-country-fr { background: rgba(96, 165, 250, 0.12); color: #60a5fa; }
-        .tag-country-nl { background: rgba(251, 146, 60, 0.12); color: #fb923c; }
-        .tag-country-it { background: rgba(52, 211, 153, 0.12); color: #34d399; }
-        .tag-country-pt { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
-        .tag-country-es { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
-        .tag-flight { background: rgba(244, 114, 182, 0.12); color: #f472b6; }
-        .tag-rental { background: rgba(45, 212, 191, 0.12); color: #2dd4bf; }
-        .tag-country-it { background: rgba(248, 113, 113, 0.12); color: #f87171; }
-        .tag-country-pt { background: rgba(251, 191, 36, 0.12); color: #fbbf24; }
-        .tag-country-es { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
-        .tag-country-lu { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+        .tag-drive { background: rgba(74, 139, 168, 0.08); color: #4a8ba8; }
+        .tag-train { background: rgba(138, 173, 110, 0.1); color: #5a7d40; }
+        .tag-food { background: rgba(212, 135, 74, 0.1); color: #d4874a; }
+        .tag-landmark { background: rgba(138, 173, 110, 0.1); color: #5a7d40; }
+        .tag-chill { background: rgba(74, 139, 168, 0.08); color: #4a8ba8; }
+        .tag-country-de { background: rgba(212, 165, 84, 0.1); color: #b8862e; }
+        .tag-country-fr { background: rgba(106, 138, 168, 0.1); color: #6a8aa8; }
+        .tag-country-nl { background: rgba(212, 135, 74, 0.1); color: #d4874a; }
+        .tag-country-it { background: rgba(196, 98, 106, 0.1); color: #c4626a; }
+        .tag-country-pt { background: rgba(212, 135, 74, 0.1); color: #d4874a; }
+        .tag-country-es { background: rgba(212, 165, 84, 0.1); color: #d4a554; }
+        .tag-flight { background: rgba(138, 112, 96, 0.08); color: #8a7060; }
+        .tag-rental { background: rgba(74, 139, 168, 0.08); color: #4a8ba8; }
+        .tag-country-lu { background: rgba(106, 170, 138, 0.1); color: #6aaa8a; }
 
         /* Bottom row */
         .bottom-row {
@@ -807,21 +855,19 @@
         }
 
         .checklist-panel, .flights-panel, .budget-panel, .notes-panel {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
         }
 
         /* Tier 3 — tertiary panels: lighter treatment */
         .tier-tertiary {
-            background: rgba(15, 19, 35, 0.5);
-            border-color: rgba(99, 130, 255, 0.06);
-            backdrop-filter: none;
+            background: #f5fafc;
+            border-color: #e4eef5;
         }
         .tier-tertiary .panel-header {
             font-size: 13px;
-            color: #c8cdd8;
+            color: #3d4f5f;
         }
 
         /* Collapsible sections */
@@ -835,7 +881,7 @@
         .panel-header.collapsible::after {
             content: '▾';
             font-size: 12px;
-            color: #6b7280;
+            color: #a0b8cc;
             transition: transform 0.3s;
         }
         .panel-header.collapsible.collapsed::after {
@@ -855,56 +901,56 @@
         .check-item {
             display: flex; align-items: flex-start; gap: 12px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.05);
+            border-bottom: 1px solid #f0f5fa;
             cursor: pointer; transition: opacity 0.2s;
         }
         .check-item:last-child { border-bottom: none; }
         .check-box {
             width: 20px; height: 20px;
-            border: 2px solid rgba(99, 130, 255, 0.3);
+            border: 2px solid #d4e4ee;
             border-radius: 6px; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
             margin-top: 1px; transition: all 0.2s;
         }
         .check-item.checked .check-box {
-            background: rgba(52, 211, 153, 0.2); border-color: #34d399;
+            background: rgba(138, 173, 110, 0.15); border-color: #8aad6e;
         }
-        .check-item.checked .check-box::after { content: '\2713'; color: #34d399; font-size: 12px; font-weight: 700; }
+        .check-item.checked .check-box::after { content: '\2713'; color: #5a7d40; font-size: 12px; font-weight: 700; }
         .check-item.checked .check-text { opacity: 0.4; text-decoration: line-through; }
         .check-text { flex: 1; }
-        .check-title { font-size: 13px; font-weight: 500; color: #e2e8f0; }
-        .check-detail { font-size: 11px; color: #6b7280; margin-top: 2px; }
+        .check-title { font-size: 13px; font-weight: 500; color: #2a3442; }
+        .check-detail { font-size: 11px; color: #7a9ab5; margin-top: 2px; }
         .check-priority { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
-        .priority-urgent { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .priority-soon { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .priority-later { background: rgba(99, 130, 255, 0.15); color: #6382ff; }
+        .priority-urgent { background: rgba(196, 98, 106, 0.12); color: #c4626a; }
+        .priority-soon { background: rgba(212, 165, 84, 0.12); color: #d4a554; }
+        .priority-later { background: rgba(74, 139, 168, 0.12); color: #4a8ba8; }
 
-        .flight-card { padding: 14px 20px; border-bottom: 1px solid rgba(99, 130, 255, 0.05); }
+        .flight-card { padding: 14px 20px; border-bottom: 1px solid #f0f5fa; }
         .flight-card:last-child { border-bottom: none; }
-        .flight-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 8px; }
+        .flight-label { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #d4874a; margin-bottom: 8px; }
         .flight-route { display: flex; align-items: center; gap: 12px; }
         .flight-city { text-align: center; }
-        .flight-code { font-size: 20px; font-weight: 800; color: #e2e8f0; }
-        .flight-name { font-size: 10px; color: #6b7280; }
-        .flight-time { font-size: 12px; color: #a78bfa; font-weight: 500; margin-top: 2px; }
+        .flight-code { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: #1a5276; }
+        .flight-name { font-size: 10px; color: #7a9ab5; }
+        .flight-time { font-size: 11px; color: #d4874a; font-weight: 500; margin-top: 2px; }
         .flight-arrow { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
-        .flight-arrow::before { content: ''; width: 100%; height: 1px; background: linear-gradient(90deg, rgba(99,130,255,0.1), rgba(99,130,255,0.4), rgba(99,130,255,0.1)); }
-        .flight-arrow::after { content: ''; position: absolute; right: 0; border: 5px solid transparent; border-left: 7px solid rgba(99, 130, 255, 0.5); }
-        .flight-number { font-size: 10px; color: #4b5563; text-align: center; margin-top: 4px; }
+        .flight-arrow::before { content: ''; width: 100%; height: 1px; background: linear-gradient(90deg, #d4e4ee, #4a8ba8, #d4e4ee); }
+        .flight-arrow::after { content: ''; position: absolute; right: 0; border: 5px solid transparent; border-left: 7px solid #4a8ba8; }
+        .flight-number { font-size: 10px; color: #a0b8cc; text-align: center; margin-top: 4px; }
 
         .budget-items { padding: 16px 20px; }
-        .budget-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(99, 130, 255, 0.05); }
+        .budget-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f5fa; }
         .budget-row:last-child { border-bottom: none; }
-        .budget-cat { font-size: 13px; color: #c8cdd8; }
-        .budget-amt { font-size: 13px; font-weight: 600; color: #38bdf8; }
-        .budget-total { display: flex; justify-content: space-between; padding: 12px 20px; border-top: 1px solid rgba(99, 130, 255, 0.15); font-weight: 700; }
-        .budget-total .budget-amt { font-size: 16px; background: linear-gradient(135deg, #7eb8ff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .budget-cat { font-size: 13px; color: #3d4f5f; }
+        .budget-amt { font-size: 13px; font-weight: 600; color: #4a8ba8; }
+        .budget-total { display: flex; justify-content: space-between; padding: 12px 20px; border-top: 1px solid #e4eef5; font-weight: 700; }
+        .budget-total .budget-amt { font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #1a5276; }
 
         .notes-grid { padding: 16px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .notes-category h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 8px; }
-        .notes-category ul { list-style: none; font-size: 12px; color: #8b94a6; }
+        .notes-category h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #d4874a; margin-bottom: 8px; }
+        .notes-category ul { list-style: none; font-size: 12px; color: #7a9ab5; }
         .notes-category li { padding: 3px 0; display: flex; align-items: center; gap: 6px; }
-        .notes-category li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(99, 130, 255, 0.4); flex-shrink: 0; }
+        .notes-category li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(74, 139, 168, 0.4); flex-shrink: 0; }
 
         .custom-marker {
             display: flex; align-items: center; justify-content: center;
@@ -913,34 +959,33 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             border: 2px solid rgba(255,255,255,0.3);
         }
-        .marker-home { background: linear-gradient(135deg, #7eb8ff, #6366f1); width: 36px; height: 36px; font-size: 16px; }
-        .marker-paris { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-        .marker-arles { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
-        .marker-neuschwanstein { background: linear-gradient(135deg, #facc15, #eab308); color: #1a1a2e; }
-        .marker-munich { background: linear-gradient(135deg, #facc15, #f59e0b); color: #1a1a2e; }
-        .marker-amsterdam { background: linear-gradient(135deg, #fb923c, #f97316); }
-        .marker-strasbourg { background: linear-gradient(135deg, #60a5fa, #2563eb); }
-        .marker-frankfurt { background: linear-gradient(135deg, #f87171, #ef4444); }
-        .marker-marseille { background: linear-gradient(135deg, #f472b6, #ec4899); }
-        .marker-arles { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
-        .marker-luxembourg { background: linear-gradient(135deg, #34d399, #059669); }
-        .marker-porto { background: linear-gradient(135deg, #fbbf24, #d97706); }
-        .marker-milan { background: linear-gradient(135deg, #f87171, #dc2626); }
-        .marker-palma { background: linear-gradient(135deg, #38bdf8, #0284c7); }
-        .marker-hahn { background: linear-gradient(135deg, #f87171, #ef4444); }
+        .marker-home { background: linear-gradient(135deg, #4a8ba8, #3a7090); width: 36px; height: 36px; font-size: 16px; }
+        .marker-paris { background: linear-gradient(135deg, #6a8aa8, #4a7090); }
+        .marker-arles { background: linear-gradient(135deg, #8a7060, #6a5040); }
+        .marker-neuschwanstein { background: linear-gradient(135deg, #8aad6e, #5a7d40); color: #fff; }
+        .marker-munich { background: linear-gradient(135deg, #4a8ba8, #3a7090); }
+        .marker-amsterdam { background: linear-gradient(135deg, #d4874a, #b06830); }
+        .marker-strasbourg { background: linear-gradient(135deg, #6a8aa8, #4a7090); }
+        .marker-frankfurt { background: linear-gradient(135deg, #c4626a, #a04048); }
+        .marker-marseille { background: linear-gradient(135deg, #c4626a, #a04048); }
+        .marker-luxembourg { background: linear-gradient(135deg, #6aaa8a, #4a8a6a); }
+        .marker-porto { background: linear-gradient(135deg, #d4874a, #b06830); }
+        .marker-milan { background: linear-gradient(135deg, #c4626a, #a04048); }
+        .marker-palma { background: linear-gradient(135deg, #4a8ba8, #3a7090); }
+        .marker-hahn { background: linear-gradient(135deg, #c4626a, #a04048); }
 
         .leaflet-popup-content-wrapper {
-            background: rgba(15, 19, 35, 0.95) !important;
-            border: 1px solid rgba(99, 130, 255, 0.2) !important;
-            border-radius: 10px !important;
-            color: #c8cdd8 !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+            background: #ffffff !important;
+            border: 1px solid #e4eef5 !important;
+            border-radius: 12px !important;
+            color: #3d4f5f !important;
+            box-shadow: 0 4px 20px rgba(74, 139, 168, 0.1) !important;
         }
-        .leaflet-popup-tip { background: rgba(15, 19, 35, 0.95) !important; border: 1px solid rgba(99, 130, 255, 0.2) !important; }
+        .leaflet-popup-tip { background: #ffffff !important; border: 1px solid #e4eef5 !important; }
         .leaflet-popup-content { margin: 12px 16px !important; }
-        .popup-title { font-weight: 700; font-size: 14px; color: #e2e8f0; margin-bottom: 4px; }
-        .popup-subtitle { font-size: 11px; color: #a78bfa; margin-bottom: 6px; }
-        .popup-desc { font-size: 12px; color: #8b94a6; line-height: 1.5; }
+        .popup-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 14px; color: #2a3442; margin-bottom: 4px; }
+        .popup-subtitle { font-size: 11px; color: #d4874a; margin-bottom: 6px; }
+        .popup-desc { font-size: 12px; color: #7a9ab5; line-height: 1.5; }
 
         @media (max-width: 1200px) {
             .main-grid { grid-template-columns: 1fr; }
@@ -974,21 +1019,20 @@
             margin-bottom: 24px;
         }
         .weather-card {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 14px 12px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
-        .weather-day-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #a78bfa; margin-bottom: 2px; }
-        .weather-city { font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+        .weather-day-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #d4874a; margin-bottom: 2px; }
+        .weather-city { font-size: 12px; font-weight: 700; color: #2a3442; margin-bottom: 6px; }
         .weather-icon { font-size: 24px; margin-bottom: 4px; }
-        .weather-temp { font-size: 18px; font-weight: 800; color: #38bdf8; }
-        .weather-temp-lo { font-size: 12px; font-weight: 600; color: #6b7280; }
-        .weather-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
-        .weather-rain { font-size: 10px; color: #a78bfa; margin-top: 4px; }
-        .weather-src { font-size: 8px; color: #4b5563; margin-top: 4px; }
+        .weather-temp { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 700; color: #1a5276; }
+        .weather-temp-lo { font-size: 12px; font-weight: 600; color: #7a9ab5; }
+        .weather-desc { font-size: 10px; color: #7a9ab5; margin-top: 2px; }
+        .weather-rain { font-size: 10px; color: #4a8ba8; margin-top: 4px; }
+        .weather-src { font-size: 8px; color: #a0b8cc; margin-top: 4px; }
         @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         /* Destination cards */
@@ -999,12 +1043,12 @@
             margin-bottom: 24px;
         }
         .dest-card {
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            border: 1px solid rgba(99, 130, 255, 0.1);
+            border: 1px solid #e4eef5;
             transition: transform 0.2s, border-color 0.2s;
         }
-        .dest-card:hover { transform: translateY(-2px); border-color: rgba(99, 130, 255, 0.3); }
+        .dest-card:hover { transform: translateY(-2px); border-color: #b0d0e4; box-shadow: 0 4px 16px rgba(74, 139, 168, 0.08); }
         .dest-card-hero {
             height: 100px;
             display: flex;
@@ -1018,15 +1062,15 @@
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 30px;
-            background: linear-gradient(transparent, rgba(15, 19, 35, 0.95));
+            background: linear-gradient(transparent, #ffffff);
         }
         .dest-card-body {
-            background: rgba(15, 19, 35, 0.95);
+            background: #ffffff;
             padding: 12px 14px;
         }
-        .dest-card-name { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
-        .dest-card-country { font-size: 10px; color: #a78bfa; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-        .dest-card-highlights { font-size: 11px; color: #8b94a6; line-height: 1.6; }
+        .dest-card-name { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 700; color: #2a3442; margin-bottom: 2px; }
+        .dest-card-country { font-size: 10px; color: #d4874a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .dest-card-highlights { font-size: 11px; color: #7a9ab5; line-height: 1.6; }
 
         /* Packing checklist */
         .packing-grid {
@@ -1039,7 +1083,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #a78bfa;
+            color: #d4874a;
             margin-bottom: 10px;
         }
         .pack-item {
@@ -1052,7 +1096,7 @@
         }
         .pack-item .pack-box {
             width: 16px; height: 16px;
-            border: 2px solid rgba(99, 130, 255, 0.3);
+            border: 2px solid #d4e4ee;
             border-radius: 4px;
             flex-shrink: 0;
             display: flex;
@@ -1061,13 +1105,13 @@
             transition: all 0.2s;
         }
         .pack-item.packed .pack-box {
-            background: rgba(52, 211, 153, 0.2);
-            border-color: #34d399;
+            background: rgba(138, 173, 110, 0.15);
+            border-color: #8aad6e;
         }
-        .pack-item.packed .pack-box::after { content: '\2713'; color: #34d399; font-size: 10px; font-weight: 700; }
+        .pack-item.packed .pack-box::after { content: '\2713'; color: #5a7d40; font-size: 10px; font-weight: 700; }
         .pack-item.packed .pack-label { opacity: 0.4; text-decoration: line-through; }
-        .pack-label { font-size: 12px; color: #c8cdd8; }
-        .pack-conditional { font-size: 10px; color: #a78bfa; font-style: italic; margin-left: auto; }
+        .pack-label { font-size: 12px; color: #3d4f5f; }
+        .pack-conditional { font-size: 10px; color: #d4874a; font-style: italic; margin-left: auto; }
 
         /* Booking links */
         .booking-links {
@@ -1081,20 +1125,20 @@
             gap: 12px;
             padding: 14px 16px;
             border-radius: 10px;
-            border: 1px solid rgba(99, 130, 255, 0.08);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            background: #f5fafc;
             text-decoration: none;
             transition: all 0.2s;
         }
         .booking-link:hover {
-            border-color: rgba(99, 130, 255, 0.3);
-            background: rgba(25, 32, 60, 0.8);
+            border-color: #b0d0e4;
+            background: #ffffff;
         }
         .booking-link-icon { font-size: 20px; flex-shrink: 0; }
         .booking-link-text { flex: 1; }
-        .booking-link-title { font-size: 13px; font-weight: 600; color: #e2e8f0; }
-        .booking-link-desc { font-size: 10px; color: #6b7280; margin-top: 2px; }
-        .booking-link-arrow { color: #4b5563; font-size: 14px; }
+        .booking-link-title { font-size: 13px; font-weight: 600; color: #2a3442; }
+        .booking-link-desc { font-size: 10px; color: #7a9ab5; margin-top: 2px; }
+        .booking-link-arrow { color: #a0b8cc; font-size: 14px; }
 
         /* Emergency info */
         .emergency-grid {
@@ -1105,25 +1149,25 @@
         .emergency-card {
             padding: 16px;
             border-radius: 10px;
-            border: 1px solid rgba(99, 130, 255, 0.08);
-            background: rgba(20, 25, 45, 0.6);
+            border: 1px solid #e4eef5;
+            background: #f5fafc;
         }
         .emergency-card h4 {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #a78bfa;
+            color: #d4874a;
             margin-bottom: 10px;
         }
         .emergency-item {
             font-size: 12px;
-            color: #c8cdd8;
+            color: #3d4f5f;
             padding: 4px 0;
             display: flex;
             justify-content: space-between;
         }
-        .emergency-item .em-label { color: #6b7280; }
+        .emergency-item .em-label { color: #7a9ab5; }
         .emergency-item .em-value { font-weight: 600; }
 
         /* Comparison picker */
@@ -1139,17 +1183,17 @@
             font-weight: 600;
             padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(99, 130, 255, 0.2);
+            border: 1px solid #d4e4ee;
             background: transparent;
-            color: #6b7280;
+            color: #7a9ab5;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .compare-pill:hover { border-color: rgba(99, 130, 255, 0.4); color: #c8cdd8; }
+        .compare-pill:hover { border-color: #b0d0e4; color: #2a3442; }
         .compare-pill.selected {
-            background: rgba(99, 130, 255, 0.15);
-            border-color: rgba(99, 130, 255, 0.4);
-            color: #e2e8f0;
+            background: rgba(74, 139, 168, 0.1);
+            border-color: #4a8ba8;
+            color: #2a3442;
         }
         .compare-table {
             width: 100%;
@@ -1160,22 +1204,22 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #6b7280;
+            color: #7a9ab5;
             text-align: left;
             padding: 10px 14px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.15);
+            border-bottom: 1px solid #e4eef5;
         }
         .compare-table td {
             font-size: 13px;
-            color: #c8cdd8;
+            color: #3d4f5f;
             padding: 10px 14px;
-            border-bottom: 1px solid rgba(99, 130, 255, 0.05);
+            border-bottom: 1px solid #f0f5fa;
         }
-        .compare-table tr:hover td { background: rgba(99, 130, 255, 0.03); }
+        .compare-table tr:hover td { background: rgba(74, 139, 168, 0.03); }
         .compare-empty {
             text-align: center;
             padding: 40px;
-            color: #4b5563;
+            color: #a0b8cc;
             font-size: 13px;
         }
 
@@ -1187,16 +1231,15 @@
             gap: 14px;
         }
         .hotel-card {
-            background: rgba(15, 19, 35, 0.8);
-            border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 14px;
             padding: 18px 20px;
-            backdrop-filter: blur(10px);
             transition: border-color 0.2s;
             position: relative;
         }
-        .hotel-card:hover { border-color: rgba(99, 130, 255, 0.3); }
-        .hotel-card.hotel-pick { border-color: rgba(52, 211, 153, 0.25); }
+        .hotel-card:hover { border-color: #b0d0e4; }
+        .hotel-card.hotel-pick { border-color: rgba(138, 173, 110, 0.3); }
         .hotel-pick-badge {
             position: absolute;
             top: -9px;
@@ -1204,34 +1247,34 @@
             font-size: 8px;
             font-weight: 800;
             letter-spacing: 1.5px;
-            color: #34d399;
-            background: rgba(15, 19, 35, 0.95);
+            color: #5a7d40;
+            background: #ffffff;
             padding: 2px 8px;
             border-radius: 4px;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+            border: 1px solid rgba(138, 173, 110, 0.3);
         }
-        .hotel-name { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 2px; }
-        .hotel-stars { font-size: 11px; color: #fbbf24; margin-bottom: 6px; }
-        .hotel-rating { display: inline-block; font-size: 11px; font-weight: 700; color: #34d399; background: rgba(52, 211, 153, 0.12); padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
-        .hotel-detail { font-size: 12px; color: #8b94a6; line-height: 1.7; margin-bottom: 10px; }
-        .hotel-price { font-size: 14px; font-weight: 700; color: #38bdf8; margin-bottom: 10px; }
+        .hotel-name { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 700; color: #2a3442; margin-bottom: 2px; }
+        .hotel-stars { font-size: 11px; color: #d4a554; margin-bottom: 6px; }
+        .hotel-rating { display: inline-block; font-size: 11px; font-weight: 700; color: #5a7d40; background: rgba(138, 173, 110, 0.12); padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+        .hotel-detail { font-size: 12px; color: #7a9ab5; line-height: 1.7; margin-bottom: 10px; }
+        .hotel-price { font-size: 14px; font-weight: 700; color: #4a8ba8; margin-bottom: 10px; }
         .hotel-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-        .hotel-tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: rgba(99, 130, 255, 0.1); color: #7eb8ff; }
-        .hotel-tag.hotel-tag-view { background: rgba(168, 85, 247, 0.12); color: #a78bfa; }
+        .hotel-tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: rgba(74, 139, 168, 0.08); color: #4a8ba8; }
+        .hotel-tag.hotel-tag-view { background: rgba(212, 135, 74, 0.1); color: #d4874a; }
         .hotel-book-btn {
             display: inline-block;
             font-family: inherit;
             font-size: 11px;
             font-weight: 700;
             padding: 8px 20px;
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 8px;
+            background: rgba(74, 139, 168, 0.08);
+            color: #4a8ba8;
+            border: 1px solid #b0d0e4;
+            border-radius: 10px;
             text-decoration: none;
             transition: all 0.2s;
         }
-        .hotel-book-btn:hover { background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.4); }
+        .hotel-book-btn:hover { background: rgba(74, 139, 168, 0.15); border-color: #85c1dc; }
 
         /* Share button */
         .share-btn {
@@ -1239,19 +1282,19 @@
             font-size: 11px;
             font-weight: 600;
             padding: 8px 20px;
-            background: rgba(99, 130, 255, 0.1);
-            color: #7eb8ff;
-            border: 1px solid rgba(99, 130, 255, 0.2);
-            border-radius: 8px;
+            background: rgba(74, 139, 168, 0.08);
+            color: #4a8ba8;
+            border: 1px solid #b0d0e4;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .share-btn:hover { background: rgba(99, 130, 255, 0.2); }
+        .share-btn:hover { background: rgba(74, 139, 168, 0.15); }
 
         /* Countdown timer */
         .ov-countdown {
             text-align: center; padding: 20px 0 8px;
-            font-size: 14px; color: #6b7280; font-weight: 500;
+            font-size: 14px; color: #7a9ab5; font-weight: 500;
         }
         .ov-countdown-num {
             display: inline-flex; align-items: baseline; gap: 16px;
@@ -1261,97 +1304,97 @@
             display: flex; flex-direction: column; align-items: center;
         }
         .ov-cd-val {
-            font-size: 36px; font-weight: 800;
-            background: linear-gradient(135deg, #38bdf8, #a78bfa);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 36px; font-weight: 700;
+            color: #1a5276;
         }
-        .ov-cd-label { font-size: 10px; color: #4b5563; text-transform: uppercase; letter-spacing: 1px; }
+        .ov-cd-label { font-size: 10px; color: #a0b8cc; text-transform: uppercase; letter-spacing: 1px; }
 
         /* Booking progress — tier 1, visually prominent */
         .ov-section.tier-primary {
-            border-color: rgba(52, 211, 153, 0.2);
-            background: rgba(15, 19, 35, 0.9);
+            border-color: rgba(138, 173, 110, 0.25);
+            background: #ffffff;
         }
         .booking-progress {
             margin-bottom: 24px;
         }
         .bp-bar-bg {
             height: 10px; border-radius: 5px;
-            background: rgba(99, 130, 255, 0.1);
+            background: #eef5fa;
             margin-bottom: 10px; overflow: hidden;
         }
         .bp-bar-fill {
             height: 100%; border-radius: 5px;
-            background: linear-gradient(90deg, #34d399, #38bdf8);
+            background: linear-gradient(90deg, #8aad6e, #4a8ba8);
             transition: width 0.4s ease;
         }
-        .bp-status { font-size: 13px; font-weight: 600; color: #c8cdd8; margin-bottom: 12px; }
+        .bp-status { font-size: 13px; font-weight: 600; color: #3d4f5f; margin-bottom: 12px; }
         .bp-items { display: flex; flex-direction: column; gap: 6px; }
         .bp-item {
             display: flex; align-items: center; gap: 10px;
             padding: 8px 12px; border-radius: 8px;
-            background: rgba(15, 19, 35, 0.5);
+            background: #f5fafc;
             cursor: pointer; transition: all 0.2s;
         }
-        .bp-item:hover { background: rgba(99, 130, 255, 0.06); }
+        .bp-item:hover { background: rgba(74, 139, 168, 0.06); }
         .bp-check {
             width: 18px; height: 18px; border-radius: 5px;
-            border: 2px solid rgba(99, 130, 255, 0.2);
+            border: 2px solid #d4e4ee;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; transition: all 0.2s; font-size: 11px;
         }
         .bp-item.booked .bp-check {
-            background: rgba(52, 211, 153, 0.2); border-color: #34d399; color: #34d399;
+            background: rgba(138, 173, 110, 0.15); border-color: #8aad6e; color: #5a7d40;
         }
         .bp-item.booked .bp-label { opacity: 0.5; text-decoration: line-through; }
-        .bp-label { font-size: 12px; color: #c8cdd8; flex: 1; }
+        .bp-label { font-size: 12px; color: #3d4f5f; flex: 1; }
         .bp-priority {
             font-size: 9px; font-weight: 700; padding: 2px 6px;
             border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .bp-priority-urgent { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .bp-priority-soon { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .bp-priority-later { background: rgba(99, 130, 255, 0.15); color: #7eb8ff; }
+        .bp-priority-urgent { background: rgba(196, 98, 106, 0.12); color: #c4626a; }
+        .bp-priority-soon { background: rgba(212, 165, 84, 0.12); color: #d4a554; }
+        .bp-priority-later { background: rgba(74, 139, 168, 0.12); color: #4a8ba8; }
 
         /* Daily briefing */
         .daily-briefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 24px; }
         .brief-card {
-            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+            background: #ffffff; border: 1px solid #e4eef5;
+            border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s;
         }
-        .brief-card:hover { border-color: rgba(99, 130, 255, 0.25); }
-        .brief-day { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 2px; }
-        .brief-dest { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+        .brief-card:hover { border-color: #b0d0e4; }
+        .brief-day { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #d4874a; margin-bottom: 2px; }
+        .brief-dest { font-family: 'Playfair Display', Georgia, serif; font-size: 14px; font-weight: 700; color: #2a3442; margin-bottom: 8px; }
         .brief-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; }
-        .brief-row-label { color: #6b7280; }
-        .brief-row-val { color: #c8cdd8; font-weight: 600; }
+        .brief-row-label { color: #7a9ab5; }
+        .brief-row-val { color: #3d4f5f; font-weight: 600; }
 
         /* Restaurant wishlist */
-        .city-section-header { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #a78bfa; padding: 18px 0 8px; border-bottom: 1px solid rgba(99, 130, 255, 0.12); margin-bottom: 12px; }
+        .city-section-header { font-family: 'Playfair Display', Georgia, serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #1a5276; padding: 18px 0 8px; border-bottom: 1px solid #e4eef5; margin-bottom: 12px; }
         .city-section-header:first-child { padding-top: 0; }
         .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 20px; }
         .restaurant-grid:last-child { margin-bottom: 0; }
         .resto-card {
-            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+            background: #ffffff; border: 1px solid #e4eef5;
+            border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s;
         }
-        .resto-card:hover { border-color: rgba(99, 130, 255, 0.25); }
-        .resto-name { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
-        .resto-type { font-size: 11px; color: #fbbf24; margin-bottom: 6px; }
-        .resto-desc { font-size: 11px; color: #8b94a6; line-height: 1.6; }
-        .resto-must { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(251, 146, 60, 0.15); color: #fb923c; margin-left: 6px; }
+        .resto-card:hover { border-color: #b0d0e4; }
+        .resto-name { font-size: 14px; font-weight: 700; color: #2a3442; margin-bottom: 4px; }
+        .resto-type { font-size: 11px; color: #d4a554; margin-bottom: 6px; }
+        .resto-desc { font-size: 11px; color: #7a9ab5; line-height: 1.6; }
+        .resto-must { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(212, 135, 74, 0.12); color: #d4874a; margin-left: 6px; }
 
         /* Language cheat sheet */
         .lang-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
         .lang-section {
-            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px; padding: 16px;
+            background: #ffffff; border: 1px solid #e4eef5;
+            border-radius: 14px; padding: 16px;
         }
-        .lang-flag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 10px; }
-        .lang-phrase { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(99, 130, 255, 0.05); }
+        .lang-flag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #d4874a; margin-bottom: 10px; }
+        .lang-phrase { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f0f5fa; }
         .lang-phrase:last-child { border-bottom: none; }
-        .lang-en { font-size: 12px; color: #6b7280; }
-        .lang-local { font-size: 12px; color: #e2e8f0; font-weight: 600; font-style: italic; }
+        .lang-en { font-size: 12px; color: #7a9ab5; }
+        .lang-local { font-size: 12px; color: #2a3442; font-weight: 600; font-style: italic; }
 
         /* Trip timeline */
         .trip-timeline {
@@ -1364,31 +1407,31 @@
             cursor: default; position: relative;
         }
         .tl-segment:hover { flex: 1.8; }
-        .tl-day { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.8); }
-        .tl-label { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
+        .tl-day { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.9); }
+        .tl-label { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 
         /* Photo spots */
         .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 20px; }
         .photo-grid:last-child { margin-bottom: 0; }
         .photo-card {
-            background: rgba(15, 19, 35, 0.8); border: 1px solid rgba(99, 130, 255, 0.1);
-            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s;
+            background: #ffffff; border: 1px solid #e4eef5;
+            border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s;
         }
-        .photo-card:hover { border-color: rgba(99, 130, 255, 0.25); }
-        .photo-spot { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+        .photo-card:hover { border-color: #b0d0e4; }
+        .photo-spot { font-size: 14px; font-weight: 700; color: #2a3442; margin-bottom: 4px; }
         .photo-icon { font-size: 20px; float: right; margin: -2px 0 0 8px; }
-        .photo-tip { font-size: 11px; color: #8b94a6; line-height: 1.6; }
-        .photo-time { font-size: 10px; color: #38bdf8; font-weight: 600; margin-top: 4px; }
-        .card-link { display: inline-block; font-size: 10px; font-weight: 600; margin-top: 6px; color: #6382ff; text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
+        .photo-tip { font-size: 11px; color: #7a9ab5; line-height: 1.6; }
+        .photo-time { font-size: 10px; color: #4a8ba8; font-weight: 600; margin-top: 4px; }
+        .card-link { display: inline-block; font-size: 10px; font-weight: 600; margin-top: 6px; color: #4a8ba8; text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
         .card-link:hover { opacity: 1; text-decoration: underline; }
         .share-toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(80px);
-            background: rgba(52, 211, 153, 0.15);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            color: #34d399;
+            background: rgba(138, 173, 110, 0.15);
+            border: 1px solid rgba(138, 173, 110, 0.3);
+            color: #5a7d40;
             padding: 10px 24px;
             border-radius: 8px;
             font-size: 13px;
@@ -1441,12 +1484,13 @@
 </div>
 
 <div class="app-content locked" id="app-content">
+<div class="sunset-bar"></div>
 <div class="topbar">
     <h1>SUMMER TRIP 2026</h1>
     <div class="meta">
         <span>Jul 3 – 12</span>
         <span>|</span>
-        <span style="color:#a78bfa;font-weight:500">Home Base: Kaiserslautern</span>
+        <span style="color:#d4874a;font-weight:500">Home Base: Kaiserslautern</span>
         <span>|</span>
         <span class="countdown" id="countdown"></span>
     </div>
@@ -1459,9 +1503,21 @@
     <!-- Overview View -->
     <div class="overview-view active" id="overview-view">
         <div class="ov-hero">
-            <div class="ov-hero-title">Melissa's Summer Visit</div>
+            <!-- Compass decoration -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px;">
+                <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,#d4874a)"></div>
+                <svg viewBox="0 0 20 20" width="20" fill="none" stroke="#d4874a" stroke-width="1.5">
+                    <circle cx="10" cy="10" r="4"/>
+                    <line x1="10" y1="1" x2="10" y2="5"/><line x1="10" y1="15" x2="10" y2="19"/>
+                    <line x1="1" y1="10" x2="5" y2="10"/><line x1="15" y1="10" x2="19" y2="10"/>
+                    <line x1="3.5" y1="3.5" x2="6" y2="6"/><line x1="14" y1="14" x2="16.5" y2="16.5"/>
+                    <line x1="16.5" y1="3.5" x2="14" y2="6"/><line x1="6" y1="14" x2="3.5" y2="16.5"/>
+                </svg>
+                <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,#d4874a,transparent)"></div>
+            </div>
+            <div class="ov-hero-title">Melissa's Summer <em>Visit</em></div>
             <div class="ov-hero-sub">Porto + Castle + Munich &mdash; Jul 3 to Jul 12, 2026</div>
-            <div class="ov-hero-detail" style="color:#34d399">&#10003; Plan confirmed &bull; 3 countries &bull; Home base: Kaiserslautern</div>
+            <div class="ov-hero-detail" style="color:#5a7d40">&#10003; Plan confirmed &bull; 3 countries &bull; Home base: Kaiserslautern</div>
             <div class="ov-countdown" id="ov-countdown"></div>
         </div>
 
@@ -1489,6 +1545,46 @@
             <div class="ov-stat">
                 <div class="ov-stat-value" style="font-size:18px" id="ov-eur-rate">...</div>
                 <div class="ov-stat-label">USD &rarr; EUR</div>
+            </div>
+        </div>
+
+        <!-- Passport Stamps -->
+        <div class="passport-stamps" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #d4874a;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#127477;&#127481;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:11px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Porto</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 4–6</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
+            </div>
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #8aad6e;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#127984;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:10px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Castle</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 7</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
+            </div>
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #4a8ba8;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#127866;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:11px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Munich</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 7–8</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
+            </div>
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #4a8ba8;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#127968;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:8px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Kaiserslautern</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 3, 9–11</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
+            </div>
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #c4626a;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#9992;&#65039;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:11px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Frankfurt</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 3, 12</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
+            </div>
+            <div class="stamp" style="width:90px;height:90px;border:2px dashed #6aaa8a;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
+                <div style="font-size:22px">&#127473;&#127482;</div>
+                <div style="font-family:'Playfair Display',serif;font-size:10px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Luxembourg</div>
+                <div style="font-size:9px;color:#7a9ab5">Jul 4, 6</div>
+                <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#8aad6e;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff">✓</div>
             </div>
         </div>
 
@@ -1546,12 +1642,12 @@
                     <div class="ov-cal-num">6</div>
                     <div class="ov-cal-label">Fly home</div>
                 </div>
-                <div class="ov-cal-day" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.25)">
+                <div class="ov-cal-day" class="ov-cal-castle">
                     <div class="ov-cal-dow">Tue</div>
                     <div class="ov-cal-num">7</div>
                     <div class="ov-cal-label">Castle&rarr;Munich</div>
                 </div>
-                <div class="ov-cal-day" style="background:rgba(234,179,8,0.12);border-color:rgba(234,179,8,0.25)">
+                <div class="ov-cal-day" class="ov-cal-castle">
                     <div class="ov-cal-dow">Wed</div>
                     <div class="ov-cal-num">8</div>
                     <div class="ov-cal-label">Munich</div>
@@ -1578,10 +1674,10 @@
                 </div>
             </div>
             <div class="ov-legend">
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(239,68,68,0.3)"></div>Flights</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.3)"></div>Porto (Portugal)</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(234,179,8,0.25)"></div>Castle + Munich</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.12)"></div>KL / Chill</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(138,112,96,0.3)"></div>Flights</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(212,135,74,0.3)"></div>Porto (Portugal)</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(138,173,110,0.3)"></div>Castle + Munich</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(74,139,168,0.2)"></div>KL / Chill</div>
             </div>
         </div>
 
@@ -1616,8 +1712,8 @@
             <div class="ov-section-title">Budget Comparison</div>
             <div class="ov-bar-chart" id="ov-budget-chart"></div>
             <div class="ov-legend" style="margin-top:12px">
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(99,130,255,0.6)"></div>Low estimate</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(168,85,247,0.4)"></div>High estimate</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(74,139,168,0.4)"></div>Low estimate</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:rgba(212,135,74,0.3)"></div>High estimate</div>
             </div>
         </div>
 
@@ -1625,8 +1721,8 @@
             <div class="ov-section-title">Chill vs Adventure</div>
             <div class="ov-bar-chart" id="ov-chill-chart"></div>
             <div class="ov-legend" style="margin-top:12px">
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#38bdf8"></div>Chill days at home</div>
-                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#fb923c"></div>Hotel nights away</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#4a8ba8"></div>Chill days at home</div>
+                <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#d4874a"></div>Hotel nights away</div>
             </div>
         </div>
     </div>
@@ -1675,16 +1771,16 @@
         <div class="rec-section">
             <div class="rec-section-title">The Flow</div>
             <div class="rec-paragraph">
-                <strong style="color:#ef4444">Fri Jul 3</strong> &mdash; Melissa lands at Frankfurt, drive to KL, Biergarten dinner, early night.<br><br>
-                <strong style="color:#d97706">Sat Jul 4</strong> &mdash; Drive to Luxembourg Airport (1h), fly Ryanair FR2863 at 2:55 PM. Arrive Porto 4:30 PM. Walk Ribeira, riverside dinner, port wine on Dom Lu&iacute;s Bridge at sunset. <em style="color:#a78bfa">4th of July in Portugal.</em><br><br>
+                <strong style="color:#c4626a">Fri Jul 3</strong> &mdash; Melissa lands at Frankfurt, drive to KL, Biergarten dinner, early night.<br><br>
+                <strong style="color:#d97706">Sat Jul 4</strong> &mdash; Drive to Luxembourg Airport (1h), fly Ryanair FR2863 at 2:55 PM. Arrive Porto 4:30 PM. Walk Ribeira, riverside dinner, port wine on Dom Lu&iacute;s Bridge at sunset. <em style="color:#d4874a">4th of July in Portugal.</em><br><br>
                 <strong style="color:#d97706">Sun Jul 5</strong> &mdash; Porto morning: Mercado do Bolh&atilde;o, Cl&eacute;rigos Tower, Livraria Lello, Pal&aacute;cio da Bolsa + Igreja de S&atilde;o Francisco. Afternoon train from S&atilde;o Bento to Viana do Castelo &mdash; funicular to Santa Luzia for panoramic views of the Lima Valley. Back for sunset + francesinha dinner.<br><br>
                 <strong style="color:#d97706">Mon Jul 6</strong> &mdash; Heritage Tram 1 along the Douro to Foz do Douro beach, fly Ryanair FR2862 at 1:10 PM. Land Luxembourg 4:35 PM, home by 6 PM.<br><br>
-                <strong style="color:#eab308">Tue Jul 7</strong> &mdash; Tesla road trip to Neuschwanstein (258 km, Supercharger stop at Merklingen). Shuttle bus up to Marienbrücke for the iconic photo, 1:40 PM castle tour, then drive to Munich. <em style="color:#a78bfa">2 nights in Munich.</em><br><br>
+                <strong style="color:#eab308">Tue Jul 7</strong> &mdash; Tesla road trip to Neuschwanstein (258 km, Supercharger stop at Merklingen). Shuttle bus up to Marienbrücke for the iconic photo, 1:40 PM castle tour, then drive to Munich. <em style="color:#d4874a">2 nights in Munich.</em><br><br>
                 <strong style="color:#eab308">Wed Jul 8</strong> &mdash; Full Munich day. Marienplatz, Viktualienmarkt, Englischer Garten, Residenz, evening walk along the Isar.<br><br>
                 <strong style="color:#eab308">Thu Jul 9</strong> &mdash; Munich morning (Nymphenburg or shopping), drive back to KL.<br><br>
                 <strong style="color:#6366f1">Fri Jul 10</strong> &mdash; Chill day. Sleep in, coffee, Pfalzerwald walk, cook dinner together.<br><br>
                 <strong style="color:#6366f1">Sat Jul 11</strong> &mdash; Farewell day. Saturday Wochenmarkt, revisit favorites, farewell dinner.<br><br>
-                <strong style="color:#ef4444">Sun Jul 12</strong> &mdash; Drive to Frankfurt, 9:45 AM flight home.
+                <strong style="color:#c4626a">Sun Jul 12</strong> &mdash; Drive to Frankfurt, 9:45 AM flight home.
             </div>
         </div>
 
@@ -1800,7 +1896,7 @@
                 <div class="flight-number">LH100 / UA8918</div>
             </div>
             <div class="flight-card">
-                <div class="flight-label">Porto Outbound — Jul 4 <span style="color:#34d399;font-weight:700;font-size:9px;letter-spacing:0.5px">✓ BOOKED</span></div>
+                <div class="flight-label">Porto Outbound — Jul 4 <span style="color:#5a7d40;font-weight:700;font-size:9px;letter-spacing:0.5px">✓ BOOKED</span></div>
                 <div class="flight-route">
                     <div class="flight-city"><div class="flight-code">LUX</div><div class="flight-name">Luxembourg</div><div class="flight-time">2:55 PM</div></div>
                     <div class="flight-arrow"></div>
@@ -1809,7 +1905,7 @@
                 <div class="flight-number">FR2863 · Ryanair (2h 35m)</div>
             </div>
             <div class="flight-card">
-                <div class="flight-label">Porto Return — Jul 6 <span style="color:#34d399;font-weight:700;font-size:9px;letter-spacing:0.5px">✓ BOOKED</span></div>
+                <div class="flight-label">Porto Return — Jul 6 <span style="color:#5a7d40;font-weight:700;font-size:9px;letter-spacing:0.5px">✓ BOOKED</span></div>
                 <div class="flight-route">
                     <div class="flight-city"><div class="flight-code">OPO</div><div class="flight-name">Porto</div><div class="flight-time">1:10 PM</div></div>
                     <div class="flight-arrow"></div>
@@ -2240,11 +2336,11 @@ const plans = {
         stats: { days: 10, countries: 3, cities: 5, km: '~760', hotelNights: 4, klDays: 4, chill: 4, overnights: 'Porto 2 · Munich 2 · KL 5', legs: 'KL\u2192LUX \u2708\uFE0F OPO · OPO\u2192LUX \u2708\uFE0F · KL\u2192Neuschwanstein\u2192Munich \uD83D\uDE97 378 km (Supercharger Merklingen) · Munich\u2192KL \uD83D\uDE97 4h' },
         locs: ['kl', 'frankfurt', 'luxembourg', 'porto', 'neuschwanstein', 'munich'],
         routes: [
-            { from: 'luxembourg', to: 'porto', color: '#d97706', dash: '8, 12' },
-            { from: 'kl', to: 'luxembourg', color: '#059669', dash: null },
-            { from: 'kl', to: 'neuschwanstein', color: '#eab308', dash: null },
-            { from: 'neuschwanstein', to: 'munich', color: '#eab308', dash: null },
-            { from: 'kl', to: 'frankfurt', color: '#ef4444', dash: '6, 8' }
+            { from: 'luxembourg', to: 'porto', color: '#d4874a', dash: '8, 12' },
+            { from: 'kl', to: 'luxembourg', color: '#6aaa8a', dash: null },
+            { from: 'kl', to: 'neuschwanstein', color: '#8aad6e', dash: null },
+            { from: 'neuschwanstein', to: 'munich', color: '#4a8ba8', dash: null },
+            { from: 'kl', to: 'frankfurt', color: '#c4626a', dash: '6, 8' }
         ],
         popups: {
             kl: { sub: 'Home Base', desc: '4 chill days. Maximum time at home between trips.' },
@@ -2255,16 +2351,16 @@ const plans = {
             munich: { sub: 'Days 5–6 (Jul 7–8)', desc: '2 nights. Marienplatz, Viktualienmarkt, Englischer Garten, beer hall.' }
         },
         days: [
-            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#ef4444' },
-            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Porto — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Porto (2h35). Arrive 4:30 PM — evening in Ribeira with port wine.', schedule: [['12:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['1:00 PM', 'Arrive LUX \u2014 Ryanair bag drop closes 2:15 PM (40 min before)'], ['2:25 PM', 'At gate \u2014 boarding gate closes 30 min before'], ['2:55 PM', 'Ryanair FR 2863 departs LUX (2h35)'], ['4:30 PM', 'Land at Porto (local time)'], ['5:00 PM', 'Metro Line E Airport \u2192 Trindade (~35 min, Zone 4 ~\u20AC2.45), walk 10 min to hotel'], ['5:45 PM', 'Check into NH Collection Porto Batalha \u2014 Batalha Square'], ['6:15 PM', 'Funicular dos Guindais down to Ribeira (steps from hotel, 3 min ride)'], ['6:30 PM', 'Walk the Ribeira waterfront'], ['7:30 PM', '4th of July dinner \u2014 riverside restaurant'], ['9:00 PM', 'Port wine tasting at sunset on Dom Lu\u00EDs Bridge']], overnight: 'NH Collection Porto Batalha', transport: 'Drive 1h + Flight 2h35 + Metro 35min', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'Ribeira', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['kl', 'luxembourg', 'porto'], color: '#d97706' },
-            { day: 3, date: 'Sun Jul 5', dest: 'Porto + Viana do Castelo', desc: 'Porto morning sights, then train to Viana do Castelo for Santa Luzia panoramic views.', schedule: [['9:00 AM', 'Mercado do Bolh\u00E3o \u2014 coffee + past\u00E9is de nata at the renovated market hall'], ['10:00 AM', 'Cl\u00E9rigos Tower \u2014 climb 225 steps for panoramic views'], ['11:00 AM', 'Livraria Lello (Harry Potter bookshop, \u20AC5 entry)'], ['11:45 AM', 'Pal\u00E1cio da Bolsa \u2014 guided tour of the Arab Room (~45 min)'], ['12:30 PM', 'Igreja de S\u00E3o Francisco \u2014 200kg of gold leaf baroque interior (next door)'], ['1:00 PM', 'Lunch near Ribeira'], ['1:45 PM', 'S\u00E3o Bento Station \u2014 see the 20,000 azulejo tiles, then catch regional train to Viana do Castelo (~1h30)'], ['3:15 PM', 'Arrive Viana do Castelo'], ['3:30 PM', 'Funicular to Santu\u00E1rio de Santa Luzia \u2014 longest funicular in Portugal (\u20AC3 round trip, 7 min ride)'], ['4:00 PM', 'Santa Luzia \u2014 panoramic views of Lima Valley + Atlantic coast'], ['4:45 PM', 'Funicular down, walk Pra\u00E7a da Rep\u00FAblica + waterfront'], ['5:30 PM', 'Train back to Porto (~1h30)'], ['7:00 PM', 'Back in Porto'], ['7:30 PM', 'Jardins do Pal\u00E1cio de Cristal \u2014 sunset views over the Douro'], ['8:30 PM', 'Dinner \u2014 francesinha at Caf\u00E9 Santiago']], overnight: 'NH Collection Porto Batalha', transport: 'Train ~1h30 each way', tags: [{ text: 'Santa Luzia', cls: 'tag-landmark' }, { text: 'Viana do Castelo', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['porto'], color: '#d97706' },
-            { day: 4, date: 'Mon Jul 6', dest: 'Porto \u2192 Luxembourg \u2192 KL', desc: 'Heritage tram to the beach, then fly home.', schedule: [['9:00 AM', 'Last breakfast in Ribeira'], ['9:45 AM', 'Heritage Tram 1 along the Douro to Foz do Douro beach (~30 min, vintage 1930s tram)'], ['10:30 AM', 'Walk the Foz promenade where the Douro meets the Atlantic'], ['11:00 AM', 'Metro Trindade \u2192 Airport (~35 min) or taxi (~20 min, ~\u20AC25)'], ['11:45 AM', 'Arrive OPO \u2014 bag drop closes 12:30 PM (40 min before)'], ['12:40 PM', 'At gate \u2014 boarding gate closes 30 min before'], ['1:10 PM', 'Ryanair FR 2862 departs OPO (2h25)'], ['4:35 PM', 'Land at Luxembourg (local time)'], ['5:00 PM', 'Pick up car, drive to KL (1h)'], ['6:00 PM', 'Home in KL'], ['7:30 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Metro/taxi + Flight 2h25 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['porto', 'luxembourg', 'kl'], color: '#d97706' },
-            { day: 5, date: 'Tue Jul 7', dest: 'KL \u2192 Neuschwanstein \u2192 Munich', desc: 'Tesla road trip. Supercharge at Merklingen, castle + Marienbrücke, then Munich.', schedule: [['7:15 AM', 'Leave KL \u2014 Tesla route: 258 km, ~4h41m total'], ['9:15 AM', 'Supercharger stop \u2014 Merklingen (16 min)'], ['9:30 AM', 'Back on the road'], ['12:00 PM', 'Arrive Schwangau \u2014 park at P4 (\u20AC12 for up to 6h)'], ['12:20 PM', 'Shuttle bus P4 \u2192 Marienbrücke (\u20AC3.50/pp, cash only, every ~20 min, ~15 min ride)'], ['12:40 PM', 'Marienbrücke \u2014 THE classic castle photo'], ['1:00 PM', 'Walk downhill from bridge to castle entrance (15 min steep path)'], ['1:25 PM', 'At castle entrance \u2014 arrive 15 min before timed entry'], ['1:40 PM', 'Neuschwanstein Castle guided tour (~35 min)'], ['2:15 PM', 'Tour ends \u2014 walk back down to P4 parking (~30 min)'], ['2:45 PM', 'Drive to Munich (~2h, 120 km)'], ['4:45 PM', 'Arrive Munich, check into hotel'], ['6:30 PM', 'Dinner at beer hall']], overnight: 'Munich hotel', transport: 'Tesla 258 km + charge + 120 km', tags: [{ text: 'Tesla Supercharger', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein', 'munich'], color: '#eab308' },
-            { day: 6, date: 'Wed Jul 8', dest: 'Munich — Full Day', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, Residenz.', schedule: [['9:00 AM', 'Breakfast at hotel'], ['10:00 AM', 'Marienplatz + Glockenspiel'], ['11:00 AM', 'Viktualienmarkt — browse + snack'], ['12:30 PM', 'Lunch at Viktualienmarkt'], ['2:00 PM', 'Englischer Garten — walk to Chinese Tower'], ['3:30 PM', 'Munich Residenz or BMW World'], ['5:00 PM', 'Shopping — Maximilianstraße or Kaufingerstraße'], ['7:00 PM', 'Dinner at Augustiner-Keller or Hofbräuhaus'], ['9:00 PM', 'Evening walk along the Isar']], overnight: 'Munich hotel', transport: '—', tags: [{ text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich'], color: '#eab308' },
-            { day: 7, date: 'Thu Jul 9', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#eab308' },
-            { day: 8, date: 'Fri Jul 10', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Coffee shops, Pfalzerwald, cook together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Pfalzerwald walk or Japanischer Garten'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#6366f1' },
-            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#ef4444' }
+            { day: 1, date: 'Fri Jul 3', dest: 'Arrive — Kaiserslautern', desc: 'Land at FRA, drive to KL. Biergarten dinner.', schedule: [['11:15 AM', 'Land at Frankfurt Airport'], ['12:00 PM', 'Bags + customs'], ['12:15 PM', 'Drive FRA → KL (1.5h)'], ['1:45 PM', 'Arrive KL'], ['2:30 PM', 'Walk Altstadt'], ['6:30 PM', 'Dinner at Bremerhof'], ['9:00 PM', 'Early night']], overnight: 'Kaiserslautern', transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['frankfurt', 'kl'], color: '#c4626a' },
+            { day: 2, date: 'Sat Jul 4', dest: 'Fly to Porto — 4th of July', desc: 'Drive to Luxembourg (1h), fly Ryanair to Porto (2h35). Arrive 4:30 PM — evening in Ribeira with port wine.', schedule: [['12:00 PM', 'Leave KL, drive to Luxembourg Airport (1h)'], ['1:00 PM', 'Arrive LUX \u2014 Ryanair bag drop closes 2:15 PM (40 min before)'], ['2:25 PM', 'At gate \u2014 boarding gate closes 30 min before'], ['2:55 PM', 'Ryanair FR 2863 departs LUX (2h35)'], ['4:30 PM', 'Land at Porto (local time)'], ['5:00 PM', 'Metro Line E Airport \u2192 Trindade (~35 min, Zone 4 ~\u20AC2.45), walk 10 min to hotel'], ['5:45 PM', 'Check into NH Collection Porto Batalha \u2014 Batalha Square'], ['6:15 PM', 'Funicular dos Guindais down to Ribeira (steps from hotel, 3 min ride)'], ['6:30 PM', 'Walk the Ribeira waterfront'], ['7:30 PM', '4th of July dinner \u2014 riverside restaurant'], ['9:00 PM', 'Port wine tasting at sunset on Dom Lu\u00EDs Bridge']], overnight: 'NH Collection Porto Batalha', transport: 'Drive 1h + Flight 2h35 + Metro 35min', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'Ribeira', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['kl', 'luxembourg', 'porto'], color: '#d4874a' },
+            { day: 3, date: 'Sun Jul 5', dest: 'Porto + Viana do Castelo', desc: 'Porto morning sights, then train to Viana do Castelo for Santa Luzia panoramic views.', schedule: [['9:00 AM', 'Mercado do Bolh\u00E3o \u2014 coffee + past\u00E9is de nata at the renovated market hall'], ['10:00 AM', 'Cl\u00E9rigos Tower \u2014 climb 225 steps for panoramic views'], ['11:00 AM', 'Livraria Lello (Harry Potter bookshop, \u20AC5 entry)'], ['11:45 AM', 'Pal\u00E1cio da Bolsa \u2014 guided tour of the Arab Room (~45 min)'], ['12:30 PM', 'Igreja de S\u00E3o Francisco \u2014 200kg of gold leaf baroque interior (next door)'], ['1:00 PM', 'Lunch near Ribeira'], ['1:45 PM', 'S\u00E3o Bento Station \u2014 see the 20,000 azulejo tiles, then catch regional train to Viana do Castelo (~1h30)'], ['3:15 PM', 'Arrive Viana do Castelo'], ['3:30 PM', 'Funicular to Santu\u00E1rio de Santa Luzia \u2014 longest funicular in Portugal (\u20AC3 round trip, 7 min ride)'], ['4:00 PM', 'Santa Luzia \u2014 panoramic views of Lima Valley + Atlantic coast'], ['4:45 PM', 'Funicular down, walk Pra\u00E7a da Rep\u00FAblica + waterfront'], ['5:30 PM', 'Train back to Porto (~1h30)'], ['7:00 PM', 'Back in Porto'], ['7:30 PM', 'Jardins do Pal\u00E1cio de Cristal \u2014 sunset views over the Douro'], ['8:30 PM', 'Dinner \u2014 francesinha at Caf\u00E9 Santiago']], overnight: 'NH Collection Porto Batalha', transport: 'Train ~1h30 each way', tags: [{ text: 'Santa Luzia', cls: 'tag-landmark' }, { text: 'Viana do Castelo', cls: 'tag-landmark' }, { text: 'PT', cls: 'tag-country-pt' }], locs: ['porto'], color: '#d4874a' },
+            { day: 4, date: 'Mon Jul 6', dest: 'Porto \u2192 Luxembourg \u2192 KL', desc: 'Heritage tram to the beach, then fly home.', schedule: [['9:00 AM', 'Last breakfast in Ribeira'], ['9:45 AM', 'Heritage Tram 1 along the Douro to Foz do Douro beach (~30 min, vintage 1930s tram)'], ['10:30 AM', 'Walk the Foz promenade where the Douro meets the Atlantic'], ['11:00 AM', 'Metro Trindade \u2192 Airport (~35 min) or taxi (~20 min, ~\u20AC25)'], ['11:45 AM', 'Arrive OPO \u2014 bag drop closes 12:30 PM (40 min before)'], ['12:40 PM', 'At gate \u2014 boarding gate closes 30 min before'], ['1:10 PM', 'Ryanair FR 2862 departs OPO (2h25)'], ['4:35 PM', 'Land at Luxembourg (local time)'], ['5:00 PM', 'Pick up car, drive to KL (1h)'], ['6:00 PM', 'Home in KL'], ['7:30 PM', 'Easy dinner at home']], overnight: 'Kaiserslautern', transport: 'Metro/taxi + Flight 2h25 + Drive 1h', tags: [{ text: 'Ryanair', cls: 'tag-flight' }, { text: 'LU', cls: 'tag-country-lu' }], locs: ['porto', 'luxembourg', 'kl'], color: '#d4874a' },
+            { day: 5, date: 'Tue Jul 7', dest: 'KL \u2192 Neuschwanstein \u2192 Munich', desc: 'Tesla road trip. Supercharge at Merklingen, castle + Marienbrücke, then Munich.', schedule: [['7:15 AM', 'Leave KL \u2014 Tesla route: 258 km, ~4h41m total'], ['9:15 AM', 'Supercharger stop \u2014 Merklingen (16 min)'], ['9:30 AM', 'Back on the road'], ['12:00 PM', 'Arrive Schwangau \u2014 park at P4 (\u20AC12 for up to 6h)'], ['12:20 PM', 'Shuttle bus P4 \u2192 Marienbrücke (\u20AC3.50/pp, cash only, every ~20 min, ~15 min ride)'], ['12:40 PM', 'Marienbrücke \u2014 THE classic castle photo'], ['1:00 PM', 'Walk downhill from bridge to castle entrance (15 min steep path)'], ['1:25 PM', 'At castle entrance \u2014 arrive 15 min before timed entry'], ['1:40 PM', 'Neuschwanstein Castle guided tour (~35 min)'], ['2:15 PM', 'Tour ends \u2014 walk back down to P4 parking (~30 min)'], ['2:45 PM', 'Drive to Munich (~2h, 120 km)'], ['4:45 PM', 'Arrive Munich, check into hotel'], ['6:30 PM', 'Dinner at beer hall']], overnight: 'Munich hotel', transport: 'Tesla 258 km + charge + 120 km', tags: [{ text: 'Tesla Supercharger', cls: 'tag-drive' }, { text: 'Neuschwanstein', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'neuschwanstein', 'munich'], color: '#5a7d40' },
+            { day: 6, date: 'Wed Jul 8', dest: 'Munich — Full Day', desc: 'Marienplatz, Viktualienmarkt, Englischer Garten, Residenz.', schedule: [['9:00 AM', 'Breakfast at hotel'], ['10:00 AM', 'Marienplatz + Glockenspiel'], ['11:00 AM', 'Viktualienmarkt — browse + snack'], ['12:30 PM', 'Lunch at Viktualienmarkt'], ['2:00 PM', 'Englischer Garten — walk to Chinese Tower'], ['3:30 PM', 'Munich Residenz or BMW World'], ['5:00 PM', 'Shopping — Maximilianstraße or Kaufingerstraße'], ['7:00 PM', 'Dinner at Augustiner-Keller or Hofbräuhaus'], ['9:00 PM', 'Evening walk along the Isar']], overnight: 'Munich hotel', transport: '—', tags: [{ text: 'Marienplatz', cls: 'tag-landmark' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich'], color: '#4a8ba8' },
+            { day: 7, date: 'Thu Jul 9', dest: 'Munich → Kaiserslautern', desc: 'Munich morning, drive back.', schedule: [['9:00 AM', 'Nymphenburg Palace or shopping'], ['11:00 AM', 'Depart Munich (4h)'], ['3:00 PM', 'Arrive KL'], ['7:00 PM', 'Easy dinner']], overnight: 'Kaiserslautern', transport: 'Drive 4h', tags: [{ text: '4h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['munich', 'kl'], color: '#4a8ba8' },
+            { day: 8, date: 'Fri Jul 10', dest: 'Kaiserslautern — Chill Day', desc: 'Recovery day. Coffee shops, Pfalzerwald, cook together.', schedule: [['10:00 AM', 'Sleep in'], ['11:00 AM', 'Brunch'], ['1:00 PM', 'Pfalzerwald walk or Japanischer Garten'], ['4:00 PM', 'Relax at home'], ['7:00 PM', 'Cook dinner together']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#4a8ba8' },
+            { day: 9, date: 'Sat Jul 11', dest: 'Kaiserslautern — Farewell', desc: 'Last full day. Saturday market, farewell dinner.', schedule: [['9:30 AM', 'Wochenmarkt (Saturday)'], ['11:00 AM', 'Revisit favorite spots'], ['1:00 PM', 'Lunch out'], ['7:00 PM', 'Farewell dinner'], ['9:00 PM', 'Pack']], overnight: 'Kaiserslautern', transport: '—', tags: [{ text: 'KL', cls: 'tag-chill' }], locs: ['kl'], color: '#4a8ba8' },
+            { day: 10, date: 'Sun Jul 12', dest: 'Departure — FRA', desc: 'Empty roads to Frankfurt.', schedule: [['6:30 AM', 'Leave KL (1.5h)'], ['8:00 AM', 'Arrive FRA'], ['8:15 AM', 'Check in + security'], ['9:45 AM', 'Flight departs']], overnight: null, transport: 'Drive 1.5h', tags: [{ text: '1.5h drive', cls: 'tag-drive' }, { text: 'DE', cls: 'tag-country-de' }], locs: ['kl', 'frankfurt'], color: '#c4626a' }
         ],
         bookings: [
             { title: 'Ryanair LUX↔OPO flights (x2)', detail: 'BOOKED ✓ — FR2863 Jul 4 (14:55→16:30) + FR2862 Jul 6 (13:10→16:35). Check-in opens May 5.', priority: 'urgent', key: 'po-flights' },
@@ -2355,7 +2451,7 @@ let renderBP = null; // set when overview booking progress mounts
 
 // ===================== MAP SETUP =====================
 const map = L.map('map', { center: [48.5, 7.5], zoom: 5, zoomControl: false, attributionControl: false });
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 // ===================== COUNTDOWN =====================
@@ -2400,7 +2496,7 @@ function renderPlan(planKey) {
     const infoEl = document.getElementById('info-rows');
     const overnightParts = p.stats.overnights.split(' · ').map(part => {
         const m = part.match(/^(.+)\s(\d+)$/);
-        return m ? `<span class="on-city">${m[1]}</span> <span style="color:#38bdf8;font-weight:700">${m[2]}</span>` : part;
+        return m ? `<span class="on-city">${m[1]}</span> <span style="color:#4a8ba8;font-weight:700">${m[2]}</span>` : part;
     }).join('<span class="on-sep"> · </span>');
 
     const legParts = p.stats.legs.split(' · ').map(leg => {
@@ -2465,6 +2561,12 @@ function renderPlan(planKey) {
         card.className = 'day-card' + (idx === 0 ? ' active' : '');
         const scheduleHtml = d.schedule ? `<div class="day-schedule">${d.schedule.map(s => `<span class="time">${s[0]}</span> <span class="act">${s[1]}</span>`).join('<br>')}</div>` : '';
         const overnightHtml = d.overnight ? `<div class="day-overnight">🌙 ${d.overnight}</div>` : '';
+        // Contextual badges
+        const badges = [];
+        if (d.dest && d.dest.includes('Porto') && d.date && d.date.includes('Jul 4')) badges.push({text:'4th of July abroad',bg:'rgba(212,135,74,0.1)',color:'#d4874a'});
+        if (d.dest && (d.dest.includes('Neuschwanstein') || d.dest.includes('Castle'))) badges.push({text:'Tesla road trip',bg:'rgba(138,173,110,0.1)',color:'#5a7d40'});
+        if (d.tags && d.tags.some(t => t.text && t.text.includes('Chill'))) badges.push({text:'Slow mornings',bg:'rgba(74,139,168,0.08)',color:'#4a8ba8'});
+        const badgeHtml = badges.length ? '<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">' + badges.map(b => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;font-weight:500;background:${b.bg};color:${b.color}">${b.text}</span>`).join('') + '</div>' : '';
         card.innerHTML = `
             <div class="day-top">
                 <span class="day-num" style="color:${d.color}">Day ${d.day}</span>
@@ -2476,6 +2578,7 @@ function renderPlan(planKey) {
             ${overnightHtml}
             <div class="day-transport">${d.transport}</div>
             <div class="day-tags">${d.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('')}</div>
+            ${badgeHtml}
         `;
         card.addEventListener('click', () => {
             document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
@@ -2586,7 +2689,7 @@ const tabBar = document.getElementById('tab-bar');
 const ovBtn = document.createElement('button');
 ovBtn.className = 'tab-btn active';
 ovBtn.dataset.plan = 'overview';
-ovBtn.innerHTML = `Overview<span class="tab-badge" style="background:rgba(56,189,248,0.15);color:#38bdf8">ALL</span>`;
+ovBtn.innerHTML = `Overview<span class="tab-badge" style="background:rgba(74,139,168,0.12);color:#4a8ba8">ALL</span>`;
 ovBtn.addEventListener('click', () => showOverview());
 tabBar.appendChild(ovBtn);
 
@@ -2594,7 +2697,7 @@ tabBar.appendChild(ovBtn);
 const recBtn = document.createElement('button');
 recBtn.className = 'tab-btn';
 recBtn.dataset.plan = 'rec';
-recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(168,85,247,0.15);color:#a78bfa">&#9733;</span>`;
+recBtn.innerHTML = `Recommended<span class="tab-badge" style="background:rgba(212,135,74,0.12);color:#d4874a">&#9733;</span>`;
 recBtn.addEventListener('click', () => showRec());
 tabBar.appendChild(recBtn);
 
@@ -2687,8 +2790,8 @@ budgetData.forEach(d => {
     col.innerHTML = `
         <div class="ov-bar-value">$${(d.hi/1000).toFixed(1)}K</div>
         <div style="width:100%;position:relative;height:${hiPct}%">
-            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:100%;background:rgba(168,85,247,0.25);border-radius:6px 6px 0 0"></div>
-            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:${loPct/hiPct*100}%;background:rgba(99,130,255,0.5);border-radius:6px 6px 0 0;z-index:1"></div>
+            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:100%;background:rgba(212,135,74,0.2);border-radius:6px 6px 0 0"></div>
+            <div class="ov-bar" style="position:absolute;bottom:0;left:0;right:0;height:${loPct/hiPct*100}%;background:rgba(74,139,168,0.35);border-radius:6px 6px 0 0;z-index:1"></div>
         </div>
         <div class="ov-bar-label">${d.name === 'Primary' ? 'Prim.' : d.name === 'Balanced' ? 'Bal.' : d.name === 'Minimal' ? 'Min.' : d.name === 'Provence' ? 'Prov.' : d.name}</div>
     `;
@@ -2819,11 +2922,11 @@ const destData = {
     paris:          { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', country: 'France', highlights: 'Eiffel Tower \u2022 Montmartre \u2022 Louvre \u2022 Champs-\u00C9lys\u00E9es' },
     strasbourg:     { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #60a5fa, #2563eb)', country: 'France', highlights: 'Petite France \u2022 Cathedral \u2022 Tarte flamb\u00E9e' },
     amsterdam:      { emoji: '\uD83C\uDDF3\uD83C\uDDF1', gradient: 'linear-gradient(135deg, #fb923c, #ea580c)', country: 'Netherlands', highlights: 'Anne Frank House \u2022 Canals \u2022 Rijksmuseum' },
-    neuschwanstein: { emoji: '\uD83C\uDFF0', gradient: 'linear-gradient(135deg, #facc15, #ca8a04)', country: 'Germany', highlights: 'Fairy-tale castle \u2022 Marienbrücke \u2022 Alpsee' },
-    munich:         { emoji: '\uD83C\uDDE9\uD83C\uDDEA', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', country: 'Germany', highlights: 'Marienplatz \u2022 Viktualienmarkt \u2022 Beer halls' },
+    neuschwanstein: { emoji: '\uD83C\uDFF0', gradient: 'linear-gradient(135deg, #8aad6e, #5a7d40)', country: 'Germany', highlights: 'Fairy-tale castle \u2022 Marienbrücke \u2022 Alpsee' },
+    munich:         { emoji: '\uD83C\uDDE9\uD83C\uDDEA', gradient: 'linear-gradient(135deg, #4a8ba8, #3a7090)', country: 'Germany', highlights: 'Marienplatz \u2022 Viktualienmarkt \u2022 Beer halls' },
     arles:          { emoji: '\uD83C\uDDEB\uD83C\uDDF7', gradient: 'linear-gradient(135deg, #a78bfa, #7c3aed)', country: 'France', highlights: 'Roman Amphitheater \u2022 Van Gogh trail \u2022 Pont du Gard' },
     milan:          { emoji: '\uD83C\uDDEE\uD83C\uDDF9', gradient: 'linear-gradient(135deg, #f87171, #dc2626)', country: 'Italy', highlights: 'Duomo rooftop \u2022 Last Supper \u2022 Lake Como' },
-    porto:          { emoji: '\uD83C\uDDF5\uD83C\uDDF9', gradient: 'linear-gradient(135deg, #fbbf24, #b45309)', country: 'Portugal', highlights: 'Dom Lu\u00EDs Bridge \u2022 Port wine \u2022 Ribeira' },
+    porto:          { emoji: '\uD83C\uDDF5\uD83C\uDDF9', gradient: 'linear-gradient(135deg, #d4874a, #b06830)', country: 'Portugal', highlights: 'Dom Lu\u00EDs Bridge \u2022 Port wine \u2022 Ribeira' },
     palma:          { emoji: '\uD83C\uDDEA\uD83C\uDDF8', gradient: 'linear-gradient(135deg, #38bdf8, #0369a1)', country: 'Spain', highlights: 'Beach \u2022 Cathedral \u2022 Serra de Tramuntana' }
 };
 
@@ -3335,11 +3438,11 @@ function renderComparison() {
     summary += '<div style="font-size:13px;color:#c8cdd8;line-height:1.9">';
 
     const winners = [];
-    winners.push('<strong style="color:#38bdf8">' + n(cheapest) + '</strong> is the cheapest at ' + plans[cheapest].budgetTotal);
-    winners.push('<strong style="color:#38bdf8">' + n(mostChill) + '</strong> gives the most downtime with ' + plans[mostChill].stats.chill + ' chill days');
-    if (n(mostCities) !== n(mostChill)) winners.push('<strong style="color:#38bdf8">' + n(mostCities) + '</strong> covers the most ground with ' + plans[mostCities].stats.cities + ' cities');
+    winners.push('<strong style="color:#4a8ba8">' + n(cheapest) + '</strong> is the cheapest at ' + plans[cheapest].budgetTotal);
+    winners.push('<strong style="color:#4a8ba8">' + n(mostChill) + '</strong> gives the most downtime with ' + plans[mostChill].stats.chill + ' chill days');
+    if (n(mostCities) !== n(mostChill)) winners.push('<strong style="color:#4a8ba8">' + n(mostCities) + '</strong> covers the most ground with ' + plans[mostCities].stats.cities + ' cities');
     if (parseInt(plans[leastDriving].stats.km.replace(/[^\d]/g,'')) < parseInt(plans[keys.find(k=>k!==leastDriving)].stats.km.replace(/[^\d]/g,'')))
-        winners.push('<strong style="color:#38bdf8">' + n(leastDriving) + '</strong> has the least driving at ' + plans[leastDriving].stats.km);
+        winners.push('<strong style="color:#4a8ba8">' + n(leastDriving) + '</strong> has the least driving at ' + plans[leastDriving].stats.km);
 
     summary += winners.join('. ') + '.';
 
@@ -3365,7 +3468,7 @@ function updateCountdown() {
     const now = new Date();
     const diff = arrival - now;
     if (diff <= 0) {
-        el.innerHTML = '<div style="color:#34d399;font-size:16px;font-weight:700">Melissa is here! 🎉</div>';
+        el.innerHTML = '<div style="color:#5a7d40;font-size:16px;font-weight:700">Melissa is here! 🎉</div>';
         return;
     }
     const days = Math.floor(diff / 86400000);
@@ -3528,5 +3631,14 @@ document.querySelectorAll('.ov-cal-day').forEach((cal, i) => {
 })();
 </script>
 <div class="share-toast" id="share-toast">Itinerary copied to clipboard!</div>
+<!-- Sun Footer -->
+<div style="text-align:center;padding:40px 20px 50px;position:relative;">
+    <div style="width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#e8c87a,#d4874a);opacity:0.3;margin:0 auto 16px;animation:sunPulse 4s ease-in-out infinite;"></div>
+    <div style="font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#7a9ab5;">A summer in three acts &mdash; Porto, Bavaria, Home</div>
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#a0b8cc;margin-top:8px;">SUMMER 2026</div>
+</div>
+<style>
+@keyframes sunPulse { 0%,100% { transform:scale(1);opacity:0.3; } 50% { transform:scale(1.1);opacity:0.5; } }
+</style>
 </body>
 </html>
