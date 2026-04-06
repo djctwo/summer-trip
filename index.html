@@ -11,6 +11,7 @@
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU3VtbWVyIFRyaXAgMjAyNiIsInNob3J0X25hbWUiOiJTdW1tZXIgVHJpcCIsInN0YXJ0X3VybCI6Ii4vIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y4ZmJmZCIsInRoZW1lX2NvbG9yIjoiI2VlZjVmYSJ9">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>if(localStorage.getItem('trip-mode')==='eve')document.documentElement.classList.add('eve-mode');</script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
@@ -114,6 +115,223 @@
             font-size: 12px; color: #7a9ab5;
         }
         .topbar .countdown { color: #4a8ba8; font-weight: 600; font-size: 13px; }
+
+        /* Mode toggle */
+        .mode-toggle {
+            width: 48px; height: 26px; border-radius: 13px; border: none;
+            cursor: pointer; position: relative; transition: background 0.4s;
+            background: #d4e4ee; flex-shrink: 0;
+        }
+        .mode-toggle-thumb {
+            position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%;
+            transition: left 0.4s, background 0.4s;
+            left: 3px; background: #4a8ba8;
+        }
+        .mode-toggle-icon {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            font-size: 12px; transition: opacity 0.3s; line-height: 1;
+        }
+        .mode-toggle-moon { right: 6px; opacity: 1; }
+        .mode-toggle-sun { left: 6px; opacity: 0; }
+
+        /* ======================== EVENING MODE ======================== */
+        .eve-mode .mode-toggle { background: #d4a554; }
+        .eve-mode .mode-toggle-thumb { left: 25px; background: #1e2a3a; }
+        .eve-mode .mode-toggle-moon { opacity: 0; }
+        .eve-mode .mode-toggle-sun { opacity: 1; }
+
+        .eve-mode body, body.eve-mode { background: #1e2a3a; color: #c8b8a0; }
+        html.eve-mode body { background: #1e2a3a; color: #c8b8a0; }
+        .eve-mode body::before, html.eve-mode body::before {
+            background: radial-gradient(ellipse at 20% 20%, rgba(212,165,84,0.04) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(133,193,220,0.03) 0%, transparent 50%);
+        }
+        .eve-mode .topbar { background: linear-gradient(180deg, #16202e 0%, #1e2a3a 100%); border-bottom-color: rgba(212,165,84,0.1); }
+        .eve-mode .topbar::after { background: linear-gradient(90deg, transparent, rgba(212,165,84,0.15), rgba(133,193,220,0.1), rgba(212,165,84,0.15), transparent); }
+        .eve-mode .topbar h1 { color: #e8c87a; }
+        .eve-mode .topbar .meta { color: #8a9aaa; }
+        .eve-mode .topbar .meta span[style] { color: #d4a554 !important; }
+        .eve-mode .topbar .countdown { color: #85c1dc; }
+
+        .eve-mode .tab-bar { background: #16202e; border-bottom-color: rgba(212,165,84,0.1); }
+        .eve-mode .tab-btn { color: #8a9aaa; }
+        .eve-mode .tab-btn:hover { color: #c8b8a0; }
+        .eve-mode .tab-btn.active { color: #e8c87a; border-bottom-color: #d4a554; }
+        .eve-mode .tab-badge { background: rgba(212,165,84,0.12) !important; color: #d4a554 !important; }
+
+        .eve-mode .container { color: #c8b8a0; }
+        .eve-mode .ov-hero { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .ov-hero-title { color: #e8c87a; }
+        .eve-mode .ov-hero-title em { color: #d4a554; }
+        .eve-mode .ov-hero-subtitle { color: #8a9aaa; }
+        .eve-mode .ov-section-title { color: #e8c87a; }
+        .eve-mode .ov-section-title::after { background: #d4a554; }
+
+        .eve-mode .stat-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .stat-card::before { background: rgba(212,165,84,0.3); }
+        .eve-mode .stat-value { color: #e8dcc8; }
+        .eve-mode .stat-label { color: #8a9aaa; }
+        .eve-mode .info-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .info-value { color: #c8b8a0; }
+        .eve-mode .info-label { color: #8a9aaa; }
+
+        .eve-mode .passport-stamp { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .stamp-city { color: #e8dcc8; }
+        .eve-mode .stamp-dates, .eve-mode .stamp-country { color: #8a9aaa; }
+
+        .eve-mode .trip-overview { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .trip-overview-label { color: #8a9aaa; }
+        .eve-mode .trip-overview-value { color: #c8b8a0; }
+
+        .eve-mode .dest-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .dest-card-name { color: #e8dcc8; }
+        .eve-mode .dest-card-detail { color: #8a9aaa; }
+        .eve-mode .dest-badge { background: rgba(212,165,84,0.12); color: #d4a554; }
+
+        .eve-mode .brief-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .brief-title { color: #e8dcc8; }
+        .eve-mode .brief-row-label { color: #8a9aaa; }
+        .eve-mode .brief-row-val { color: #c8b8a0; }
+
+        .eve-mode .weather-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .weather-city { color: #e8dcc8; }
+        .eve-mode .weather-temp { color: #85c1dc; }
+        .eve-mode .weather-desc { color: #8a9aaa; }
+
+        .eve-mode .panel-header { color: #e8c87a; border-bottom-color: rgba(212,165,84,0.1); }
+        .eve-mode .tier-tertiary { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .tier-tertiary .panel-header { background: #16202e; border-bottom-color: rgba(212,165,84,0.1); color: #e8c87a; }
+        .eve-mode .tier-tertiary .panel-header.collapsible:hover { background: #1a2636; }
+
+        .eve-mode .map-container { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .map-header h2 { color: #e8dcc8; }
+        .eve-mode .map-header { border-bottom-color: rgba(212,165,84,0.1); }
+        .eve-mode .legend-item { color: #8a9aaa; }
+        .eve-mode .sidebar { }
+        .eve-mode .timeline-panel { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .day-card { background: #1a2636; border-color: rgba(212,165,84,0.1); border-left-color: rgba(212,165,84,0.3); }
+        .eve-mode .day-card:hover, .eve-mode .day-card.active { background: #1e2a3a; border-color: rgba(212,165,84,0.25); }
+        .eve-mode .day-date { color: #d4a554; }
+        .eve-mode .day-dest { color: #e8dcc8; }
+        .eve-mode .day-brief { color: #8a9aaa; }
+
+        .eve-mode .checklist-panel { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .budget-panel { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .budget-row { border-bottom-color: rgba(212,165,84,0.06); }
+        .eve-mode .budget-cat { color: #c8b8a0; }
+        .eve-mode .budget-amt { color: #85c1dc; }
+        .eve-mode .budget-total { border-top-color: rgba(212,165,84,0.1); }
+        .eve-mode .budget-total .budget-amt { color: #e8c87a; }
+
+        .eve-mode .check-item { border-bottom-color: rgba(212,165,84,0.06); }
+        .eve-mode .check-label { color: #c8b8a0; }
+        .eve-mode .check-status { color: #8a9aaa; }
+        .eve-mode .check-box.checked { background: rgba(138,173,110,0.12); border-color: #8aad6e; }
+        .eve-mode .check-box.checked::after { color: #8aad6e; }
+
+        .eve-mode .flight-panel { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .flight-card { background: #1a2636; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .flight-code { color: #e8dcc8; }
+        .eve-mode .flight-name { color: #8a9aaa; }
+        .eve-mode .flight-time { color: #d4a554; }
+        .eve-mode .flight-number { color: #8a9aaa; }
+
+        .eve-mode .notes-panel { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .notes-category h3 { color: #d4a554; }
+        .eve-mode .notes-category ul { color: #8a9aaa; }
+        .eve-mode .notes-category li::before { background: rgba(212,165,84,0.4); }
+
+        .eve-mode .booking-link { background: #1a2636; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .booking-link:hover { background: #1e2a3a; border-color: rgba(212,165,84,0.25); }
+        .eve-mode .booking-link-title { color: #e8dcc8; }
+        .eve-mode .booking-link-desc { color: #8a9aaa; }
+        .eve-mode .booking-link-arrow { color: #5a6a7a; }
+
+        .eve-mode .resto-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .resto-card:hover { border-color: rgba(212,165,84,0.25); }
+        .eve-mode .resto-name { color: #e8dcc8; }
+        .eve-mode .resto-type { color: #d4a554; }
+        .eve-mode .resto-desc { color: #6a7a8a; }
+        .eve-mode .resto-must { background: rgba(212,165,84,0.12); color: #d4a554; }
+        .eve-mode .resto-city-label { color: #5a6a7a; }
+        .eve-mode .resto-status { background: rgba(212,165,84,0.12); color: #d4a554; }
+        .eve-mode .city-section-header { color: #e8c87a; border-bottom-color: rgba(212,165,84,0.1); }
+
+        .eve-mode .photo-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .photo-card:hover { border-color: rgba(212,165,84,0.25); }
+        .eve-mode .photo-spot { color: #e8dcc8; }
+        .eve-mode .photo-tip { color: #8a9aaa; }
+        .eve-mode .photo-time { color: #85c1dc; }
+
+        .eve-mode .lang-section { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .lang-title { color: #e8dcc8; }
+        .eve-mode .lang-en { color: #8a9aaa; }
+        .eve-mode .lang-local { color: #c8b8a0; }
+        .eve-mode .lang-phrase { border-bottom-color: rgba(212,165,84,0.06); }
+
+        .eve-mode .hotel-card { background: #1a2636; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .hotel-card:hover { border-color: rgba(212,165,84,0.25); }
+        .eve-mode .hotel-name { color: #e8dcc8; }
+        .eve-mode .hotel-detail { color: #8a9aaa; }
+        .eve-mode .hotel-price { color: #85c1dc; }
+        .eve-mode .hotel-stars { color: #d4a554; }
+        .eve-mode .hotel-rating { color: #8a9aaa; }
+        .eve-mode .hotel-tag { background: rgba(212,165,84,0.08); color: #8a9aaa; }
+        .eve-mode .hotel-book-btn { background: rgba(212,165,84,0.1); color: #d4a554; border-color: rgba(212,165,84,0.2); }
+        .eve-mode .hotel-book-btn:hover { background: rgba(212,165,84,0.18); }
+        .eve-mode .hotel-pick-badge { background: rgba(212,165,84,0.15); color: #d4a554; }
+
+        .eve-mode .pack-item { color: #c8b8a0; }
+        .eve-mode .pack-box { border-color: rgba(212,165,84,0.2); background: #1a2636; }
+        .eve-mode .pack-item.packed .pack-label { color: #8a9aaa; }
+        .eve-mode .packing-category h3 { color: #d4a554; }
+
+        .eve-mode .emergency-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .emergency-card h4 { color: #e8dcc8; }
+        .eve-mode .em-label { color: #8a9aaa; }
+        .eve-mode .em-value { color: #c8b8a0; }
+
+        .eve-mode .card-link { color: #85c1dc; }
+        .eve-mode .card-link:hover { color: #a8d4ec; }
+
+        .eve-mode .rec-section { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .rec-paragraph { color: #c8b8a0; }
+        .eve-mode .rec-heading { color: #e8dcc8; }
+        .eve-mode .rec-cta-btn { background: rgba(212,165,84,0.12); color: #d4a554; border-color: rgba(212,165,84,0.25); }
+        .eve-mode .rec-cta-btn:hover { background: rgba(212,165,84,0.2); }
+
+        .eve-mode .plan-subtitle { color: #e8c87a; }
+        .eve-mode .cal-strip { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .cal-dow, .eve-mode .cal-label { color: #8a9aaa; }
+        .eve-mode .cal-num { color: #e8dcc8; }
+
+        .eve-mode .leaflet-popup-content-wrapper { background: #16202e !important; border-color: rgba(212,165,84,0.1) !important; color: #c8b8a0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important; }
+        .eve-mode .leaflet-popup-tip { background: #16202e !important; border-color: rgba(212,165,84,0.1) !important; }
+        .eve-mode .popup-title { color: #e8dcc8; }
+        .eve-mode .popup-subtitle { color: #d4a554; }
+        .eve-mode .popup-desc { color: #8a9aaa; }
+
+        .eve-mode .share-btn { background: rgba(212,165,84,0.1); color: #d4a554; border-color: rgba(212,165,84,0.2); }
+        .eve-mode .share-btn:hover { background: rgba(212,165,84,0.18); }
+
+        .eve-mode ::-webkit-scrollbar-thumb { background: rgba(212,165,84,0.15); }
+
+        .eve-mode .pw-overlay { background: #1e2a3a; }
+        .eve-mode .pw-title { color: #e8c87a; }
+        .eve-mode .pw-input { background: rgba(30,42,58,0.8); color: #e8dcc8; border-color: rgba(212,165,84,0.2); }
+        .eve-mode .pw-input:focus { border-color: rgba(212,165,84,0.5); }
+        .eve-mode .pw-btn { background: rgba(212,165,84,0.15); color: #d4a554; border-color: rgba(212,165,84,0.3); }
+        .eve-mode .pw-btn:hover { background: rgba(212,165,84,0.25); }
+
+        /* Cuisine tag colors — evening overrides */
+        .eve-mode .cuisine-portuguese { background: rgba(212,135,74,0.15); color: #d4874a; }
+        .eve-mode .cuisine-bavarian, .eve-mode .cuisine-beer { background: rgba(138,173,110,0.12); color: #8aad6e; }
+        .eve-mode .cuisine-german { background: rgba(74,139,168,0.12); color: #85c1dc; }
+        .eve-mode .cuisine-seafood { background: rgba(196,98,106,0.12); color: #d48088; }
+        .eve-mode .cuisine-market, .eve-mode .cuisine-bakery, .eve-mode .cuisine-brunch { background: rgba(212,165,84,0.12); color: #d4a554; }
+        .eve-mode .cuisine-wine { background: rgba(138,90,130,0.12); color: #b080a8; }
+        .eve-mode .cuisine-french { background: rgba(106,138,168,0.12); color: #8ab0cc; }
+        .eve-mode .cuisine-street { background: rgba(212,135,74,0.12); color: #d4874a; }
 
         /* Tabs */
         .tab-bar {
@@ -1372,16 +1590,30 @@
         /* Restaurant wishlist */
         .city-section-header { font-family: 'Playfair Display', Georgia, serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #1a5276; padding: 18px 0 8px; border-bottom: 1px solid #e4eef5; margin-bottom: 12px; }
         .city-section-header:first-child { padding-top: 0; }
-        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .restaurant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 20px; }
         .restaurant-grid:last-child { margin-bottom: 0; }
         .resto-card {
             background: #ffffff; border: 1px solid #e4eef5;
-            border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s;
+            border-radius: 12px; padding: 14px 16px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-        .resto-card:hover { border-color: #b0d0e4; }
-        .resto-name { font-size: 14px; font-weight: 700; color: #2a3442; margin-bottom: 4px; }
-        .resto-type { font-size: 11px; color: #d4a554; margin-bottom: 6px; }
-        .resto-desc { font-size: 11px; color: #7a9ab5; line-height: 1.6; }
+        .resto-card:hover { border-color: #b0d0e4; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,139,168,0.08); }
+        .resto-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+        .resto-name { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 700; color: #2a3442; }
+        .resto-status { font-size: 9px; font-weight: 600; padding: 3px 8px; border-radius: 10px; flex-shrink: 0; margin-left: 8px; white-space: nowrap; }
+        .resto-status-saved { background: rgba(74,139,168,0.08); color: #4a8ba8; }
+        .resto-status-must { background: rgba(212,135,74,0.1); color: #d4874a; }
+        .resto-cuisine { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; margin-bottom: 8px; }
+        .cuisine-portuguese { background: rgba(212,135,74,0.08); color: #a06030; }
+        .cuisine-bavarian, .cuisine-beer { background: rgba(138,173,110,0.08); color: #5a7d40; }
+        .cuisine-german { background: rgba(74,139,168,0.08); color: #3a7090; }
+        .cuisine-seafood { background: rgba(196,98,106,0.08); color: #a04048; }
+        .cuisine-market, .cuisine-bakery, .cuisine-brunch { background: rgba(212,165,84,0.08); color: #8a6a20; }
+        .cuisine-wine { background: rgba(138,90,130,0.08); color: #7a4a72; }
+        .cuisine-french { background: rgba(106,138,168,0.08); color: #4a7090; }
+        .cuisine-street { background: rgba(212,135,74,0.08); color: #a06030; }
+        .resto-desc { font-size: 12px; font-weight: 300; color: #7a9ab5; line-height: 1.5; margin-bottom: 8px; }
+        .resto-footer { display: flex; justify-content: space-between; align-items: center; }
+        .resto-city-label { font-size: 9px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #a0b8cc; }
         .resto-must { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(212, 135, 74, 0.12); color: #d4874a; margin-left: 6px; }
 
         /* Language cheat sheet */
@@ -1407,8 +1639,8 @@
             cursor: default; position: relative;
         }
         .tl-segment:hover { flex: 1.8; }
-        .tl-day { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.9); }
-        .tl-label { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
+        .tl-day { font-size: 10px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .tl-label { font-size: 9px; font-weight: 500; color: rgba(255,255,255,0.85); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
 
         /* Photo spots */
         .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 20px; }
@@ -1445,6 +1677,26 @@
         @media (max-width: 1200px) {
             .packing-grid { grid-template-columns: 1fr 1fr; }
             .emergency-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+        .reveal-d4 { transition-delay: 0.32s; }
+        .reveal-d5 { transition-delay: 0.40s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
         }
 
         /* Print styles */
@@ -1493,6 +1745,12 @@
         <span style="color:#d4874a;font-weight:500">Home Base: Kaiserslautern</span>
         <span>|</span>
         <span class="countdown" id="countdown"></span>
+        <span>|</span>
+        <button class="mode-toggle" id="mode-toggle" aria-label="Toggle evening mode">
+            <span class="mode-toggle-icon mode-toggle-moon">☾</span>
+            <span class="mode-toggle-icon mode-toggle-sun">☀</span>
+            <span class="mode-toggle-thumb"></span>
+        </button>
     </div>
 </div>
 
@@ -1521,7 +1779,7 @@
             <div class="ov-countdown" id="ov-countdown"></div>
         </div>
 
-        <div class="ov-stats-bar">
+        <div class="ov-stats-bar reveal">
             <div class="ov-stat">
                 <div class="ov-stat-value">10</div>
                 <div class="ov-stat-label">Days Together</div>
@@ -1549,7 +1807,7 @@
         </div>
 
         <!-- Passport Stamps -->
-        <div class="passport-stamps" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
+        <div class="passport-stamps reveal" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
             <div class="stamp" style="width:90px;height:90px;border:2px dashed #d4874a;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform 0.2s;cursor:default;" onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'" onmouseleave="this.style.transform=''">
                 <div style="font-size:22px">&#127477;&#127481;</div>
                 <div style="font-family:'Playfair Display',serif;font-size:11px;font-weight:600;text-transform:uppercase;color:#2a3442;letter-spacing:0.5px">Porto</div>
@@ -1588,7 +1846,7 @@
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">The Itinerary</div>
             <div class="ov-fixed-grid">
                 <div class="ov-fixed-card">
@@ -1619,7 +1877,7 @@
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">The 10-Day Window</div>
             <div class="ov-calendar">
                 <div class="ov-cal-day ov-cal-fixed">
@@ -1681,18 +1939,18 @@
             </div>
         </div>
 
-        <div class="ov-section tier-primary">
+        <div class="ov-section reveal tier-primary">
             <div class="ov-section-title">Booking Progress</div>
             <div class="booking-progress" id="booking-progress"></div>
         </div>
 
-        <div class="ov-section" style="text-align:center; border-color:rgba(52,211,153,0.2)">
+        <div class="ov-section reveal" style="text-align:center; border-color:rgba(52,211,153,0.2)">
             <div class="rec-paragraph" style="margin-bottom:16px">
                 <button class="rec-cta-btn" onclick="renderPlan('porto')" style="font-size:13px;padding:12px 32px">View Full Day-by-Day Itinerary &rarr;</button>
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">How We Decided</div>
             <div class="rec-paragraph" style="margin-bottom:16px">
                 We evaluated 8 itinerary options across 6 countries. The tradeoff was always the same: more destinations = less downtime. Porto won because it delivers a stunning international weekend <em>and</em> the most chill days at home (4). The castle and Munich are locked in as must-do's. The 4th of July is spent in Portugal instead of fighting crowds in Paris or Strasbourg.
@@ -1702,13 +1960,13 @@
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">All Plans Comparison</div>
             <div class="compare-picker" id="compare-picker"></div>
             <div id="compare-result"></div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">Budget Comparison</div>
             <div class="ov-bar-chart" id="ov-budget-chart"></div>
             <div class="ov-legend" style="margin-top:12px">
@@ -1717,7 +1975,7 @@
             </div>
         </div>
 
-        <div class="ov-section">
+        <div class="ov-section reveal">
             <div class="ov-section-title">Chill vs Adventure</div>
             <div class="ov-bar-chart" id="ov-chill-chart"></div>
             <div class="ov-legend" style="margin-top:12px">
@@ -1820,32 +2078,32 @@
     <div class="plan-content hidden" id="plan-content">
     <div class="plan-subtitle" id="plan-subtitle"></div>
 
-    <div class="stats-row" id="stats-row"></div>
-    <div class="info-rows" id="info-rows"></div>
+    <div class="stats-row reveal" id="stats-row"></div>
+    <div class="info-rows reveal" id="info-rows"></div>
 
-    <div class="trip-overview" id="trip-overview"></div>
+    <div class="trip-overview reveal" id="trip-overview"></div>
 
-    <div class="trip-timeline" id="trip-timeline"></div>
+    <div class="trip-timeline reveal" id="trip-timeline"></div>
 
-    <div class="daily-briefs" id="daily-briefs"></div>
+    <div class="daily-briefs reveal" id="daily-briefs"></div>
 
-    <div class="weather-row" id="weather-row"></div>
+    <div class="weather-row reveal" id="weather-row"></div>
 
-    <div class="dest-cards" id="dest-cards"></div>
+    <div class="dest-cards reveal" id="dest-cards"></div>
 
-    <div class="hotel-recs" id="hotel-recs"></div>
+    <div class="hotel-recs reveal" id="hotel-recs"></div>
 
-    <div class="main-grid">
+    <div class="main-grid reveal">
         <div class="map-container">
             <div class="map-header">
                 <h2>Route Map</h2>
                 <div class="map-legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Home</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>France</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Bavaria</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Netherlands</div>
-                    <div class="legend-item"><span style="color:#8b94a6;font-style:italic">- - - TGV</span></div>
-                    <div class="legend-item"><span style="color:#8b94a6">&#x2014; Drive</span></div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#6aaa8a"></div>Home</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#6a8aa8"></div>France</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#5a7d40"></div>Bavaria</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#d4874a"></div>Netherlands</div>
+                    <div class="legend-item"><span style="color:#7a9ab5;font-style:italic">- - - TGV</span></div>
+                    <div class="legend-item"><span style="color:#7a9ab5">&#x2014; Drive</span></div>
                 </div>
             </div>
             <div id="map"></div>
@@ -1858,7 +2116,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="checklist-panel">
             <div class="panel-header">Booking Checklist</div>
             <div class="checklist-items" id="checklist"></div>
@@ -1870,7 +2128,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="flights-panel">
             <div class="panel-header">Flight Itinerary</div>
             <div class="flight-card">
@@ -1922,7 +2180,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="checklist-panel tier-tertiary">
             <div class="panel-header collapsible" onclick="toggleCollapse(this)">Packing Checklist</div>
             <div class="collapsible-body">
@@ -1938,7 +2196,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="checklist-panel tier-tertiary">
             <div class="panel-header collapsible" onclick="toggleCollapse(this)">Restaurant &amp; Food Wishlist</div>
             <div class="collapsible-body">
@@ -1953,7 +2211,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="checklist-panel tier-tertiary" style="grid-column: 1 / -1">
             <div class="panel-header collapsible" onclick="toggleCollapse(this)">Language Cheat Sheet</div>
             <div class="collapsible-body">
@@ -1962,7 +2220,7 @@
         </div>
     </div>
 
-    <div class="bottom-row">
+    <div class="bottom-row reveal">
         <div class="checklist-panel" style="grid-column: 1 / -1">
             <div class="panel-header">Emergency &amp; Practical Info</div>
             <div class="emergency-grid" id="emergency-grid" style="padding:16px 20px"></div>
@@ -2451,8 +2709,30 @@ let renderBP = null; // set when overview booking progress mounts
 
 // ===================== MAP SETUP =====================
 const map = L.map('map', { center: [48.5, 7.5], zoom: 5, zoomControl: false, attributionControl: false });
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
+const lightTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 });
+const darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 });
+const isEve = document.documentElement.classList.contains('eve-mode');
+(isEve ? darkTiles : lightTiles).addTo(map);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+// ===================== EVENING MODE TOGGLE =====================
+(function() {
+    const toggle = document.getElementById('mode-toggle');
+    if (!toggle) return;
+    // Sync body class with html class (set in head script)
+    if (document.documentElement.classList.contains('eve-mode')) {
+        document.body.classList.add('eve-mode');
+    }
+    toggle.addEventListener('click', function() {
+        const goingEve = !document.body.classList.contains('eve-mode');
+        document.body.classList.toggle('eve-mode');
+        document.documentElement.classList.toggle('eve-mode');
+        localStorage.setItem('trip-mode', goingEve ? 'eve' : 'day');
+        // Swap map tiles
+        if (goingEve) { map.removeLayer(lightTiles); darkTiles.addTo(map); }
+        else { map.removeLayer(darkTiles); lightTiles.addTo(map); }
+    });
+})();
 
 // ===================== COUNTDOWN =====================
 function updateCountdown() {
@@ -2982,8 +3262,6 @@ const bookingLinksData = {
         { icon: '\uD83C\uDFF0', title: 'Neuschwanstein Tickets', desc: 'Timed entry — sells out weeks ahead!', url: 'https://www.hohenschwangau.de/en/show-rooms/ticket-center' },
         { icon: '\uD83D\uDE82', title: 'CP Train Tickets', desc: 'Porto S\u00E3o Bento \u2192 Viana do Castelo (~1h30)', url: 'https://www.cp.pt/passageiros/en/train-times' },
         { icon: '\uD83D\uDE87', title: 'Porto Metro', desc: 'Airport → Trindade (Zone 4 ticket, ~35 min)', url: 'https://en.metrodoporto.pt/' },
-        { icon: '\uD83C\uDFE8', title: 'Booking.com — Porto', desc: 'Ribeira area, 2 nights Jul 4\u20135', url: 'https://www.booking.com/searchresults.html?ss=Ribeira%2C+Porto&checkin=2026-07-04&checkout=2026-07-06&group_adults=2' },
-        { icon: '\uD83C\uDFE8', title: 'Booking.com — Munich', desc: 'Central, 2 nights Jul 7\u20138', url: 'https://www.booking.com/searchresults.html?ss=Munich+City+Centre&checkin=2026-07-07&checkout=2026-07-09&group_adults=2' }
     ],
     palma:    [
         { icon: '\u2708\uFE0F', title: 'Ryanair', desc: 'HHN\u2013PMI round trip (\u20AC101/pp)', url: 'https://www.ryanair.com' },
@@ -3097,8 +3375,8 @@ renderPlan = function(planKey) {
         }
         hotelEl.innerHTML = hotelCities.map(city => {
             const label = city.charAt(0).toUpperCase() + city.slice(1);
-            return '<div class="panel-header" style="background:rgba(15,19,35,0.8);border:1px solid rgba(99,130,255,0.1);border-radius:12px 12px 0 0;border-bottom:none;margin-bottom:0">Hotel Recommendations \u2014 ' + label + '</div>' +
-                '<div style="background:rgba(15,19,35,0.5);border:1px solid rgba(99,130,255,0.1);border-top:none;border-radius:0 0 12px 12px;padding:18px 20px;margin-bottom:16px"><div class="hotel-cards">' +
+            return '<div class="panel-header" style="border-radius:12px 12px 0 0;border-bottom:none;margin-bottom:0">Hotel Recommendations \u2014 ' + label + '</div>' +
+                '<div style="border:1px solid #e4eef5;border-top:none;border-radius:0 0 12px 12px;padding:18px 20px;margin-bottom:16px"><div class="hotel-cards">' +
                 hotelData[city].map(renderHotelCard).join('') + '</div></div>';
         }).join('');
     } else {
@@ -3170,20 +3448,20 @@ renderPlan = function(planKey) {
 
     // Trip timeline
     const tlEl = document.getElementById('trip-timeline');
-    const tlColors = { arrive: '#ef4444', porto: '#d97706', paris: '#8b5cf6', castle: '#eab308', munich: '#eab308', chill: '#6366f1', depart: '#ef4444', strasbourg: '#8b5cf6', arles: '#f97316', amsterdam: '#f97316', milan: '#0ea5e9', palma: '#0284c7', kl: '#6366f1' };
     tlEl.innerHTML = p.days.map(d => {
         const key = d.dest.toLowerCase();
-        let bg = '#6366f1';
-        if (key.includes('arrive') || key.includes('depart')) bg = '#ef4444';
-        else if (key.includes('porto')) bg = '#d97706';
-        else if (key.includes('paris')) bg = '#8b5cf6';
-        else if (key.includes('neuschwanstein') || key.includes('castle') || key.includes('munich') || key.includes('füssen')) bg = '#eab308';
-        else if (key.includes('amsterdam')) bg = '#f97316';
-        else if (key.includes('strasbourg')) bg = '#8b5cf6';
-        else if (key.includes('arles') || key.includes('provence')) bg = '#f97316';
-        else if (key.includes('milan')) bg = '#0ea5e9';
-        else if (key.includes('palma')) bg = '#0284c7';
-        else if (key.includes('chill') || key.includes('farewell') || key.includes('kaiserslautern')) bg = '#6366f1';
+        let bg = '#4a8ba8';
+        if (key.includes('arrive') || key.includes('depart')) bg = '#c4626a';
+        else if (key.includes('porto')) bg = '#d4874a';
+        else if (key.includes('paris')) bg = '#6a8aa8';
+        else if (key.includes('neuschwanstein') || key.includes('castle') || key.includes('füssen')) bg = '#5a7d40';
+        else if (key.includes('munich')) bg = '#4a8ba8';
+        else if (key.includes('amsterdam')) bg = '#d4874a';
+        else if (key.includes('strasbourg')) bg = '#6a8aa8';
+        else if (key.includes('arles') || key.includes('provence')) bg = '#8a7060';
+        else if (key.includes('milan')) bg = '#c4626a';
+        else if (key.includes('palma')) bg = '#4a8ba8';
+        else if (key.includes('chill') || key.includes('farewell') || key.includes('kaiserslautern')) bg = '#6aaa8a';
         return '<div class="tl-segment" style="background:' + bg + '"><div class="tl-day">' + d.date.split(' ')[1] + ' ' + d.date.split(' ')[2] + '</div><div class="tl-label">' + d.dest.split('—')[0].split('→')[0].trim() + '</div></div>';
     }).join('');
 
@@ -3241,16 +3519,32 @@ renderPlan = function(planKey) {
     ]});
     if (p.locs.includes('neuschwanstein') || p.locs.includes('munich')) restoCityOrder.push({ label: '🇩🇪 Munich', items: restoData.munich || [] });
     restoCityOrder.push({ label: '🇩🇪 Kaiserslautern', items: restoData.kl || [] });
+    function cuisineClass(type) {
+        const t = type.toLowerCase();
+        if (t.includes('portug') || t.includes('francesinha')) return 'cuisine-portuguese';
+        if (t.includes('bavarian') || t.includes('beer hall') || t.includes('biergarten')) return 'cuisine-bavarian';
+        if (t.includes('german') || t.includes('brewpub')) return 'cuisine-german';
+        if (t.includes('seafood')) return 'cuisine-seafood';
+        if (t.includes('market') || t.includes('bakery') || t.includes('brunch') || t.includes('pastry') || t.includes('café')) return 'cuisine-market';
+        if (t.includes('wine')) return 'cuisine-wine';
+        if (t.includes('french')) return 'cuisine-french';
+        if (t.includes('street')) return 'cuisine-street';
+        if (t.includes('food hall')) return 'cuisine-market';
+        return 'cuisine-market';
+    }
     restoEl.innerHTML = restoCityOrder.map(group => {
         const cards = group.items.map(r => {
             const mapsQ = encodeURIComponent(r.name + ' ' + r.city);
+            const statusClass = r.must ? 'resto-status-must' : 'resto-status-saved';
+            const statusText = r.must ? 'Must Try' : 'Saved';
             return '<div class="resto-card">' +
-            '<div class="resto-name">' + r.name + (r.must ? '<span class="resto-must">MUST TRY</span>' : '') + '</div>' +
-            '<div class="resto-type">' + r.type + '</div>' +
+            '<div class="resto-header"><div class="resto-name">' + r.name + '</div><span class="resto-status ' + statusClass + '">' + statusText + '</span></div>' +
+            '<span class="resto-cuisine ' + cuisineClass(r.type) + '">' + r.type + '</span>' +
             '<div class="resto-desc">' + r.desc + '</div>' +
-            '<a class="card-link" href="https://www.google.com/maps/search/' + mapsQ + '" target="_blank" rel="noopener">Google Maps ↗</a></div>';
+            '<div class="resto-footer"><span class="resto-city-label">' + r.city.toUpperCase() + '</span>' +
+            '<a class="card-link" href="https://www.google.com/maps/search/' + mapsQ + '" target="_blank" rel="noopener">Google Maps ↗</a></div></div>';
         }).join('');
-        return '<div class="city-section-header">' + group.label + '</div><div class="restaurant-grid">' + cards + '</div>';
+        return '<div class="city-section-header">' + group.label + '</div><div class="restaurant-grid reveal-stagger">' + cards + '</div>';
     }).join('');
 
     // Photo spots
@@ -3597,6 +3891,47 @@ document.querySelectorAll('.ov-cal-day').forEach((cal, i) => {
 
 // Initial view: overview (no plan rendered yet)
 // renderPlan('primary') is NOT called — overview is shown by default
+
+// ===================== SCROLL REVEAL =====================
+(function() {
+    var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    function observeReveals() {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+            revealObserver.observe(el);
+        });
+    }
+
+    // Observe existing elements
+    observeReveals();
+
+    // Re-observe after plan renders (dynamic content)
+    var origRenderPlan = window.renderPlan;
+    if (origRenderPlan) {
+        window.renderPlan = function() {
+            origRenderPlan.apply(this, arguments);
+            setTimeout(observeReveals, 50);
+        };
+    }
+
+    // Re-observe when switching views (overview/trip/rec)
+    document.querySelectorAll('.tab-bar, [onclick*="showOverview"], [onclick*="renderPlan"]').forEach(function(el) {
+        el.addEventListener('click', function() { setTimeout(observeReveals, 100); });
+    });
+
+    // Also observe on tab clicks
+    var tabBar = document.getElementById('tab-bar');
+    if (tabBar) {
+        tabBar.addEventListener('click', function() { setTimeout(observeReveals, 100); });
+    }
+})();
 </script>
 </div><!-- /app-content -->
 
