@@ -369,6 +369,28 @@
         .eve-mode .rec-comparison tr.rec-highlight td { color: #e8dcc8; background: rgba(212,165,84,0.06); }
         .eve-mode .rec-cta-btn { background: rgba(212,165,84,0.12); color: #d4a554; border-color: rgba(212,165,84,0.25); }
         .eve-mode .rec-cta-btn:hover { background: rgba(212,165,84,0.2); }
+        .eve-mode .pb-hero { background: linear-gradient(135deg, rgba(196,98,106,0.12), rgba(212,165,84,0.10)); border-color: rgba(196,98,106,0.25); }
+        .eve-mode .pb-hero-title { color: #e8dcc8; }
+        .eve-mode .pb-hero-sub { color: #9aacbe; }
+        .eve-mode .pb-hero-stat { background: rgba(22,32,46,0.6); color: #e8dcc8; border-color: rgba(196,98,106,0.2); }
+        .eve-mode .pb-card { background: #16202e; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .pb-card-title { color: #e8dcc8; }
+        .eve-mode .pb-card-sub { color: #9aacbe; }
+        .eve-mode .pb-card-vibe { color: #c8b8a0; }
+        .eve-mode .pb-leg { background: rgba(212,165,84,0.08); border-color: rgba(212,165,84,0.15); color: #e8dcc8; }
+        .eve-mode .pb-day { background: #1a2636; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .pb-day-title { color: #e8dcc8; }
+        .eve-mode .pb-day-schedule { color: #9aacbe; }
+        .eve-mode .pb-day-overnight { color: #9aacbe; border-top-color: rgba(212,165,84,0.1); }
+        .eve-mode .pb-daytrip-section { background: rgba(212,135,74,0.06); border-color: rgba(212,135,74,0.15); }
+        .eve-mode .pb-daytrip-list li { background: rgba(22,32,46,0.55); color: #c8b8a0; }
+        .eve-mode .pb-daytrip-list li strong { color: #e8dcc8; }
+        .eve-mode .pb-footer-cell { background: #1a2636; border-color: rgba(212,165,84,0.1); }
+        .eve-mode .pb-footer-label { color: #9aacbe; }
+        .eve-mode .pb-footer-value { color: #e8dcc8; }
+        .eve-mode .pb-compare th { background: rgba(212,165,84,0.1); color: #e8dcc8; }
+        .eve-mode .pb-compare td { color: #c8b8a0; border-bottom-color: rgba(212,165,84,0.1); }
+        .eve-mode .pb-compare tr.pb-top td { background: rgba(212,135,74,0.08); }
 
         .eve-mode .overnights-row { background: #16202e; border-color: rgba(212,165,84,0.1); }
         .eve-mode .overnights-label { color: #9aacbe; }
@@ -602,6 +624,8 @@
         .overview-view.active { display: block; opacity: 1; }
         .rec-view { display: none; opacity: 0; }
         .rec-view.active { display: block; opacity: 1; }
+        .plan-b-view { display: none; opacity: 0; }
+        .plan-b-view.active { display: block; opacity: 1; }
         .plan-content { opacity: 1; }
         .plan-content.hidden { display: none; opacity: 0; }
         .view-fade-in {
@@ -1029,6 +1053,276 @@
 
         @media (max-width: 1200px) {
             .rec-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Plan B — DRIVE (contingency) */
+        .pb-hero {
+            background: linear-gradient(135deg, rgba(196, 98, 106, 0.08), rgba(212, 135, 74, 0.08));
+            border: 1px solid rgba(196, 98, 106, 0.25);
+            border-radius: 18px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+        .pb-hero-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #c4626a;
+            margin-bottom: 8px;
+        }
+        .pb-hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2a3442;
+            margin-bottom: 10px;
+        }
+        .pb-hero-sub {
+            color: #5a7080;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 780px;
+        }
+        .pb-hero-stats {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .pb-hero-stat {
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(196,98,106,0.15);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 12px;
+            color: #2a3442;
+            font-weight: 600;
+        }
+        .pb-hero-stat .pb-hero-stat-v { color: #c4626a; font-weight: 700; margin-right: 4px; }
+
+        .pb-card {
+            background: #ffffff;
+            border: 1px solid #e4eef5;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .pb-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--pb-accent, #4a8ba8);
+        }
+        .pb-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .pb-card-rank {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--pb-accent, #4a8ba8);
+            line-height: 1;
+            opacity: 0.3;
+            margin-right: 8px;
+        }
+        .pb-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #2a3442;
+            margin-bottom: 4px;
+        }
+        .pb-card-sub {
+            color: #7a9ab5;
+            font-size: 13px;
+            font-style: italic;
+        }
+        .pb-score-badge {
+            background: rgba(74,139,168,0.1);
+            color: var(--pb-accent, #4a8ba8);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .pb-card-vibe {
+            color: #5a7080;
+            font-size: 14px;
+            line-height: 1.55;
+            margin: 10px 0 16px;
+        }
+        .pb-legs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .pb-leg {
+            background: rgba(74,139,168,0.06);
+            border: 1px solid rgba(74,139,168,0.15);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #2a3442;
+            font-weight: 500;
+        }
+        .pb-leg strong { color: var(--pb-accent, #4a8ba8); font-weight: 700; }
+
+        .pb-days {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .pb-day {
+            background: #fafcfd;
+            border: 1px solid #e4eef5;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .pb-day-date {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--pb-accent, #4a8ba8);
+            margin-bottom: 4px;
+        }
+        .pb-day-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #2a3442;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .pb-day-schedule {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #5a7080;
+        }
+        .pb-day-schedule .pb-time {
+            color: var(--pb-accent, #4a8ba8);
+            font-weight: 700;
+            display: inline-block;
+            min-width: 58px;
+        }
+        .pb-day-overnight {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e4eef5;
+            font-size: 11px;
+            color: #7a9ab5;
+            font-style: italic;
+        }
+        .pb-daytrip-section {
+            background: rgba(212, 135, 74, 0.04);
+            border: 1px solid rgba(212, 135, 74, 0.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+        }
+        .pb-daytrip-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #d4874a;
+            margin-bottom: 10px;
+        }
+        .pb-daytrip-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .pb-daytrip-list li {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #3a4656;
+            padding: 6px 10px;
+            background: rgba(255,255,255,0.55);
+            border-radius: 6px;
+        }
+        .pb-daytrip-list li strong { color: #2a3442; font-weight: 700; }
+        .pb-daytrip-list li .pb-dt-time { color: #d4874a; font-weight: 600; }
+
+        .pb-footer-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 4px;
+        }
+        .pb-footer-cell {
+            background: #fafcfd;
+            border: 1px solid #e4eef5;
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+        .pb-footer-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #7a9ab5;
+            margin-bottom: 4px;
+        }
+        .pb-footer-value {
+            font-size: 13px;
+            color: #2a3442;
+            line-height: 1.5;
+        }
+
+        .pb-compare {
+            margin-top: 8px;
+            overflow-x: auto;
+        }
+        .pb-compare table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .pb-compare th {
+            background: rgba(74,139,168,0.08);
+            color: #2a3442;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pb-compare td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e4eef5;
+            color: #3a4656;
+        }
+        .pb-compare tr.pb-top td {
+            background: rgba(212, 135, 74, 0.05);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .pb-days { grid-template-columns: 1fr; }
+            .pb-footer-row { grid-template-columns: 1fr; }
+            .pb-hero { padding: 20px 22px; }
+            .pb-hero-title { font-size: 22px; }
+            .pb-card { padding: 18px 20px; }
         }
 
         /* Trip overview */
@@ -1809,7 +2103,7 @@
             body::before { display: none; }
             .pw-overlay, .tab-bar, .topbar, .share-btn { display: none !important; }
             .app-content.locked { display: block !important; }
-            .overview-view, .rec-view { display: none !important; }
+            .overview-view, .rec-view, .plan-b-view { display: none !important; }
             .plan-content { display: block !important; }
             .plan-content.hidden { display: block !important; }
             .container { max-width: 100%; padding: 0; }
@@ -2176,6 +2470,539 @@
         <div class="rec-section" style="text-align:center; border-color: rgba(168, 85, 247, 0.2);">
             <div class="rec-paragraph" style="margin-bottom:16px;">Porto wins because it doesn't make you choose. You get a stunning international destination <em>and</em> the most time together at home. The other plans either cram too much in or skip the adventure.</div>
             <button class="rec-cta-btn" onclick="renderPlan('porto')">View Full Porto Plan</button>
+        </div>
+    </div>
+
+    <!-- Plan B - DRIVE View (contingency if Porto flight is canceled) -->
+    <div class="plan-b-view" id="plan-b-view">
+        <div class="pb-hero">
+            <div class="pb-hero-label">&#9888; Contingency Plan</div>
+            <div class="pb-hero-title">Porto Plan B &mdash; Drive Alternatives</div>
+            <div class="pb-hero-sub">
+                If the Jul 4 Ryanair flight to Porto is canceled (current-events risk to European flights), pivot at Luxembourg Airport and drive to one of these five destinations instead. Return drive to Kaiserslautern on Mon Jul 6 &mdash; then the Neuschwanstein + Munich block (Jul 7&ndash;9) and the KL chill days (Jul 10&ndash;11) stay unchanged. Tesla Superchargers are dense on every outbound and return route.
+            </div>
+            <div class="pb-hero-stats">
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">2</span>nights</div>
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">Jul 4&ndash;6</span>window</div>
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">LUX</span>outbound</div>
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">KL</span>return</div>
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">5</span>options</div>
+            </div>
+        </div>
+
+        <!-- Option 1: The Hague + Rotterdam -->
+        <div class="pb-card" style="--pb-accent:#4a8ba8">
+            <div class="pb-card-top">
+                <div>
+                    <div style="display:flex;align-items:baseline;gap:12px">
+                        <span class="pb-card-rank">#1</span>
+                        <div>
+                            <div class="pb-card-title">The Hague + Rotterdam</div>
+                            <div class="pb-card-sub">Base: Scheveningen beachfront &middot; Netherlands</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="pb-score-badge">Score 22/25 &middot; Beach match</span>
+            </div>
+            <div class="pb-card-vibe">
+                Beach + boardwalk = closest Porto match. Scheveningen's pier and North Sea boulevard hit the same Atlantic waterfront note as Porto's Foz, and The Hague center is 15 min inland for Vermeer + Binnenhof.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Scheveningen</strong> &middot; ~4h via Li&egrave;ge/Eindhoven/Utrecht</div>
+                <div class="pb-leg"><strong>Scheveningen &rarr; KL</strong> &middot; ~5.5h via Venlo/K&ouml;ln/Frankfurt</div>
+                <div class="pb-leg">1 hotel &middot; ~9.5h total drive</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Scheveningen</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">7:30 AM</span> Leave KL &rarr; LUX<br>
+                        <span class="pb-time">9:00 AM</span> Pivot at LUX, drive N<br>
+                        <span class="pb-time">1:00 PM</span> Arrive, check in<br>
+                        <span class="pb-time">2:00 PM</span> Pier + boardwalk walk<br>
+                        <span class="pb-time">4:00 PM</span> Beach + North Sea dip<br>
+                        <span class="pb-time">7:00 PM</span> <strong>4th of July dinner on the boulevard</strong>
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Scheveningen</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Hague + Rotterdam day</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">10:00 AM</span> Mauritshuis (<em>Girl with a Pearl Earring</em>)<br>
+                        <span class="pb-time">12:00 PM</span> Binnenhof + Peace Palace<br>
+                        <span class="pb-time">1:30 PM</span> Train to Rotterdam (27 min)<br>
+                        <span class="pb-time">2:00 PM</span> Markthal lunch<br>
+                        <span class="pb-time">3:30 PM</span> Cube Houses + Erasmusbrug<br>
+                        <span class="pb-time">7:00 PM</span> Sunset beach dinner back in Scheveningen
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Scheveningen</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Return to KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Beach morning walk<br>
+                        <span class="pb-time">11:00 AM</span> Check out, depart<br>
+                        <span class="pb-time">1:30 PM</span> Supercharger stop<br>
+                        <span class="pb-time">5:30 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-daytrip-section">
+                <div class="pb-daytrip-title">Sunday Alternatives &mdash; Pick one day-of</div>
+                <ul class="pb-daytrip-list">
+                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 27 min train</span><br>Markthal, Cube Houses, Erasmusbrug</li>
+                    <li><strong>Delft</strong> <span class="pb-dt-time">&middot; 15 min train</span><br>Vermeer country, Markt, Oude Kerk</li>
+                    <li><strong>Leiden</strong> <span class="pb-dt-time">&middot; 15 min train</span><br>University town, canals, Rembrandt birthplace</li>
+                    <li><strong>Amsterdam</strong> <span class="pb-dt-time">&middot; 50 min train</span><br>Canals, Anne Frank, Rijksmuseum</li>
+                    <li><strong>Haarlem</strong> <span class="pb-dt-time">&middot; 30 min train</span><br>Frans Hals Museum, Grote Markt</li>
+                </ul>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Scheveningen boulevard &mdash; Kurhaus area or Grand Hotel Amr&acirc;th. Beachfront rooms, tram to Hague center in 15 min.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">North Sea seafood on the boulevard, Haagse hopjes coffee candies, Markthal stalls (Rotterdam), bitterballen + Heineken.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 2: Bruges + Antwerp -->
+        <div class="pb-card" style="--pb-accent:#c4626a">
+            <div class="pb-card-top">
+                <div>
+                    <div style="display:flex;align-items:baseline;gap:12px">
+                        <span class="pb-card-rank">#2</span>
+                        <div>
+                            <div class="pb-card-title">Bruges + Antwerp</div>
+                            <div class="pb-card-sub">Base: Bruges historic center &middot; Belgium</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="pb-score-badge">Score 22/25 &middot; Most romantic</span>
+            </div>
+            <div class="pb-card-vibe">
+                Closest spiritual match to Porto's Ribeira &mdash; compact, canal-fronted, walkable, romantic at sunset. Shortest outbound drive from LUX. Sunday is your choice: Antwerp, the Belgian coast, a Flemish canal city, or even the French Channel coast.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Bruges</strong> &middot; ~3.5h via Li&egrave;ge/Ghent</div>
+                <div class="pb-leg"><strong>Bruges &rarr; KL</strong> &middot; ~5.5h via Antwerp/Aachen/K&ouml;ln</div>
+                <div class="pb-leg">1 hotel &middot; ~9h total drive</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Bruges</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
+                        <span class="pb-time">12:30 PM</span> Arrive Bruges, check in<br>
+                        <span class="pb-time">2:00 PM</span> Markt square + Belfry climb (366 steps)<br>
+                        <span class="pb-time">4:00 PM</span> Canal boat ride at golden hour<br>
+                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner on a canal</strong><br>
+                        <span class="pb-time">9:30 PM</span> Belgian beer in a tucked-away bar
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Bruges</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Day-trip of your choice</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Pick Sunday option (see menu below)<br>
+                        <span class="pb-time">~10:00 AM</span> Depart Bruges<br>
+                        <span class="pb-time">~12:30 PM</span> Lunch at destination<br>
+                        <span class="pb-time">Afternoon</span> Explore<br>
+                        <span class="pb-time">~8:00 PM</span> Back in Bruges<br>
+                        <span class="pb-time">9:30 PM</span> Canal nightcap
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Bruges</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Return to KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Beguinage (peaceful convent)<br>
+                        <span class="pb-time">10:00 AM</span> Half Moon Brewery tour<br>
+                        <span class="pb-time">11:30 AM</span> Chocolate run, check out<br>
+                        <span class="pb-time">12:30 PM</span> Depart Bruges<br>
+                        <span class="pb-time">6:00 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-daytrip-section">
+                <div class="pb-daytrip-title">Sunday Day-Trip Menu &mdash; 9 options</div>
+                <ul class="pb-daytrip-list">
+                    <li><strong>Antwerp</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Rubens, Cathedral of Our Lady, MAS rooftop, Het Eilandje harbor</li>
+                    <li><strong>Ghent</strong> <span class="pb-dt-time">&middot; 25 min train</span><br>Gravensteen castle, Korenmarkt canals, less touristy than Bruges</li>
+                    <li><strong>Ostend (Oostende)</strong> <span class="pb-dt-time">&middot; 25 min train</span><br>Biggest Belgian beach town, pier, Mu.ZEE art, casino, seafood</li>
+                    <li><strong>De Haan</strong> <span class="pb-dt-time">&middot; 25 min train</span><br>Belle &Eacute;poque villas, cobbled streets, Einstein's beach town</li>
+                    <li><strong>Knokke-Heist</strong> <span class="pb-dt-time">&middot; 20 min train</span><br>Upscale resort, boardwalk, designer shopping, galleries</li>
+                    <li><strong>Zeebrugge</strong> <span class="pb-dt-time">&middot; 15 min</span><br>Working port + beach &mdash; harbor fans only</li>
+                    <li><strong>Ostend + De Haan combo</strong> <span class="pb-dt-time">&middot; Kusttram</span><br>Two beach towns in one day on the world's longest coastal tram</li>
+                    <li><strong>Dunkirk, France</strong> <span class="pb-dt-time">&middot; 1h drive</span><br>WWII 1940 evacuation history, Mus&eacute;e Dunkerque 1940, beach</li>
+                    <li><strong>Cap Blanc-Nez, France</strong> <span class="pb-dt-time">&middot; 1.5h drive</span><br>French chalk cliffs, dramatic Channel views</li>
+                </ul>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Bruges old town inside the canal ring &mdash; 10 min walk from Markt. Canal-view rooms if available. Hotel Heritage, Dukes' Palace, or a B&amp;B near Minnewater.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Moules frites, Flemish stew (stoofvlees), Half Moon Brugse Zot beer, Trappist abbey beers, handmade chocolate at The Chocolate Line or Dumon.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 3: Utrecht hub -->
+        <div class="pb-card" style="--pb-accent:#5a7d40">
+            <div class="pb-card-top">
+                <div>
+                    <div style="display:flex;align-items:baseline;gap:12px">
+                        <span class="pb-card-rank">#3</span>
+                        <div>
+                            <div class="pb-card-title">Utrecht Hub</div>
+                            <div class="pb-card-sub">Base: Utrecht old town &middot; Netherlands</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="pb-score-badge">Score 21/25 &middot; Best value</span>
+            </div>
+            <div class="pb-card-vibe">
+                The dark horse. Often called "Amsterdam without the crowds" &mdash; Utrecht's two-tier wharf canals put you <em>below</em> street level, on the water, for dinner. Dom Tower + medieval old town. Train hub puts Amsterdam (27 min) and Rotterdam (40 min) inside reach.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Utrecht</strong> &middot; ~3.5h via Li&egrave;ge/Eindhoven</div>
+                <div class="pb-leg"><strong>Utrecht &rarr; KL</strong> &middot; ~5h via Venlo/K&ouml;ln</div>
+                <div class="pb-leg">1 hotel &middot; ~8.5h total drive (shortest)</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Utrecht</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
+                        <span class="pb-time">12:30 PM</span> Arrive Utrecht, check in<br>
+                        <span class="pb-time">2:00 PM</span> Wharf canal walk on Oudegracht<br>
+                        <span class="pb-time">4:00 PM</span> Dom Tower climb (465 steps)<br>
+                        <span class="pb-time">7:00 PM</span> <strong>4th of July dinner on a wharf</strong> &mdash; below street level, on the water
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Utrecht</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Day-trip of your choice</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:30 AM</span> Pick Sunday option (see menu below)<br>
+                        <span class="pb-time">~10:30 AM</span> Train departs Utrecht Centraal<br>
+                        <span class="pb-time">Afternoon</span> Explore destination<br>
+                        <span class="pb-time">~7:00 PM</span> Back in Utrecht<br>
+                        <span class="pb-time">8:00 PM</span> Dinner on the canal
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Utrecht</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Return to KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">10:00 AM</span> Oudegracht boat tour<br>
+                        <span class="pb-time">12:00 PM</span> Caf&eacute; on a wharf, check out<br>
+                        <span class="pb-time">1:00 PM</span> Depart Utrecht<br>
+                        <span class="pb-time">6:00 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-daytrip-section">
+                <div class="pb-daytrip-title">Sunday Day-Trip Menu &mdash; 6 options</div>
+                <ul class="pb-daytrip-list">
+                    <li><strong>Amsterdam</strong> <span class="pb-dt-time">&middot; 27 min train</span><br>Melissa's first Amsterdam &mdash; Anne Frank, canal cruise, Jordaan</li>
+                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 40 min train</span><br>Markthal, Cube Houses, modern architecture</li>
+                    <li><strong>The Hague + Scheveningen</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Mauritshuis + beach combo</li>
+                    <li><strong>Delft</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Vermeer, Markt, Oude Kerk</li>
+                    <li><strong>Haarlem</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Frans Hals, Grote Kerk</li>
+                    <li><strong>Gouda</strong> <span class="pb-dt-time">&middot; 20 min train</span><br>Cheese town (note: public market Thursdays only)</li>
+                </ul>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Utrecht center &mdash; along Oudegracht or Neude. Walk everywhere. Hotels are 30&ndash;40% cheaper than Amsterdam in peak July.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Wharf cellar restaurants (eat on the water), Dutch apple pie, bitterballen, poffertjes, herring stands. Cafe Le Journal, De Rechtbank.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 4: Antwerp solo -->
+        <div class="pb-card" style="--pb-accent:#8c5a7e">
+            <div class="pb-card-top">
+                <div>
+                    <div style="display:flex;align-items:baseline;gap:12px">
+                        <span class="pb-card-rank">#4</span>
+                        <div>
+                            <div class="pb-card-title">Antwerp Solo</div>
+                            <div class="pb-card-sub">Base: Antwerp old town &middot; Belgium</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="pb-score-badge">Score 20/25 &middot; Middle ground</span>
+            </div>
+            <div class="pb-card-vibe">
+                Underrated middle ground between Bruges and Amsterdam. Old town with Rubens masterpieces in the Cathedral, fashion-district cool, the gentrified Het Eilandje harbor, diamond quarter, MAS rooftop. Shortest total drive of the five.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Antwerp</strong> &middot; ~3h via Li&egrave;ge</div>
+                <div class="pb-leg"><strong>Antwerp &rarr; KL</strong> &middot; ~5h via Aachen/K&ouml;ln</div>
+                <div class="pb-leg">1 hotel &middot; ~8h total drive (shortest)</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Antwerp</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:30 AM</span> Depart LUX<br>
+                        <span class="pb-time">12:30 PM</span> Arrive Antwerp, check in<br>
+                        <span class="pb-time">1:30 PM</span> Grote Markt + Cathedral (Rubens)<br>
+                        <span class="pb-time">3:30 PM</span> Plantin-Moretus Museum<br>
+                        <span class="pb-time">5:30 PM</span> MAS rooftop sunset views<br>
+                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner at Het Eilandje</strong> &mdash; harbor district
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Antwerp</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Day-trip of your choice</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:30 AM</span> Pick Sunday option (see menu below)<br>
+                        <span class="pb-time">~10:30 AM</span> Train to destination<br>
+                        <span class="pb-time">Afternoon</span> Explore<br>
+                        <span class="pb-time">~7:00 PM</span> Back in Antwerp<br>
+                        <span class="pb-time">8:00 PM</span> Fashion-district dinner
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Antwerp</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Return to KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">10:00 AM</span> Rubens House or Chocolate Nation<br>
+                        <span class="pb-time">12:00 PM</span> Check out<br>
+                        <span class="pb-time">12:30 PM</span> Depart Antwerp<br>
+                        <span class="pb-time">5:30 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-daytrip-section">
+                <div class="pb-daytrip-title">Sunday Day-Trip Menu &mdash; 5 options</div>
+                <ul class="pb-daytrip-list">
+                    <li><strong>Bruges</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Fairytale canals, Markt + Belfry, canal boat</li>
+                    <li><strong>Ghent</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Gravensteen castle, Korenmarkt canals</li>
+                    <li><strong>Brussels</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Grand Place, Atomium, EU quarter</li>
+                    <li><strong>Ostend</strong> <span class="pb-dt-time">&middot; 1.5h train</span><br>Belgian North Sea beach, pier, Mu.ZEE</li>
+                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Modern architecture, Markthal, Cube Houses</li>
+                </ul>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Antwerp old town near Grote Markt, or Het Zuid (hip arts district). Hilton Old Town, Hotel Franq, or a canal-side boutique.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Belgian fries, waterzooi, chocolate (Goossens bakery, Philip's Biscuits), De Koninck Antwerp beer, Chocolate Nation experience.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 5: Amsterdam hub -->
+        <div class="pb-card" style="--pb-accent:#d4874a">
+            <div class="pb-card-top">
+                <div>
+                    <div style="display:flex;align-items:baseline;gap:12px">
+                        <span class="pb-card-rank">#5</span>
+                        <div>
+                            <div class="pb-card-title">Amsterdam Hub</div>
+                            <div class="pb-card-sub">Base: Canal Ring &middot; Melissa first-timer &#11088;</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="pb-score-badge">Score 19/25 &middot; First-timer premium</span>
+            </div>
+            <div class="pb-card-vibe">
+                Amsterdam's score is held back by July crowds and hotel prices, but Melissa has never been &mdash; and you only get a first-Amsterdam once. Anne Frank House, Rijksmuseum, canal cruise at golden hour, Jordaan walks. Bucket-list city energy.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Amsterdam</strong> &middot; ~4h via Li&egrave;ge/Eindhoven/Utrecht</div>
+                <div class="pb-leg"><strong>Amsterdam &rarr; KL</strong> &middot; ~5.5h via Venlo/K&ouml;ln</div>
+                <div class="pb-leg">1 hotel &middot; ~9.5h total drive</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Amsterdam</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
+                        <span class="pb-time">1:00 PM</span> Arrive Amsterdam, check in<br>
+                        <span class="pb-time">3:00 PM</span> Canal cruise &mdash; golden hour on Herengracht<br>
+                        <span class="pb-time">5:00 PM</span> Jordaan walk (shops, bruin caf&eacute;s)<br>
+                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner in Jordaan</strong> &mdash; traditional brown caf&eacute;
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Amsterdam full day</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">10:00 AM</span> <strong>Anne Frank House</strong> (BOOK 6 weeks ahead)<br>
+                        <span class="pb-time">12:30 PM</span> Lunch at Caf&eacute; Winkel 43 (best apple pie)<br>
+                        <span class="pb-time">2:30 PM</span> <strong>Rijksmuseum</strong> (<em>Night Watch</em>, Vermeer's <em>Milkmaid</em>)<br>
+                        <span class="pb-time">5:00 PM</span> Vondelpark picnic or De Pijp<br>
+                        <span class="pb-time">8:00 PM</span> Evening canal walk
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Return to KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">10:00 AM</span> Museum Quarter stroll or Vondelpark brunch<br>
+                        <span class="pb-time">12:00 PM</span> Check out, depart<br>
+                        <span class="pb-time">2:30 PM</span> Supercharger stop<br>
+                        <span class="pb-time">6:30 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-daytrip-section">
+                <div class="pb-daytrip-title">Sunday Alternatives &mdash; If not a full Amsterdam day</div>
+                <ul class="pb-daytrip-list">
+                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 40 min train</span><br>Markthal, Cube Houses, modern port</li>
+                    <li><strong>Delft</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Vermeer country</li>
+                    <li><strong>The Hague + Scheveningen</strong> <span class="pb-dt-time">&middot; 50 min train</span><br>Mauritshuis + beach</li>
+                    <li><strong>Haarlem</strong> <span class="pb-dt-time">&middot; 15 min train</span><br>Frans Hals, Grote Kerk</li>
+                    <li><strong>Zaanse Schans</strong> <span class="pb-dt-time">&middot; 40 min bus</span><br>Working windmills, clogs, cheese</li>
+                    <li><strong>Volendam + Marken</strong> <span class="pb-dt-time">&middot; 30 min bus</span><br>Fishing villages, wooden houses</li>
+                    <li><strong>Utrecht</strong> <span class="pb-dt-time">&middot; 27 min train</span><br>Wharf canals, Dom Tower</li>
+                </ul>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Canal Ring &mdash; Herengracht, Keizersgracht, Prinsengracht. Or Jordaan-adjacent. July prices are steep: book 2+ months ahead.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Stroopwafels, bitterballen, herring, Indonesian rijsttafel, Caf&eacute; Winkel apple pie, De Pijp food scene (Sarphatipark).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary comparison -->
+        <div class="pb-card" style="--pb-accent:#4a8ba8">
+            <div class="pb-card-top">
+                <div>
+                    <div class="pb-card-title">At-a-Glance Comparison</div>
+                    <div class="pb-card-sub">All 5 options side-by-side &mdash; decide day-of</div>
+                </div>
+            </div>
+            <div class="pb-compare">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Base</th>
+                            <th>LUX Out</th>
+                            <th>KL Return</th>
+                            <th>Total</th>
+                            <th>Score</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pb-top">
+                            <td>#1 Hague + Rotterdam</td>
+                            <td>Scheveningen</td>
+                            <td>4h</td>
+                            <td>5.5h</td>
+                            <td>9.5h</td>
+                            <td>22</td>
+                            <td>Beach match for Porto</td>
+                        </tr>
+                        <tr class="pb-top">
+                            <td>#2 Bruges + Antwerp</td>
+                            <td>Bruges</td>
+                            <td>3.5h</td>
+                            <td>5.5h</td>
+                            <td>9h</td>
+                            <td>22</td>
+                            <td>Most romantic, coast access</td>
+                        </tr>
+                        <tr>
+                            <td>#3 Utrecht Hub</td>
+                            <td>Utrecht</td>
+                            <td>3.5h</td>
+                            <td>5h</td>
+                            <td>8.5h</td>
+                            <td>21</td>
+                            <td>Best value, quieter</td>
+                        </tr>
+                        <tr>
+                            <td>#4 Antwerp Solo</td>
+                            <td>Antwerp</td>
+                            <td>3h</td>
+                            <td>5h</td>
+                            <td>8h</td>
+                            <td>20</td>
+                            <td>Shortest drive overall</td>
+                        </tr>
+                        <tr>
+                            <td>#5 Amsterdam Hub</td>
+                            <td>Canal Ring</td>
+                            <td>4h</td>
+                            <td>5.5h</td>
+                            <td>9.5h</td>
+                            <td>19&#11088;</td>
+                            <td>Melissa first-timer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:16px;padding:14px 16px;background:rgba(74,139,168,0.05);border-radius:10px;font-size:13px;color:#3a4656;line-height:1.6">
+                <strong>Tesla charging:</strong> Superchargers are dense on every outbound and return route &mdash; Li&egrave;ge, Eindhoven, Antwerp, Ghent, Venlo, K&ouml;ln, Frankfurt. Nav will pick 1&ndash;2 stops automatically, no planning needed.
+            </div>
+        </div>
+
+        <div class="rec-section" style="text-align:center; border-color: rgba(196, 98, 106, 0.2);">
+            <div class="rec-paragraph" style="margin-bottom:16px;">
+                <strong>Use this tab only if the Porto flight is actually canceled.</strong> The <a href="#" onclick="renderPlan('porto');return false;" style="color:#d4874a;font-weight:700">Porto plan</a> remains the primary. The Neuschwanstein + Munich + KL chill days (Jul 7&ndash;11) stay unchanged under all scenarios.
+            </div>
+            <button class="rec-cta-btn" onclick="renderPlan('porto')">Back to Primary Porto Plan</button>
         </div>
     </div>
 
@@ -3096,6 +3923,14 @@ portoBtn.innerHTML = `${portoP.name}<span class="tab-badge badge-chosen">&#10003
 portoBtn.addEventListener('click', () => renderPlan('porto'));
 tabBar.appendChild(portoBtn);
 
+// Plan B — DRIVE tab (contingency — fourth)
+const planBBtn = document.createElement('button');
+planBBtn.className = 'tab-btn';
+planBBtn.dataset.plan = 'plan-b';
+planBBtn.innerHTML = `Plan B &mdash; DRIVE<span class="tab-badge" style="background:rgba(196,98,106,0.12);color:#c4626a">&#9881; BACKUP</span>`;
+planBBtn.addEventListener('click', () => showPlanB());
+tabBar.appendChild(planBBtn);
+
 // Archive toggle button
 const archiveToggle = document.createElement('button');
 archiveToggle.className = 'archive-toggle';
@@ -3131,6 +3966,7 @@ function fadeInView(el) {
 function hideAllViews() {
     document.getElementById('overview-view').classList.remove('active');
     document.getElementById('rec-view').classList.remove('active');
+    document.getElementById('plan-b-view').classList.remove('active');
     document.getElementById('plan-content').classList.add('hidden');
     document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
 }
@@ -3149,6 +3985,14 @@ function showRec() {
     var rv = document.getElementById('rec-view');
     rv.classList.add('active');
     fadeInView(rv);
+}
+
+function showPlanB() {
+    hideAllViews();
+    planBBtn.classList.add('active');
+    var pbv = document.getElementById('plan-b-view');
+    pbv.classList.add('active');
+    fadeInView(pbv);
 }
 
 // Patch renderPlan to hide other views and fix map bounds
