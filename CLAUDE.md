@@ -48,6 +48,19 @@ All plans include **Neuschwanstein Castle + Munich** as a locked 2-day block (mu
 | 7 | porto | Porto 2 nights (Ryanair €229/pp) | Jul 7-8 | 4 KL chill days |
 | 8 | palma | Palma 3 nights (Ryanair €101/pp) | Jul 8-9 | 2 KL chill days |
 
+## Plan B — DRIVE Tab (Porto contingency)
+Separate view rendered by `showPlanB()` — shown if the Jul 4 Ryanair flight to Porto is canceled. Pivot at Luxembourg Airport and drive Sat Jul 4 → return Mon Jul 6. Neuschwanstein + Munich block (Jul 7–9) and KL chill days stay unchanged.
+
+| # | Option | Base | Total drive | Notes |
+|---|--------|------|-------------|-------|
+| 1 | Hague + Rotterdam | Scheveningen | 9.5h | Beach match for Porto |
+| 2 | Bruges + Antwerp | Bruges | 9h | Most romantic, coast access |
+| 3 | Amsterdam Hub | Canal Ring | 9.5h | Melissa first-timer, Van Gogh must-do |
+| 4 | **Amsterdam + Rotterdam** ★ Doug's choice | Canal Ring | 9.5h | Historic + modern Holland, 40 min Intercity Direct |
+| 5 | **Amsterdam + Antwerp** ★ Doug's choice | AMS → ANT | 9h | Two-hotel hybrid, two countries |
+
+Van Gogh Museum is a must-do in all three Amsterdam-based options (slotted between Anne Frank House and Rijksmuseum on Sunday). Doug's Choice options wear a terracotta pill badge next to the card title and a star in the At-a-Glance comparison table. Paris options and Utrecht/Antwerp-Solo options are archived in git history.
+
 ## Features Per Plan Tab
 - **Trip Overview Summary**: paragraph-style overview (~900-1050 chars)
 - **Route Map**: Leaflet.js with plan-specific markers and routes
