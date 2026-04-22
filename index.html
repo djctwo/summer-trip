@@ -391,6 +391,7 @@
         .eve-mode .pb-compare th { background: rgba(212,165,84,0.1); color: #e8dcc8; }
         .eve-mode .pb-compare td { color: #c8b8a0; border-bottom-color: rgba(212,165,84,0.1); }
         .eve-mode .pb-compare tr.pb-top td { background: rgba(212,135,74,0.08); }
+        .eve-mode .pb-dougs-pick { background: linear-gradient(135deg, #e8c878, #c99a3a); color: #1a2636; box-shadow: 0 2px 8px rgba(232,200,120,0.3); }
 
         .eve-mode .overnights-row { background: #16202e; border-color: rgba(212,165,84,0.1); }
         .eve-mode .overnights-label { color: #9aacbe; }
@@ -1156,6 +1157,25 @@
             border-radius: 8px;
             letter-spacing: 0.5px;
             white-space: nowrap;
+        }
+        .pb-dougs-pick {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #d4a54a, #b8872e);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 8px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(184,135,46,0.25);
+        }
+        .pb-dougs-pick::before {
+            content: '\2605';
+            font-size: 12px;
         }
         .pb-card-vibe {
             color: #5a7080;
@@ -2479,30 +2499,166 @@
             <div class="pb-hero-label">&#9888; Contingency Plan</div>
             <div class="pb-hero-title">Porto Plan B &mdash; Drive Alternatives</div>
             <div class="pb-hero-sub">
-                If the Jul 4 Ryanair flight to Porto is canceled (current-events risk to European flights), pivot at Luxembourg Airport and drive to one of these five destinations instead. Return drive to Kaiserslautern on Mon Jul 6 &mdash; then the Neuschwanstein + Munich block (Jul 7&ndash;9) and the KL chill days (Jul 10&ndash;11) stay unchanged. Tesla Superchargers are dense on every outbound and return route.
+                If the Jul 4 Ryanair flight to Porto is canceled (current-events risk to European flights), pivot at Luxembourg Airport and drive to one of these destinations instead. Return drive to Kaiserslautern on Mon Jul 6 &mdash; then the Neuschwanstein + Munich block (Jul 7&ndash;9) and the KL chill days (Jul 10&ndash;11) stay unchanged. Tesla Superchargers are dense on every outbound and return route.
             </div>
             <div class="pb-hero-stats">
                 <div class="pb-hero-stat"><span class="pb-hero-stat-v">2</span>nights</div>
                 <div class="pb-hero-stat"><span class="pb-hero-stat-v">Jul 4&ndash;6</span>window</div>
                 <div class="pb-hero-stat"><span class="pb-hero-stat-v">LUX</span>outbound</div>
                 <div class="pb-hero-stat"><span class="pb-hero-stat-v">KL</span>return</div>
-                <div class="pb-hero-stat"><span class="pb-hero-stat-v">7</span>options</div>
+                <div class="pb-hero-stat"><span class="pb-hero-stat-v">6</span>options</div>
             </div>
         </div>
 
-        <!-- Option 1: The Hague + Rotterdam -->
+        <!-- Option: Amsterdam + Rotterdam (Doug's Pick) -->
+        <div class="pb-card" style="--pb-accent:#2a6a8c">
+            <div class="pb-card-top">
+                <div>
+                    <div class="pb-card-title">Amsterdam + Rotterdam</div>
+                    <div class="pb-card-sub">Base: Amsterdam Canal Ring &middot; Sunday in Rotterdam</div>
+                </div>
+                <span class="pb-dougs-pick">Doug's Pick</span>
+            </div>
+            <div class="pb-card-vibe">
+                The old-meets-new Netherlands double. Amsterdam's Golden Age canals + Melissa's first Anne Frank House on Saturday, then a Sunday train down to Rotterdam for the Markthal, Cube Houses, and Erasmusbrug &mdash; Europe's boldest modern skyline, 40 minutes away. Two cities, one hotel, no repacking.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Amsterdam</strong> &middot; ~4h via Li&egrave;ge/Eindhoven/Utrecht</div>
+                <div class="pb-leg"><strong>Amsterdam &rarr; Rotterdam</strong> &middot; 40 min train (Sunday)</div>
+                <div class="pb-leg"><strong>Amsterdam &rarr; KL</strong> &middot; ~5.5h via Venlo/K&ouml;ln</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Amsterdam</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
+                        <span class="pb-time">1:00 PM</span> Arrive Amsterdam, check in<br>
+                        <span class="pb-time">2:30 PM</span> <strong>Anne Frank House</strong> (BOOK 6 weeks ahead)<br>
+                        <span class="pb-time">5:00 PM</span> Canal cruise &mdash; golden hour on Herengracht<br>
+                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner in the Jordaan</strong> &mdash; traditional brown caf&eacute;
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Rotterdam day trip</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:30 AM</span> Train to Rotterdam (40 min, direct)<br>
+                        <span class="pb-time">10:30 AM</span> Markthal &mdash; architecture + food stalls<br>
+                        <span class="pb-time">12:00 PM</span> <strong>Cube Houses</strong> + Oude Haven<br>
+                        <span class="pb-time">1:30 PM</span> Lunch near Erasmusbrug<br>
+                        <span class="pb-time">3:00 PM</span> Water taxi or Erasmusbrug walk, Witte de With gallery strip<br>
+                        <span class="pb-time">6:00 PM</span> Train back to Amsterdam<br>
+                        <span class="pb-time">8:00 PM</span> Evening canal walk, De Pijp dinner
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Rijksmuseum &rarr; KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> <strong>Rijksmuseum</strong> 90-min hit (<em>Night Watch</em>, Vermeer)<br>
+                        <span class="pb-time">11:00 AM</span> Vondelpark stroll or Museum Quarter coffee<br>
+                        <span class="pb-time">12:00 PM</span> Check out, depart<br>
+                        <span class="pb-time">2:30 PM</span> Supercharger stop<br>
+                        <span class="pb-time">6:30 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Canal Ring (Herengracht / Keizersgracht / Prinsengracht) or Jordaan-adjacent. July prices are steep &mdash; book 2+ months ahead. Central Station is 5 min walk for the Rotterdam train.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Amsterdam: stroopwafels, bitterballen, rijsttafel, Caf&eacute; Winkel apple pie. Rotterdam: Markthal stalls (Turkish pizza, stroopwafel ice cream), FG Food Labs, waterfront seafood.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option: Amsterdam + Antwerp (Doug's Pick) -->
+        <div class="pb-card" style="--pb-accent:#7a5a8c">
+            <div class="pb-card-top">
+                <div>
+                    <div class="pb-card-title">Amsterdam + Antwerp</div>
+                    <div class="pb-card-sub">Base: Amsterdam Canal Ring &middot; Sunday in Antwerp</div>
+                </div>
+                <span class="pb-dougs-pick">Doug's Pick</span>
+            </div>
+            <div class="pb-card-vibe">
+                Two cities, two countries, one hotel. Amsterdam on Saturday &mdash; Anne Frank, canal cruise, Jordaan dinner for the 4th. Sunday: train to Antwerp (~1h 50m) for Rubens in the Cathedral, diamond quarter, MAS rooftop at sunset. Monday the return drive passes back through Belgium if you want one last chocolate stop.
+            </div>
+            <div class="pb-legs">
+                <div class="pb-leg"><strong>LUX &rarr; Amsterdam</strong> &middot; ~4h via Li&egrave;ge/Eindhoven/Utrecht</div>
+                <div class="pb-leg"><strong>Amsterdam &rarr; Antwerp</strong> &middot; ~1h 50m direct train (Sunday)</div>
+                <div class="pb-leg"><strong>Amsterdam &rarr; KL</strong> &middot; ~5.5h via Venlo/K&ouml;ln</div>
+            </div>
+
+            <div class="pb-days">
+                <div class="pb-day">
+                    <div class="pb-day-date">Sat Jul 4</div>
+                    <div class="pb-day-title">LUX &rarr; Amsterdam</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
+                        <span class="pb-time">1:00 PM</span> Arrive Amsterdam, check in<br>
+                        <span class="pb-time">2:30 PM</span> <strong>Anne Frank House</strong> (BOOK 6 weeks ahead)<br>
+                        <span class="pb-time">5:00 PM</span> Canal cruise &mdash; golden hour on Herengracht<br>
+                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner in the Jordaan</strong> &mdash; traditional brown caf&eacute;
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Sun Jul 5</div>
+                    <div class="pb-day-title">Antwerp day trip</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> Train from Amsterdam Centraal (~1h 50m)<br>
+                        <span class="pb-time">11:00 AM</span> Grote Markt + <strong>Cathedral of Our Lady</strong> (Rubens)<br>
+                        <span class="pb-time">1:00 PM</span> Lunch near the Cathedral (stoofvlees + frites)<br>
+                        <span class="pb-time">2:30 PM</span> Het Eilandje harbor + <strong>MAS rooftop</strong> skyline<br>
+                        <span class="pb-time">4:30 PM</span> Fashion district + Chocolate Nation or Rubens House<br>
+                        <span class="pb-time">6:30 PM</span> Return train to Amsterdam<br>
+                        <span class="pb-time">9:00 PM</span> Nightcap canal walk
+                    </div>
+                    <div class="pb-day-overnight">&#127769; Amsterdam Canal Ring</div>
+                </div>
+                <div class="pb-day">
+                    <div class="pb-day-date">Mon Jul 6</div>
+                    <div class="pb-day-title">Rijksmuseum &rarr; KL</div>
+                    <div class="pb-day-schedule">
+                        <span class="pb-time">9:00 AM</span> <strong>Rijksmuseum</strong> 90-min hit (<em>Night Watch</em>, Vermeer)<br>
+                        <span class="pb-time">11:00 AM</span> Vondelpark stroll or De Pijp brunch<br>
+                        <span class="pb-time">12:00 PM</span> Check out, depart<br>
+                        <span class="pb-time">2:30 PM</span> Supercharger stop<br>
+                        <span class="pb-time">6:30 PM</span> Home to KL
+                    </div>
+                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
+                </div>
+            </div>
+
+            <div class="pb-footer-row">
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Hotel Zone</div>
+                    <div class="pb-footer-value">Canal Ring or Jordaan-adjacent. Book near Centraal or a direct tram line &mdash; the Antwerp train leaves Centraal Sunday morning and Sunday service is lighter.</div>
+                </div>
+                <div class="pb-footer-cell">
+                    <div class="pb-footer-label">Food Highlights</div>
+                    <div class="pb-footer-value">Amsterdam: stroopwafels, bitterballen, rijsttafel. Antwerp: Belgian fries, waterzooi, De Koninck beer, Goossens bakery, Chocolate Nation.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option: The Hague + Rotterdam -->
         <div class="pb-card" style="--pb-accent:#4a8ba8">
             <div class="pb-card-top">
                 <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#1</span>
-                        <div>
-                            <div class="pb-card-title">The Hague + Rotterdam</div>
-                            <div class="pb-card-sub">Base: Scheveningen beachfront &middot; Netherlands</div>
-                        </div>
-                    </div>
+                    <div class="pb-card-title">The Hague + Rotterdam</div>
+                    <div class="pb-card-sub">Base: Scheveningen beachfront &middot; Netherlands</div>
                 </div>
-                <span class="pb-score-badge">Score 22/25 &middot; Beach match</span>
             </div>
             <div class="pb-card-vibe">
                 Beach + boardwalk = closest Porto match. Scheveningen's pier and North Sea boulevard hit the same Atlantic waterfront note as Porto's Foz, and The Hague center is 15 min inland for Vermeer + Binnenhof.
@@ -2576,19 +2732,13 @@
             </div>
         </div>
 
-        <!-- Option 2: Bruges + Antwerp -->
+        <!-- Option: Bruges + Antwerp -->
         <div class="pb-card" style="--pb-accent:#c4626a">
             <div class="pb-card-top">
                 <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#2</span>
-                        <div>
-                            <div class="pb-card-title">Bruges + Antwerp</div>
-                            <div class="pb-card-sub">Base: Bruges historic center &middot; Belgium</div>
-                        </div>
-                    </div>
+                    <div class="pb-card-title">Bruges + Antwerp</div>
+                    <div class="pb-card-sub">Base: Bruges historic center &middot; Belgium</div>
                 </div>
-                <span class="pb-score-badge">Score 22/25 &middot; Most romantic</span>
             </div>
             <div class="pb-card-vibe">
                 Closest spiritual match to Porto's Ribeira &mdash; compact, canal-fronted, walkable, romantic at sunset. Shortest outbound drive from LUX. Sunday is your choice: Antwerp, the Belgian coast, a Flemish canal city, or even the French Channel coast.
@@ -2667,189 +2817,13 @@
             </div>
         </div>
 
-        <!-- Option 3: Utrecht hub -->
-        <div class="pb-card" style="--pb-accent:#5a7d40">
-            <div class="pb-card-top">
-                <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#3</span>
-                        <div>
-                            <div class="pb-card-title">Utrecht Hub</div>
-                            <div class="pb-card-sub">Base: Utrecht old town &middot; Netherlands</div>
-                        </div>
-                    </div>
-                </div>
-                <span class="pb-score-badge">Score 21/25 &middot; Best value</span>
-            </div>
-            <div class="pb-card-vibe">
-                The dark horse. Often called "Amsterdam without the crowds" &mdash; Utrecht's two-tier wharf canals put you <em>below</em> street level, on the water, for dinner. Dom Tower + medieval old town. Train hub puts Amsterdam (27 min) and Rotterdam (40 min) inside reach.
-            </div>
-            <div class="pb-legs">
-                <div class="pb-leg"><strong>LUX &rarr; Utrecht</strong> &middot; ~3.5h via Li&egrave;ge/Eindhoven</div>
-                <div class="pb-leg"><strong>Utrecht &rarr; KL</strong> &middot; ~5h via Venlo/K&ouml;ln</div>
-                <div class="pb-leg">1 hotel &middot; ~8.5h total drive (shortest)</div>
-            </div>
-
-            <div class="pb-days">
-                <div class="pb-day">
-                    <div class="pb-day-date">Sat Jul 4</div>
-                    <div class="pb-day-title">LUX &rarr; Utrecht</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:00 AM</span> Depart LUX<br>
-                        <span class="pb-time">12:30 PM</span> Arrive Utrecht, check in<br>
-                        <span class="pb-time">2:00 PM</span> Wharf canal walk on Oudegracht<br>
-                        <span class="pb-time">4:00 PM</span> Dom Tower climb (465 steps)<br>
-                        <span class="pb-time">7:00 PM</span> <strong>4th of July dinner on a wharf</strong> &mdash; below street level, on the water
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Utrecht</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Sun Jul 5</div>
-                    <div class="pb-day-title">Day-trip of your choice</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> Pick Sunday option (see menu below)<br>
-                        <span class="pb-time">~10:30 AM</span> Train departs Utrecht Centraal<br>
-                        <span class="pb-time">Afternoon</span> Explore destination<br>
-                        <span class="pb-time">~7:00 PM</span> Back in Utrecht<br>
-                        <span class="pb-time">8:00 PM</span> Dinner on the canal
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Utrecht</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Mon Jul 6</div>
-                    <div class="pb-day-title">Return to KL</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">10:00 AM</span> Oudegracht boat tour<br>
-                        <span class="pb-time">12:00 PM</span> Caf&eacute; on a wharf, check out<br>
-                        <span class="pb-time">1:00 PM</span> Depart Utrecht<br>
-                        <span class="pb-time">6:00 PM</span> Home to KL
-                    </div>
-                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
-                </div>
-            </div>
-
-            <div class="pb-daytrip-section">
-                <div class="pb-daytrip-title">Sunday Day-Trip Menu &mdash; 6 options</div>
-                <ul class="pb-daytrip-list">
-                    <li><strong>Amsterdam</strong> <span class="pb-dt-time">&middot; 27 min train</span><br>Melissa's first Amsterdam &mdash; Anne Frank, canal cruise, Jordaan</li>
-                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 40 min train</span><br>Markthal, Cube Houses, modern architecture</li>
-                    <li><strong>The Hague + Scheveningen</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Mauritshuis + beach combo</li>
-                    <li><strong>Delft</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Vermeer, Markt, Oude Kerk</li>
-                    <li><strong>Haarlem</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Frans Hals, Grote Kerk</li>
-                    <li><strong>Gouda</strong> <span class="pb-dt-time">&middot; 20 min train</span><br>Cheese town (note: public market Thursdays only)</li>
-                </ul>
-            </div>
-
-            <div class="pb-footer-row">
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Hotel Zone</div>
-                    <div class="pb-footer-value">Utrecht center &mdash; along Oudegracht or Neude. Walk everywhere. Hotels are 30&ndash;40% cheaper than Amsterdam in peak July.</div>
-                </div>
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Food Highlights</div>
-                    <div class="pb-footer-value">Wharf cellar restaurants (eat on the water), Dutch apple pie, bitterballen, poffertjes, herring stands. Cafe Le Journal, De Rechtbank.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Option 4: Antwerp solo -->
-        <div class="pb-card" style="--pb-accent:#8c5a7e">
-            <div class="pb-card-top">
-                <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#4</span>
-                        <div>
-                            <div class="pb-card-title">Antwerp Solo</div>
-                            <div class="pb-card-sub">Base: Antwerp old town &middot; Belgium</div>
-                        </div>
-                    </div>
-                </div>
-                <span class="pb-score-badge">Score 20/25 &middot; Middle ground</span>
-            </div>
-            <div class="pb-card-vibe">
-                Underrated middle ground between Bruges and Amsterdam. Old town with Rubens masterpieces in the Cathedral, fashion-district cool, the gentrified Het Eilandje harbor, diamond quarter, MAS rooftop. Shortest total drive of the five.
-            </div>
-            <div class="pb-legs">
-                <div class="pb-leg"><strong>LUX &rarr; Antwerp</strong> &middot; ~3h via Li&egrave;ge</div>
-                <div class="pb-leg"><strong>Antwerp &rarr; KL</strong> &middot; ~5h via Aachen/K&ouml;ln</div>
-                <div class="pb-leg">1 hotel &middot; ~8h total drive (shortest)</div>
-            </div>
-
-            <div class="pb-days">
-                <div class="pb-day">
-                    <div class="pb-day-date">Sat Jul 4</div>
-                    <div class="pb-day-title">LUX &rarr; Antwerp</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> Depart LUX<br>
-                        <span class="pb-time">12:30 PM</span> Arrive Antwerp, check in<br>
-                        <span class="pb-time">1:30 PM</span> Grote Markt + Cathedral (Rubens)<br>
-                        <span class="pb-time">3:30 PM</span> Plantin-Moretus Museum<br>
-                        <span class="pb-time">5:30 PM</span> MAS rooftop sunset views<br>
-                        <span class="pb-time">7:30 PM</span> <strong>4th of July dinner at Het Eilandje</strong> &mdash; harbor district
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Antwerp</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Sun Jul 5</div>
-                    <div class="pb-day-title">Day-trip of your choice</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> Pick Sunday option (see menu below)<br>
-                        <span class="pb-time">~10:30 AM</span> Train to destination<br>
-                        <span class="pb-time">Afternoon</span> Explore<br>
-                        <span class="pb-time">~7:00 PM</span> Back in Antwerp<br>
-                        <span class="pb-time">8:00 PM</span> Fashion-district dinner
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Antwerp</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Mon Jul 6</div>
-                    <div class="pb-day-title">Return to KL</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">10:00 AM</span> Rubens House or Chocolate Nation<br>
-                        <span class="pb-time">12:00 PM</span> Check out<br>
-                        <span class="pb-time">12:30 PM</span> Depart Antwerp<br>
-                        <span class="pb-time">5:30 PM</span> Home to KL
-                    </div>
-                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
-                </div>
-            </div>
-
-            <div class="pb-daytrip-section">
-                <div class="pb-daytrip-title">Sunday Day-Trip Menu &mdash; 5 options</div>
-                <ul class="pb-daytrip-list">
-                    <li><strong>Bruges</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Fairytale canals, Markt + Belfry, canal boat</li>
-                    <li><strong>Ghent</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Gravensteen castle, Korenmarkt canals</li>
-                    <li><strong>Brussels</strong> <span class="pb-dt-time">&middot; 45 min train</span><br>Grand Place, Atomium, EU quarter</li>
-                    <li><strong>Ostend</strong> <span class="pb-dt-time">&middot; 1.5h train</span><br>Belgian North Sea beach, pier, Mu.ZEE</li>
-                    <li><strong>Rotterdam</strong> <span class="pb-dt-time">&middot; 1h train</span><br>Modern architecture, Markthal, Cube Houses</li>
-                </ul>
-            </div>
-
-            <div class="pb-footer-row">
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Hotel Zone</div>
-                    <div class="pb-footer-value">Antwerp old town near Grote Markt, or Het Zuid (hip arts district). Hilton Old Town, Hotel Franq, or a canal-side boutique.</div>
-                </div>
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Food Highlights</div>
-                    <div class="pb-footer-value">Belgian fries, waterzooi, chocolate (Goossens bakery, Philip's Biscuits), De Koninck Antwerp beer, Chocolate Nation experience.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Option 5: Amsterdam hub -->
+        <!-- Option: Amsterdam hub -->
         <div class="pb-card" style="--pb-accent:#d4874a">
             <div class="pb-card-top">
                 <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#5</span>
-                        <div>
-                            <div class="pb-card-title">Amsterdam Hub</div>
-                            <div class="pb-card-sub">Base: Canal Ring &middot; Melissa first-timer &#11088;</div>
-                        </div>
-                    </div>
+                    <div class="pb-card-title">Amsterdam Hub</div>
+                    <div class="pb-card-sub">Base: Canal Ring &middot; Melissa first-timer &#11088;</div>
                 </div>
-                <span class="pb-score-badge">Score 19/25 &middot; First-timer premium</span>
             </div>
             <div class="pb-card-vibe">
                 Amsterdam's score is held back by July crowds and hotel prices, but Melissa has never been &mdash; and you only get a first-Amsterdam once. Anne Frank House, Rijksmuseum, canal cruise at golden hour, Jordaan walks. Bucket-list city energy.
@@ -2923,106 +2897,13 @@
             </div>
         </div>
 
-        <!-- Option 6: Paris -->
-        <div class="pb-card" style="--pb-accent:#6a5a9c">
-            <div class="pb-card-top">
-                <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#6</span>
-                        <div>
-                            <div class="pb-card-title">Paris</div>
-                            <div class="pb-card-sub">Base: Left Bank or Marais &middot; Iconic bucket list</div>
-                        </div>
-                    </div>
-                </div>
-                <span class="pb-score-badge">Score 20/25 &middot; Iconic, parking is the knock</span>
-            </div>
-            <div class="pb-card-vibe">
-                Paris is Paris &mdash; Eiffel at dusk, Louvre mornings, Seine walks, Marais dinners, Montmartre sunset. The honest tradeoff is driving into central Paris with a Tesla (parking is expensive and scarce). The workaround: park at the hotel and use Metro/walk. July is peak &mdash; crowded but also warm evenings on the Seine. 4th of July bistro dinner in the Marais is a real moment.
-            </div>
-            <div class="pb-legs">
-                <div class="pb-leg"><strong>LUX &rarr; Paris</strong> &middot; ~3.5h via Metz/Reims (~370 km)</div>
-                <div class="pb-leg"><strong>Paris &rarr; KL</strong> &middot; ~5h via Reims/Metz (~570 km)</div>
-                <div class="pb-leg">1 hotel &middot; ~8.5h total drive &middot; shortest return of all options</div>
-            </div>
-
-            <div class="pb-days">
-                <div class="pb-day">
-                    <div class="pb-day-date">Sat Jul 4</div>
-                    <div class="pb-day-title">LUX &rarr; Paris, Eiffel evening</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> Depart LUX (Supercharger stop at Metz or Reims)<br>
-                        <span class="pb-time">1:30 PM</span> Arrive Paris, check in, park for the weekend<br>
-                        <span class="pb-time">3:00 PM</span> Walk Seine &rarr; &Icirc;le de la Cit&eacute; &rarr; Notre-Dame exterior<br>
-                        <span class="pb-time">5:30 PM</span> <strong>Eiffel Tower</strong> &mdash; Trocad&eacute;ro viewpoint, then ascend<br>
-                        <span class="pb-time">8:30 PM</span> <strong>4th of July dinner in the Marais</strong> &mdash; classic bistro
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Paris (Left Bank or Marais)</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Sun Jul 5</div>
-                    <div class="pb-day-title">Louvre + Marais + Montmartre sunset</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> <strong>Louvre</strong> (pre-book timed entry) &mdash; hit the headliners<br>
-                        <span class="pb-time">12:30 PM</span> Lunch in Le Marais &mdash; L'As du Fallafel or a bistro<br>
-                        <span class="pb-time">2:30 PM</span> Place des Vosges &rarr; Mus&eacute;e Picasso (optional)<br>
-                        <span class="pb-time">4:30 PM</span> Coffee on Rue de Rivoli or Jardin des Tuileries<br>
-                        <span class="pb-time">6:30 PM</span> <strong>Montmartre &amp; Sacr&eacute;-C&oelig;ur</strong> &mdash; golden hour from the steps<br>
-                        <span class="pb-time">9:00 PM</span> Dinner in Montmartre or return to the Marais
-                    </div>
-                    <div class="pb-day-overnight">&#127769; Paris</div>
-                </div>
-                <div class="pb-day">
-                    <div class="pb-day-date">Mon Jul 6</div>
-                    <div class="pb-day-title">Mus&eacute;e d'Orsay &rarr; Return to KL</div>
-                    <div class="pb-day-schedule">
-                        <span class="pb-time">9:30 AM</span> <strong>Mus&eacute;e d'Orsay</strong> (Impressionists) &mdash; 90 min hit<br>
-                        <span class="pb-time">11:30 AM</span> Saint-Germain stroll + p&acirc;tisserie<br>
-                        <span class="pb-time">1:00 PM</span> Check out, depart Paris<br>
-                        <span class="pb-time">3:30 PM</span> Supercharger stop (Reims/Metz)<br>
-                        <span class="pb-time">7:00 PM</span> Home to KL
-                    </div>
-                    <div class="pb-day-overnight">&#127969; Kaiserslautern</div>
-                </div>
-            </div>
-
-            <div class="pb-daytrip-section">
-                <div class="pb-daytrip-title">Sunday Alternatives &mdash; Swap out the Louvre day</div>
-                <ul class="pb-daytrip-list">
-                    <li><strong>Versailles</strong> <span class="pb-dt-time">&middot; 40 min RER</span><br>Palace + gardens &mdash; full half-day</li>
-                    <li><strong>Giverny (Monet's Garden)</strong> <span class="pb-dt-time">&middot; 1h drive</span><br>Water lily pond in peak July bloom</li>
-                    <li><strong>Mus&eacute;e d'Orsay + Rodin</strong> <span class="pb-dt-time">&middot; walking</span><br>Skip the Louvre &mdash; do Impressionists + sculpture</li>
-                    <li><strong>Seine cruise + L'Orangerie</strong> <span class="pb-dt-time">&middot; walking</span><br>Monet's Water Lilies in the oval rooms</li>
-                    <li><strong>Latin Quarter + Panth&eacute;on</strong> <span class="pb-dt-time">&middot; walking</span><br>Shakespeare &amp; Co., Jardin du Luxembourg</li>
-                    <li><strong>Sainte-Chapelle + Conciergerie</strong> <span class="pb-dt-time">&middot; walking</span><br>Stained glass that justifies the hype</li>
-                </ul>
-            </div>
-
-            <div class="pb-footer-row">
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Hotel Zone</div>
-                    <div class="pb-footer-value">Left Bank (Saint-Germain, 6th/7th) for classic Paris, or Marais (3rd/4th) for dining + walkability. Pick a hotel with parking OR a nearby garage &mdash; street parking is painful. Avoid ring-road hotels unless you want a commute.</div>
-                </div>
-                <div class="pb-footer-cell">
-                    <div class="pb-footer-label">Food Highlights</div>
-                    <div class="pb-footer-value">Croissants at Du Pain et des Id&eacute;es, steak frites at Le Relais de l'Entrec&ocirc;te, falafel on Rue des Rosiers, classic bistros in the Marais, p&acirc;tisserie at Pierre Herm&eacute; or Cedric Grolet.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Option 7: Paris + Reims (Champagne) -->
+        <!-- Option: Paris + Reims (Champagne) -->
         <div class="pb-card" style="--pb-accent:#b89a5c">
             <div class="pb-card-top">
                 <div>
-                    <div style="display:flex;align-items:baseline;gap:12px">
-                        <span class="pb-card-rank">#7</span>
-                        <div>
-                            <div class="pb-card-title">Paris + Reims (Champagne)</div>
-                            <div class="pb-card-sub">Base: Paris &middot; Day trip to Champagne country</div>
-                        </div>
-                    </div>
+                    <div class="pb-card-title">Paris + Reims (Champagne)</div>
+                    <div class="pb-card-sub">Base: Paris &middot; Day trip to Champagne country</div>
                 </div>
-                <span class="pb-score-badge">Score 22/25 &middot; Paris iconic + real 4th of July toast</span>
             </div>
             <div class="pb-card-vibe">
                 Same Paris as #6 &mdash; Eiffel, Louvre, Marais dinners &mdash; but Sunday is a <strong>Champagne day trip</strong>. TGV to Reims (45 min), coronation cathedral, one champagne house tour + tasting (Veuve Clicquot, Taittinger, Pommery, or Ruinart), lunch in the old town, back to Paris by 6 PM for a second Parisian night. Reims also sits on your outbound AND return drive, so if you'd rather stretch the road day, you can tour a champagne cellar on the way through &mdash; no extra drive time.
@@ -3103,7 +2984,7 @@
             <div class="pb-card-top">
                 <div>
                     <div class="pb-card-title">At-a-Glance Comparison</div>
-                    <div class="pb-card-sub">All 7 options side-by-side &mdash; decide day-of</div>
+                    <div class="pb-card-sub">All 6 options side-by-side &mdash; decide day-of</div>
                 </div>
             </div>
             <div class="pb-compare">
@@ -3115,72 +2996,56 @@
                             <th>LUX Out</th>
                             <th>KL Return</th>
                             <th>Total</th>
-                            <th>Score</th>
                             <th>Best For</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="pb-top">
-                            <td>#1 Hague + Rotterdam</td>
-                            <td>Scheveningen</td>
-                            <td>4h</td>
-                            <td>5.5h</td>
-                            <td>9.5h</td>
-                            <td>22</td>
-                            <td>Beach match for Porto</td>
-                        </tr>
-                        <tr class="pb-top">
-                            <td>#2 Bruges + Antwerp</td>
-                            <td>Bruges</td>
-                            <td>3.5h</td>
-                            <td>5.5h</td>
-                            <td>9h</td>
-                            <td>22</td>
-                            <td>Most romantic, coast access</td>
-                        </tr>
-                        <tr>
-                            <td>#3 Utrecht Hub</td>
-                            <td>Utrecht</td>
-                            <td>3.5h</td>
-                            <td>5h</td>
-                            <td>8.5h</td>
-                            <td>21</td>
-                            <td>Best value, quieter</td>
-                        </tr>
-                        <tr>
-                            <td>#4 Antwerp Solo</td>
-                            <td>Antwerp</td>
-                            <td>3h</td>
-                            <td>5h</td>
-                            <td>8h</td>
-                            <td>20</td>
-                            <td>Shortest drive overall</td>
-                        </tr>
-                        <tr>
-                            <td>#5 Amsterdam Hub</td>
+                            <td>Amsterdam + Rotterdam <span class="pb-dougs-pick" style="margin-left:6px">Doug's Pick</span></td>
                             <td>Canal Ring</td>
                             <td>4h</td>
                             <td>5.5h</td>
                             <td>9.5h</td>
-                            <td>19&#11088;</td>
-                            <td>Melissa first-timer</td>
-                        </tr>
-                        <tr>
-                            <td>#6 Paris</td>
-                            <td>Marais / Left Bank</td>
-                            <td>3.5h</td>
-                            <td>5h</td>
-                            <td>8.5h</td>
-                            <td>20</td>
-                            <td>Iconic bucket list</td>
+                            <td>Old + new NL, Melissa first-timer</td>
                         </tr>
                         <tr class="pb-top">
-                            <td>#7 Paris + Reims</td>
+                            <td>Amsterdam + Antwerp <span class="pb-dougs-pick" style="margin-left:6px">Doug's Pick</span></td>
+                            <td>Canal Ring</td>
+                            <td>4h</td>
+                            <td>5.5h</td>
+                            <td>9.5h</td>
+                            <td>Two countries, one hotel</td>
+                        </tr>
+                        <tr>
+                            <td>The Hague + Rotterdam</td>
+                            <td>Scheveningen</td>
+                            <td>4h</td>
+                            <td>5.5h</td>
+                            <td>9.5h</td>
+                            <td>Beach match for Porto</td>
+                        </tr>
+                        <tr>
+                            <td>Bruges + Antwerp</td>
+                            <td>Bruges</td>
+                            <td>3.5h</td>
+                            <td>5.5h</td>
+                            <td>9h</td>
+                            <td>Most romantic, coast access</td>
+                        </tr>
+                        <tr>
+                            <td>Amsterdam Hub</td>
+                            <td>Canal Ring</td>
+                            <td>4h</td>
+                            <td>5.5h</td>
+                            <td>9.5h</td>
+                            <td>Slow Amsterdam, full-day Sunday</td>
+                        </tr>
+                        <tr>
+                            <td>Paris + Reims</td>
                             <td>Paris (day trip)</td>
                             <td>3.5h</td>
                             <td>5h</td>
                             <td>8.5h</td>
-                            <td>22</td>
                             <td>Paris iconic + real 4th toast</td>
                         </tr>
                     </tbody>
